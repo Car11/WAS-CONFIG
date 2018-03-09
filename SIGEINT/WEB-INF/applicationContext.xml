@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd"
+    xmlns:jee="http://www.springframework.org/schema/jee">
+    
+    <!--========== Transaction Proxy ==========-->
+     <bean id="interrupcionesTP" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">
+        <property name="transactionManager" ref="interrupcionesTM"/>
+        
+        <property name="transactionAttributes">
+            <props>
+                <prop key="agregar*">PROPAGATION_REQUIRED</prop>
+                <prop key="modificar*">PROPAGATION_REQUIRED</prop>
+                <prop key="eliminar*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean> 
+    
+    <bean id="obrasTP" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">
+        <property name="transactionManager" ref="obrasTM"/>
+        
+        <property name="transactionAttributes">
+            <props>
+                <prop key="agregar*">PROPAGATION_REQUIRED</prop>
+                <prop key="modificar*">PROPAGATION_REQUIRED</prop>
+                <prop key="eliminar*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+        
+     <!--  <bean id="transformadoresTP" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">
+        <property name="transactionManager" ref="transformadoresTM"/>
+        
+        <property name="transactionAttributes">
+            <props>
+                <prop key="agregar*">PROPAGATION_REQUIRED</prop>
+                <prop key="modificar*">PROPAGATION_REQUIRED</prop>
+                <prop key="eliminar*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>  -->     
+
+    <!--========== Bussiness Objects Obras==========-->
+    <bean id="agenciaBO" parent="obrasTP">
+        <property name="target">
+            <bean class="cr.go.ice.obras.BO.AgenciaBO">
+                <property name="agenciaDAO" ref="agenciaDAO"/>
+            </bean>
+        </property>
+    </bean>
+
+	<!--========== Bussiness Objects Transformadores==========-->
+	
+    <bean id="puebloBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.PuebloBOImpl">
+                <property name="puebloDAO" ref="puebloDAO"/>
+            </bean>
+        </property>
+    </bean>	
+    
+       
+	
+    <!--========== Bussiness Objects Interrupciones==========-->
+    
+    <bean id="animalBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.AnimalBOImpl">
+                <property name="animalDAO" ref="animalDAO"/>
+            </bean>
+        </property>
+    </bean>    
+    
+    <bean id="causaBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.CausaBOImpl">
+                <property name="causaDAO" ref="causaDAO"/>
+            </bean>
+        </property>
+    </bean>        
+    
+    <bean id="circuitoBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.CircuitoBOImpl">
+                <property name="circuitoDAO" ref="circuitoDAO"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="consecutivoClorBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.ConsecutivoClorBOImpl">
+                <property name="consecutivoClorDAO" ref="consecutivoClorDAO"/>
+                <property name="parametroDAO" ref="parametroDAO"/>
+            </bean>
+        </property>
+    </bean> 
+    
+    <bean id="comportamientoADPIRBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.ComportamientoADPIRBOImpl">
+                <property name="comportamientoADPIRDAO" ref="comportamientoADPIRDAO"/>
+            </bean>
+        </property>
+    </bean>   
+    
+    <bean id="correoBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.CorreoBOImpl">
+                <property name="correoDAO" ref="correoDAO"/>
+                <property name="oficinaDAO" ref="oficinaDAO"/>
+            </bean>
+        </property>
+    </bean> 
+    
+    <bean id="cuadrillaBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.CuadrillaBOImpl">
+                <property name="cuadrillaDAO" ref="cuadrillaDAO"/>
+            </bean>
+        </property>
+    </bean>    
+    
+    <bean id="danoBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.DanoBOImpl">
+                <property name="danoDAO" ref="danoDAO"/>
+            </bean>
+        </property>
+    </bean>  
+    
+    <bean id="empleadoBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.EmpleadoBOImpl">
+                <property name="empleadoDAO" ref="empleadoDAO"/>
+            </bean>
+        </property>
+    </bean>   
+    
+    <bean id="equipoEspecialBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.EquipoEspecialBOImpl">
+                <property name="equipoEspecialDAO" ref="equipoEspecialDAO"/>
+            </bean>
+        </property>
+    </bean>   
+    
+    <bean id="fusibleBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.FusibleBOImpl">
+                <property name="fusibleDAO" ref="fusibleDAO"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="glosarioBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.GlosarioBOImpl">
+                <property name="glosarioDAO" ref="glosarioDAO"/>
+            </bean>
+        </property>
+    </bean> 
+    
+    <bean id="historicoTrasladoSeccionBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.HistoricoTrasladoSeccionBOImpl">
+                <property name="historicoTrasladoSeccionDAO" ref="historicoTrasladoSeccionDAO"/>
+            </bean>
+        </property>
+    </bean>    
+    
+    <bean id="interrupcionBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.InterrupcionBOImpl">
+                <property name="interrupcionDAO" ref="interrupcionDAO"/>                                                   
+                <property name="cuadrillaDAO" ref="cuadrillaDAO"/>
+                <property name="fusibleDAO" ref="fusibleDAO"/>
+                <property name="trafoDAO" ref="trafoDAO"/>
+                <property name="posteInstaladoRetiradoDAO" ref="posteInstaladoRetiradoDAO"/>
+                <property name="equipoEspecialDAO" ref="equipoEspecialDAO"/>
+                <property name="interrupcionGemelaDAO" ref="interrupcionGemelaDAO"/>
+                <property name="vehiculoDAO" ref="vehiculoDAO"/>
+                <property name="noPropiaSeccionamientoDAO" ref="noPropiaSeccionamientoDAO"/>
+            </bean>
+        </property>
+    </bean>  
+    
+     <bean id="indiceGlobalRegionBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.IndiceGlobalRegionBOImpl">
+                <property name="indiceGlobalRegionDAO" ref="indiceGlobalRegionDAO"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="indiceCalidadNacionalBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.IndiceCalidadNacionalBOImpl">
+                <property name="indiceCalidadNacionalDAO" ref="indiceCalidadNacionalDAO"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="indiceCalidadRegionBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.IndiceCalidadRegionBOImpl">
+                <property name="indiceCalidadRegionDAO" ref="indiceCalidadRegionDAO"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="interrupcionGemelaBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.InterrupcionGemelaBOImpl">
+                <property name="interrupcionGemelaDAO" ref="interrupcionGemelaDAO"/>
+            </bean>
+        </property>
+    </bean>    
+    
+    <bean id="materialBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.MaterialBOImpl">
+                <property name="materialDAO" ref="materialDAO"/>
+            </bean>
+        </property>
+    </bean>   
+   <bean id="auditoriaBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.AuditoriaBOImpl">
+                <property name="auditoriaDAO" ref="auditoriaDAO"/>
+            </bean>
+        </property>
+    </bean>    
+    <bean id="noPropiaSeccionamientoBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.NoPropiaSeccionamientoBOImpl">
+                <property name="noPropiaSeccionamientoDAO" ref="noPropiaSeccionamientoDAO"/>
+            </bean>
+        </property>
+    </bean>                                                               
+
+    <bean id="oficinaBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.OficinaBOImpl">
+                <property name="oficinaDAO" ref="oficinaDAO"/>
+            </bean>
+        </property>
+    </bean>      
+    
+    <bean id="parametroBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.ParametroBOImpl">
+                <property name="parametroDAO" ref="parametroDAO"/>
+            </bean>
+        </property>
+    </bean>      
+    
+    <bean id="posteInstaladoRetiradoBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.PosteInstaladoRetiradoBOImpl">
+                <property name="posteInstaladoRetiradoDAO" ref="posteInstaladoRetiradoDAO"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="proteccionBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.ProteccionBOImpl">
+                <property name="proteccionDAO" ref="proteccionDAO"/>
+            </bean>
+        </property>
+    </bean>      
+    
+    <bean id="provolmaBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.ProvolmaBOImpl">
+                <property name="provolmaDAO" ref="provolmaDAO"/>
+            </bean>
+        </property>
+    </bean>                         
+    
+     <bean id="regionBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.RegionBOImpl">
+                <property name="regionDAO" ref="regionDAO"/>
+            </bean>
+        </property>
+    </bean> 
+    
+     <bean id="reporteBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.ReporteBOImpl">
+                <property name="reporteDAO" ref="reporteDAO"/>
+            </bean>
+        </property>
+    </bean>     
+
+    <bean id="seccionBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.SeccionBOImpl">
+                <property name="seccionDAO" ref="seccionDAO"/>
+            </bean>
+        </property>
+    </bean>    
+    
+    <bean id="subEstacionBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.SubEstacionBOImpl">
+                <property name="subEstacionDAO" ref="subEstacionDAO"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="subEstacionSubRegionBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.SubEstacionSubRegionBOImpl">
+                <property name="subEstacionSubRegionDAO" ref="subEstacionSubRegionDAO"/>
+            </bean>
+        </property>
+    </bean>    
+ 
+     <bean id="subRegionBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.SubRegionBOImpl">
+                <property name="subRegionDAO" ref="subRegionDAO"/>
+            </bean>
+        </property>
+    </bean>   
+    
+     <bean id="tipoVoltajeBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.TipoVoltajeBOImpl">
+                <property name="tipoVoltajeDAO" ref="tipoVoltajeDAO"/>
+            </bean>
+        </property>
+    </bean>  
+    
+     <bean id="trafoBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.TrafoBOImpl">
+                <property name="trafoDAO" ref="trafoDAO"/>
+            </bean>
+        </property>
+    </bean>  
+    
+     <bean id="vehiculoBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.VehiculoBOImpl">
+                <property name="vehiculoDAO" ref="vehiculoDAO"/>
+            </bean>
+        </property>
+    </bean>  
+    
+    <bean id="tiposCausaBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.TiposCausaBOImpl">
+                <property name="tiposCausaDAO" ref="tiposCausaDAO"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="tiposCausaEspecificaBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.TiposCausaEspecificaBOImpl">
+                <property name="tiposCausaEspecificaDAO" ref="tiposCausaEspecificaDAO"/>
+            </bean>
+        </property>
+    </bean>  
+    
+    <bean id="detalleCausaBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.DetalleCausaBOImpl">
+                <property name="detalleCausaDAO" ref="detalleCausaDAO"/>
+            </bean>
+        </property>
+    </bean>  
+    
+    <bean id="ubicacionGeneralDanoBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.UbicacionGeneralDanoBOImpl">
+                <property name="ubicacionGeneralDanoDAO" ref="ubicacionGeneralDanoDAO"/>
+            </bean>
+        </property>
+    </bean>  
+    
+    <bean id="ubicacionEspecificaDanoBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.UbicacionEspecificaDanoBOImpl">
+                <property name="ubicacionEspecificaDanoDAO" ref="ubicacionEspecificaDanoDAO"/>
+            </bean>
+        </property>
+    </bean>  
+    
+    <bean id="usuarioOficinaBO" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.UsuarioOficinaBOImpl">
+                <property name="usuarioOficinaDAO" ref="usuarioOficinaDAO"/>
+            </bean>
+        </property>
+    </bean>
+    
+    
+    <!-- BOs de SIGEdocWeb -->
+    <bean id="aplicacionBo" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.sige.carga.bo.impl.AplicacionBoImpl">
+                <property name="aplicacionDao" ref="aplicacionDao"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="archivoBo" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.sige.carga.bo.impl.ArchivoBoImpl">
+                <property name="archivoDao" ref="archivoDao"/>
+                <property name="tipoArchivoDao" ref="tipoArchivoDao"/>                
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="rolUsuarioBo" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.sige.carga.bo.impl.RolUsuarioBoImpl">
+                <property name="rolUsuarioDao" ref="rolUsuarioDao"/>
+            </bean>
+        </property>
+    </bean>    
+    <bean id="tipoArchivoBo" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.sige.carga.bo.impl.TipoArchivoBoImpl">
+                <property name="tipoArchivoDao" ref="tipoArchivoDao"/>
+            </bean>
+        </property>
+    </bean>
+     <!-- Genérico -->
+    <bean id="genericUtilityBo" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="com.vvs.generic.bo.impl.GenericUtilityBoImpl">
+                <property name="genericUtilityDao" ref="genericUtilityDao" />
+            </bean>
+        </property>
+    </bean>  
+    <bean id="genericoBo" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.interrupciones.BO.impl.GenericoBoImpl">
+                <property name="genericoDao" ref="genericoDao" />
+            </bean>
+        </property>
+    </bean>
+    
+    <!--========== Bussiness Objects ConfMailer==========-->
+    <bean id="mailerBo" parent="interrupcionesTP">
+        <property name="target">
+            <bean class="cr.go.ice.sige.confmailer.bo.impl.MailerBoImpl">
+                <property name="mailerDao" ref="mailerDao"/>
+            </bean>
+        </property>
+    </bean> 
+    
+    <!-- Envío de Correos -->	   
+    <bean id="envioEmailBO" parent="interrupcionesTP">
+        <property name="target">
+           <bean class="cr.go.ice.interrupciones.BO.impl.EnvioEmailBOImpl">                         
+				<property name="emailHost" 		value="smtpapl.correo.ice"/>
+                <property name="emailUser" 		value="sige"/>
+                <property name="emailPassword" 	value="sige1"/>
+                <property name="emailFrom" 		value="sige@ice.go.cr"/>                
+                <property name="mailerBo" ref="mailerBo"/>
+            </bean>                           
+        </property>
+    </bean>	                          
+                           
+</beans>

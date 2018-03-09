@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SigeItrRepResumenIndiceMensualAcumuladoRegion" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="f0ab327e-f91c-429d-acd6-d8dc1d5f468d">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="ISO-8859-1"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="ano" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(2002)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tipoVoltaje" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigoVoltaje" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="region" class="java.lang.Integer"/>
+	<parameter name="tipoInterrupcionSTR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombreNivelRed" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select EVE11M.aa, EVE11M.MES, EVE11M.NUM_SALIDAS, EVE11M.DPIR, EVE11M.FPI, EVE11M.DPIC, EVE11M.DPS, EVE11M.ADPIR,
+EVE11M.AFPI, EVE11M.ADPIC, EVE11M.ADPS, EVE11M.NUM_SALIDAS_ACUM, EVE05C.NOM_REGION from EVE11M
+inner join EVE05C on EVE05C.REG = EVE11M.REG
+where EVE11M.aa = $P{ano}
+and EVE11M.tipo_voltaje = $P{tipoVoltaje}
+and EVE11M.cod_voltaje = $P{codigoVoltaje}
+and EVE11M.reg = $P{region}]]>
+	</queryString>
+	<field name="AA" class="java.math.BigDecimal"/>
+	<field name="MES" class="java.math.BigDecimal"/>
+	<field name="NUM_SALIDAS" class="java.math.BigDecimal"/>
+	<field name="DPIR" class="java.math.BigDecimal"/>
+	<field name="FPI" class="java.math.BigDecimal"/>
+	<field name="DPIC" class="java.math.BigDecimal"/>
+	<field name="DPS" class="java.math.BigDecimal"/>
+	<field name="ADPIR" class="java.math.BigDecimal"/>
+	<field name="AFPI" class="java.math.BigDecimal"/>
+	<field name="ADPIC" class="java.math.BigDecimal"/>
+	<field name="ADPS" class="java.math.BigDecimal"/>
+	<field name="NUM_SALIDAS_ACUM" class="java.math.BigDecimal"/>
+	<field name="NOM_REGION" class="java.lang.String"/>
+	<variable name="dpirEsperado" class="java.lang.Double">
+		<variableExpression><![CDATA[new Double(
+($F{ADPIR}.doubleValue() / $F{MES}.intValue()) * 12
+)]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="66" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-1" x="405" y="16" width="130" height="12" uuid="ab3dc680-1a1f-42fc-a035-8698f3c65cc5"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fecha: "+new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-2" x="405" y="0" width="83" height="16" uuid="c062d3db-b31a-410d-8230-bc8363642c5e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página: "+$V{PAGE_NUMBER}+ " de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="true">
+				<reportElement key="textField-3" x="488" y="0" width="47" height="16" uuid="ab90ed2e-99b7-4639-8e1e-a982383411e1"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-4" x="143" y="16" width="262" height="12" uuid="0e3ba259-13db-4f7f-af22-e86100629469"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TIPO DE INTERRUPCIÓN: " + $P{tipoInterrupcionSTR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-1" x="0" y="0" width="143" height="16" uuid="be031420-b137-454e-a6a9-f86f81601973"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[ICE - UEN Servicio al Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-2" x="0" y="16" width="143" height="12" uuid="77c16522-5c16-43e4-9473-5db82327dd3a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" x="143" y="0" width="262" height="16" uuid="6309576c-e921-41e3-8b3c-ccd675f9f72e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[ÍNDICES DE CALIDAD]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-5" x="0" y="28" width="535" height="14" uuid="e839ae20-6608-4a5f-bdea-0a27cff319e1"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["REGIÓN " + $P{nombreNivelRed}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-6" x="0" y="42" width="535" height="14" uuid="7e9bcb79-affc-4b3b-989c-ade55fd8dc6c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["AÑO " + $P{ano}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-4" x="0" y="28" width="35" height="13" uuid="d6f3fedb-7e80-4266-816a-6f254daa7d73"/>
+				<box>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[MES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-5" x="35" y="28" width="45" height="13" uuid="44b22133-b46b-42ad-914f-45bef6875eb6"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[AVERIAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-6" x="80" y="28" width="45" height="13" uuid="b5b24420-046a-4e20-9764-e6978db673b5"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DPIR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-7" x="125" y="28" width="45" height="13" uuid="103a6db3-b7c7-4307-a988-a164662c2448"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[FPI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-8" x="170" y="28" width="45" height="13" uuid="c1d4c965-7353-449d-a4c0-05636d4d1ae6"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DPIC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-9" x="215" y="28" width="45" height="13" uuid="28525c13-50b9-4c94-83e6-4e290ca3d578"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DPS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-10" x="35" y="14" width="225" height="14" uuid="2836b3f6-3ce6-45b8-a34c-67e583897818"/>
+				<box>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[MENSUAL
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-11" x="0" y="14" width="35" height="14" uuid="065e2461-e924-4d71-99a9-a058d7dd0172"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-12" x="260" y="14" width="225" height="14" uuid="350c72d9-032c-43f0-8ece-7fbfc72633cb"/>
+				<box>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ACUMULADO
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-13" x="260" y="28" width="45" height="13" uuid="e53849e6-d05b-4b05-9511-d67ae63c707f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ADPIR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-14" x="305" y="28" width="45" height="13" uuid="ca0357e8-3629-4e52-8a70-432ccc69d7c0"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[AFPI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-15" x="350" y="28" width="45" height="13" uuid="276f7211-85cf-47d4-bdb1-d6de23fd0aca"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ADPIC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-16" x="395" y="28" width="45" height="13" uuid="60f97e76-25f0-4d64-9927-141214a2d542"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ADPS
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-17" x="440" y="28" width="45" height="13" uuid="d5cf7011-7811-4a21-8a3b-af606c48e479"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[AVERIAS
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-18" x="485" y="14" width="50" height="27" uuid="1b87ce97-1e94-419f-9ffc-34004efff0e6"/>
+				<box>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DPIR Esperado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-7" x="0" y="0" width="35" height="18" uuid="352e12e1-aa30-4d28-aff6-b340168f2a0d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[(
+$F{MES}.intValue() == 1 ? "ENE" :
+$F{MES}.intValue() == 2 ? "FEB" :
+$F{MES}.intValue() == 3 ? "MAR" :
+$F{MES}.intValue() == 4 ? "ABR" :
+$F{MES}.intValue() == 5 ? "MAY" :
+$F{MES}.intValue() == 6 ? "JUN" :
+$F{MES}.intValue() == 7 ? "JUL" :
+$F{MES}.intValue() == 8 ? "AGO" :
+$F{MES}.intValue() == 9 ? "SET" :
+$F{MES}.intValue() == 10 ? "OCT" :
+$F{MES}.intValue() == 11 ? "NOV" :
+$F{MES}.intValue() == 12 ? "DIC" : ""
+)]]></textFieldExpression>
+			</textField>
+			<textField pattern="##0" isBlankWhenNull="true">
+				<reportElement key="textField" x="35" y="0" width="45" height="18" uuid="ad0ca4d1-25af-4193-a4f9-779bb82627f0"/>
+				<box>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{NUM_SALIDAS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="80" y="0" width="45" height="18" uuid="45290ccf-bdd1-4958-9de8-cd5ef47b3676"/>
+				<box>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DPIR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="125" y="0" width="45" height="18" uuid="906a807b-cf66-4e91-bfdf-efaffbdac4d1"/>
+				<box>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{FPI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="170" y="0" width="45" height="18" uuid="71ca8907-98f1-4339-b36c-cda3be6c90a8"/>
+				<box>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DPIC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="215" y="0" width="45" height="18" uuid="f4fa4b95-4c50-425f-92cd-c096e64c0151"/>
+				<box>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DPS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="260" y="0" width="45" height="18" uuid="d472a3dd-035c-4f01-ad71-12b9bbbb2575"/>
+				<box>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ADPIR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="305" y="0" width="45" height="18" uuid="4087e689-b322-4d40-919d-1a0d87c2d76a"/>
+				<box>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{AFPI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="350" y="0" width="45" height="18" uuid="b0c6bd2c-92d6-415d-af9b-7e8d11b16074"/>
+				<box>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ADPIC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="395" y="0" width="45" height="18" uuid="6fd50467-11a7-4df1-9dd9-6f90694d2329"/>
+				<box>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ADPS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##0" isBlankWhenNull="true">
+				<reportElement key="textField" x="440" y="0" width="45" height="18" uuid="4766162e-4067-49d2-a1ef-5a257369012d"/>
+				<box>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{NUM_SALIDAS_ACUM}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="485" y="0" width="50" height="18" uuid="e9891a48-ffa7-4d7a-af91-0e4c9f516194"/>
+				<box>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{dpirEsperado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField-8" x="260" y="0" width="45" height="18" forecolor="#CC0000" uuid="772aa76d-1517-40b9-8b13-7707112219cd">
+					<printWhenExpression><![CDATA[new Boolean($F{ADPIR}.doubleValue() > 24)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ADPIR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="259" splitType="Stretch">
+			<lineChart>
+				<chart>
+					<reportElement key="element-2" x="19" y="28" width="496" height="207" uuid="c75ab706-213e-4fca-937f-cb20684dd7f4"/>
+					<chartTitle color="#000000">
+						<titleExpression><![CDATA["Acumulado ADPIR " + $P{ano}]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend textColor="#000000" backgroundColor="#FFFFFF"/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Acumulado ADPIR " + $P{ano}]]></seriesExpression>
+						<categoryExpression><![CDATA[(
+$F{MES}.intValue() == 1 ? "ENE" :
+$F{MES}.intValue() == 2 ? "FEB" :
+$F{MES}.intValue() == 3 ? "MAR" :
+$F{MES}.intValue() == 4 ? "ABR" :
+$F{MES}.intValue() == 5 ? "MAY" :
+$F{MES}.intValue() == 6 ? "JUN" :
+$F{MES}.intValue() == 7 ? "JUL" :
+$F{MES}.intValue() == 8 ? "AGO" :
+$F{MES}.intValue() == 9 ? "SET" :
+$F{MES}.intValue() == 10 ? "OCT" :
+$F{MES}.intValue() == 11 ? "NOV" :
+$F{MES}.intValue() == 12 ? "DIC" : ""
+)]]></categoryExpression>
+						<valueExpression><![CDATA[$F{ADPIR}]]></valueExpression>
+						<labelExpression><![CDATA["Acumulado ADPIR " + $P{ano}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot/>
+					<categoryAxisFormat>
+						<axisFormat axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+		</band>
+	</summary>
+</jasperReport>

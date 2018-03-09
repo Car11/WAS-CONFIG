@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="cr.go.ice.interrupciones.domain.ComportamientoADPIR" table="EVE08M">
+    <composite-id name="id" class="cr.go.ice.interrupciones.domain.ComportamientoADPIRid">
+    
+        <key-property name="region"         column="REG"            type="java.lang.Integer" length="2" />
+        <key-property name="subregion"      column="SUBREGION"      type="java.lang.Integer" length="2" />
+        <key-property name="subestacion"    column="SUB"            type="java.lang.Integer" length="3" />
+        <key-property name="circuito"       column="CIR"            type="java.lang.Integer" length="4" />
+        <key-property name="tipoVoltaje"    column="TIPO_VOLTAJE"   type="java.lang.Integer" length="2" />
+        <key-property name="codigoVoltaje"  column="COD_VOLTAJE"    type="java.lang.Integer" length="3" />
+        <key-property name="anno"           column="AA"             type="java.lang.Integer" length="4" />
+        <key-property name="mes"            column="MES"            type="java.lang.Integer" length="2" />
+    
+    </composite-id>
+    
+    
+    <property name="numeroSalidasAcum"          column="NUM_SALIDAS_ACUM"       type="java.lang.Integer"   length="4"  />
+    <property name="numeroSalidas"              column="NUM_SALIDAS"            type="java.lang.Integer"   length="4"  />
+    <property name="FPI"                        column="FPI"                    type="java.lang.Double"    length="14" precision="4"/>
+    <property name="DPIC"                       column="DPIC"                   type="java.lang.Double"    length="14" precision="4"/>
+    <property name="DPS"                        column="DPS"                    type="java.lang.Double"    length="14" precision="4"/>
+    <property name="DPIR"                       column="DPIR"                   type="java.lang.Double"    length="14" precision="4"/>
+    
+    <property name="ADPIC"                      column="ADPIC"                  type="java.lang.Double"    length="14" precision="4"/>
+    <property name="AFPI"                       column="AFPI"                   type="java.lang.Double"    length="14" precision="4"/>
+    <property name="ADPS"                       column="ADPS"                   type="java.lang.Double"    length="14" precision="4"/>
+    <property name="ADPIR"                      column="ADPIR"                  type="java.lang.Double"    length="14" precision="4"/>
+    <property name="DPA"                        column="DPA"                    type="java.lang.Double"    length="8"  precision="2"/>
+    <property name="DPAacum"                    column="DPA_ACUM"               type="java.lang.Double"    length="10" precision="2"/>
+    <property name="duracionAcum"               column="DURACION_ACUM"          type="java.lang.Double"    length="10" precision="2"/>
+
+    <property name="ABOafectaAcum"              column="ABO_AFECTA_ACUM"        type="java.lang.Long"      length="10" />
+    <property name="duracion"                   column="DURACION"               type="java.lang.Double"    length="8"  precision="2"/>
+    <property name="ABOafecta"                  column="ABO_AFECTA"             type="java.lang.Long"      length="8"  />
+    <property name="horasABOacum"               column="HRS_ABO_ACUM"           type="java.lang.Double"    length="14" precision="2"/>
+    <property name="horasABO"                   column="HRS_ABO"                type="java.lang.Double"    length="12" precision="2"/>
+    <property name="interrupcionKilometroAcum"  column="INTERRUP_KM_ACUM"       type="java.lang.Double"    length="10" precision="2"/>
+    <property name="interrupcionKilometro"      column="INTERRUP_KM"            type="java.lang.Double"    length="6"  precision="2"/>
+
+</class>
+</hibernate-mapping>
+
+

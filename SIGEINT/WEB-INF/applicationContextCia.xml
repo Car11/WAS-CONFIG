@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd" xmlns:jee="http://www.springframework.org/schema/jee">
+    
+    <!--========== Transaction Manager ==========-->
+    <bean id="ciaTM" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="ciaSF"/>
+    </bean>
+        
+    <!--========== Transaction Proxy ==========-->
+    <bean id="ciaTP" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">
+        <property name="transactionManager" ref="ciaTM"/>
+        
+        <property name="transactionAttributes">
+            <props>
+                <prop key="agregar*">PROPAGATION_REQUIRED</prop>
+                <prop key="modificar*">PROPAGATION_REQUIRED</prop>
+                <prop key="eliminar*">PROPAGATION_REQUIRED</prop>
+                <prop key="buscar*">PROPAGATION_REQUIRED</prop>
+                <prop key="existe*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+    <!--========== Bussiness Objects ==========-->
+    <bean id="aplicacionCiaBo" parent="ciaTP">
+        <property name="target">
+            <bean class="cr.go.ice.cia.bo.impl.AplicacionCiaBoImpl">
+                <property name="aplicacionCiaDao" ref="aplicacionCiaDao"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="grupoCiaBo" parent="ciaTP">
+        <property name="target">
+            <bean class="cr.go.ice.cia.bo.impl.GrupoCiaBoImpl">
+                <property name="grupoCiaDao" ref="grupoCiaDao"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="grupoAplicacionCiaBo" parent="ciaTP">
+        <property name="target">
+            <bean class="cr.go.ice.cia.bo.impl.GrupoAplicacionCiaBoImpl">
+                <property name="grupoAplicacionCiaDao" ref="grupoAplicacionCiaDao"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="grupoUsuarioCiaBo" parent="ciaTP">
+        <property name="target">
+            <bean class="cr.go.ice.cia.bo.impl.GrupoUsuarioCiaBoImpl">
+                <property name="grupoUsuarioCiaDao" ref="grupoUsuarioCiaDao"/>
+            </bean>
+        </property>
+    </bean>
+     
+    <bean id="paginaOpcionCiaBo" parent="ciaTP">
+        <property name="target">
+            <bean class="cr.go.ice.cia.bo.impl.PaginaOpcionCiaBoImpl">
+                <property name="paginaOpcionCiaDao" ref="paginaOpcionCiaDao"/>
+            </bean>
+        </property>
+    </bean>
+    <bean id="opcionCiaBo" parent="ciaTP">
+        <property name="target">
+            <bean class="cr.go.ice.cia.bo.impl.OpcionCiaBoImpl">
+                <property name="opcionCiaDao" ref="opcionCiaDao"/>
+            </bean>
+        </property>
+    </bean>
+     <bean id="opcionPerfilCiaBo" parent="ciaTP">
+        <property name="target">
+            <bean class="cr.go.ice.cia.bo.impl.OpcionPerfilCiaBoImpl">
+                <property name="opcionPerfilCiaDao" ref="opcionPerfilCiaDao"/>
+            </bean>
+        </property>
+    </bean>
+    <bean id="paginaCiaBo" parent="ciaTP">
+        <property name="target">
+            <bean class="cr.go.ice.cia.bo.impl.PaginaCiaBoImpl">
+                <property name="paginaCiaDao" ref="paginaCiaDao"/>
+            </bean>
+        </property>
+    </bean> 
+    <bean id="perfilCiaBo" parent="ciaTP">
+        <property name="target">
+            <bean class="cr.go.ice.cia.bo.impl.PerfilCiaBoImpl">
+                <property name="perfilCiaDao" ref="perfilCiaDao"/>
+            </bean>
+        </property>
+    </bean>
+    <bean id="perfilGrupoCiaBo" parent="ciaTP">
+        <property name="target">
+            <bean class="cr.go.ice.cia.bo.impl.PerfilGrupoCiaBoImpl">
+                <property name="perfilGrupoCiaDao" ref="perfilGrupoCiaDao"/>
+            </bean>
+        </property>
+    </bean>
+    <bean id="usuarioCiaBo" parent="ciaTP">
+        <property name="target">
+            <bean class="cr.go.ice.cia.bo.impl.UsuarioCiaBoImpl">
+                <property name="usuarioCiaDao" ref="usuarioCiaDao"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="moduloCiaBo" parent="ciaTP">
+        <property name="target">
+            <bean class="cr.go.ice.cia.bo.impl.ModuloCiaBoImpl">
+                <property name="moduloCiaDao" ref="moduloCiaDao"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="generacionArchivoBo" parent="ciaTP">
+        <property name="target">
+            <bean class="cr.go.ice.cia.bo.impl.GeneracionArchivoBoImpl">
+                <property name="generacionArchivoDao" ref="generacionArchivoDao"/>
+            </bean>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,760 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SigeItrRepInterrupcionTiemposVehiculos" pageWidth="2409" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="2349" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="10f8fb9e-f93d-45f6-9511-837af8ca1127">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="455"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="pFechaInicio" class="java.lang.String"/>
+	<parameter name="pFechaFin" class="java.lang.String"/>
+	<parameter name="pVehiculo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(4122)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/home/vvs/Documentos/Proyectos/Interrupciones/Paquete Reporte/Reportes/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+  m.aa,
+  m.cod_oficina,
+  m.numinterrup,
+  m.lugar,
+  m.codpueblo,
+  m.codcalle,
+  m.poste,
+  m.secuencia,
+  m.fecha_aviso,
+  m.hora_aviso,
+  v.tiempo_aviso,
+  v.hrs_inicio,
+  v.kms_inicio,
+  floor((v.hrs_inicio - v.tiempo_aviso)*24) AS horaCuad,
+  round((((v.hrs_inicio - v.tiempo_aviso)*24)-floor((v.hrs_inicio - v.tiempo_aviso)*24))*60,0) as minCuad,
+  v.kms_llegada, (v.kms_llegada - v.kms_inicio) AS recorridoS,
+  v.hrs_llegada,
+  m.fecfin,
+  m.horafin,
+  ABS((EXTRACT(DAY  FROM (TO_DATE(to_char(m.fecfin, 'YYYYMMDD'),'YYYYMMDD') - TO_DATE(to_char(m.fecha_aviso, 'YYYYMMDD'),'YYYYMMDD')) DAY TO SECOND ) * 24) +
+  (EXTRACT(HOUR FROM (TO_DATE(TO_CHAR(Floor(m.horafin))||':'||TO_CHAR((m.horafin-Floor(m.horafin))*100,'00'),'HH24: MI') -
+  TO_DATE(TO_CHAR(Floor(m.hora_aviso))||':'||TO_CHAR((m.hora_aviso-Floor(m.hora_aviso))*100,'00'),'HH24: MI')) DAY TO SECOND))) horasRest,
+  ABS((EXTRACT(DAY  FROM (TO_DATE(to_char(m.fecfin, 'YYYYMMDD'),'YYYYMMDD') - TO_DATE(to_char(m.fecha_aviso, 'YYYYMMDD'),'YYYYMMDD')) DAY TO SECOND ) * 24*60) +
+  (EXTRACT(MINUTE FROM (TO_DATE(TO_CHAR(Floor(m.horafin))||':'||TO_CHAR((m.horafin-Floor(m.horafin))*100,'00'),'HH24: MI') -
+  TO_DATE(TO_CHAR(Floor(m.hora_aviso))||':'||TO_CHAR((m.hora_aviso-Floor(m.hora_aviso))*100,'00'),'HH24: MI')) DAY TO SECOND))) minutosRest,
+  v.hrs_restablece,
+  v.kms_final,
+  ABS((EXTRACT(DAY  FROM (TO_DATE(to_char(v.hrs_restablece, 'YYYYMMDD'),'YYYYMMDD') - TO_DATE(to_char(m.fecfin, 'YYYYMMDD'),'YYYYMMDD')) DAY TO SECOND ) * 24) +
+  (EXTRACT(HOUR FROM (TO_DATE(TO_CHAR(v.hrs_restablece,'HH24: MI'),'HH24: MI') -
+  TO_DATE(TO_CHAR(Floor(m.horafin))||':'||TO_CHAR((m.horafin-Floor(m.horafin))*100,'00'),'HH24: MI')) DAY TO SECOND))) horasReto,
+  ABS((EXTRACT(DAY  FROM (TO_DATE(to_char(m.fecfin, 'YYYYMMDD'),'YYYYMMDD') - TO_DATE(to_char(m.fecfin, 'YYYYMMDD'),'YYYYMMDD')) DAY TO SECOND ) * 24*60) +
+  (EXTRACT(MINUTE FROM (TO_DATE(TO_CHAR(v.hrs_restablece,'HH24: MI'),'HH24: MI') -
+  TO_DATE(TO_CHAR(Floor(m.horafin))||':'||TO_CHAR((m.horafin-Floor(m.horafin))*100,'00'),'HH24: MI')) DAY TO SECOND))) minutosReto,
+  (v.kms_final - v.kms_inicio) AS kmRecorrido,
+  m.comentario,
+  m.fecini,
+
+  TO_CHAR(
+  FLOOR(
+  ((((TO_CHAR(v.hrs_llegada, 'mi')))+
+  ((TO_CHAR(v.hrs_llegada, 'HH24'))*60))
+  -
+  (((TO_CHAR(v.hrs_inicio, 'mi')))+
+  ((TO_CHAR(v.hrs_inicio, 'HH24'))*60)))
+  /60)
+  , '00')
+  || ':' ||
+  TO_CHAR(
+  MOD(
+  (((TO_CHAR(v.hrs_llegada, 'mi')))+
+  ((TO_CHAR(v.hrs_llegada, 'HH24'))*60)
+  -
+  ((TO_CHAR(v.hrs_inicio, 'mi')))+
+  ((TO_CHAR(v.hrs_inicio, 'HH24'))*60))
+
+  , 60)
+  , '00')
+
+  AS TIEMPOSITIO
+
+  FROM eve01m m, eve05m v
+  WHERE v.num_vehiculo = $P{pVehiculo}
+  AND to_date(to_char(m.fecini,'dd/MM/yyyy'),'dd/MM/yyyy') >=  to_date($P{pFechaInicio},'dd/MM/yyyy')
+  AND to_date(to_char(m.fecfin,'dd/MM/yyyy'),'dd/MM/yyyy') <=  to_date($P{pFechaFin},'dd/MM/yyyy')
+  AND m.aa = v.aa
+  AND m.cod_oficina = v.cod_oficina
+  AND m.numinterrup = v.numinterrup
+  ORDER BY m.fecha_aviso, m.hora_aviso asc]]>
+	</queryString>
+	<field name="AA" class="java.math.BigDecimal"/>
+	<field name="COD_OFICINA" class="java.math.BigDecimal"/>
+	<field name="NUMINTERRUP" class="java.math.BigDecimal"/>
+	<field name="LUGAR" class="java.lang.String"/>
+	<field name="CODPUEBLO" class="java.math.BigDecimal"/>
+	<field name="CODCALLE" class="java.math.BigDecimal"/>
+	<field name="POSTE" class="java.math.BigDecimal"/>
+	<field name="SECUENCIA" class="java.math.BigDecimal"/>
+	<field name="FECHA_AVISO" class="java.sql.Timestamp"/>
+	<field name="HORA_AVISO" class="java.math.BigDecimal"/>
+	<field name="TIEMPO_AVISO" class="java.sql.Timestamp"/>
+	<field name="HRS_INICIO" class="java.sql.Timestamp"/>
+	<field name="KMS_INICIO" class="java.math.BigDecimal"/>
+	<field name="HORACUAD" class="java.math.BigDecimal"/>
+	<field name="MINCUAD" class="java.math.BigDecimal"/>
+	<field name="KMS_LLEGADA" class="java.math.BigDecimal"/>
+	<field name="RECORRIDOS" class="java.math.BigDecimal"/>
+	<field name="HRS_LLEGADA" class="java.sql.Timestamp"/>
+	<field name="FECFIN" class="java.sql.Timestamp"/>
+	<field name="HORAFIN" class="java.math.BigDecimal"/>
+	<field name="HORASREST" class="java.math.BigDecimal"/>
+	<field name="MINUTOSREST" class="java.math.BigDecimal"/>
+	<field name="HRS_RESTABLECE" class="java.sql.Timestamp"/>
+	<field name="KMS_FINAL" class="java.math.BigDecimal"/>
+	<field name="HORASRETO" class="java.math.BigDecimal"/>
+	<field name="MINUTOSRETO" class="java.math.BigDecimal"/>
+	<field name="KMRECORRIDO" class="java.math.BigDecimal"/>
+	<field name="COMENTARIO" class="java.lang.String"/>
+	<field name="FECINI" class="java.sql.Timestamp"/>
+	<field name="TIEMPOSITIO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-1" x="1879" y="36" width="470" height="19" uuid="f01b72be-3db2-4e71-a6be-1e9db479d7fa"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fecha: "+
+new SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date())+" "+
+new SimpleDateFormat("hh:mm").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-3" x="1879" y="0" width="218" height="36" uuid="d8ad4e53-8ee3-45eb-aa93-c891bfce4a50"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pág. "+ $V{PAGE_NUMBER} +" de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-4" x="2097" y="0" width="252" height="36" uuid="96db23ee-d522-45d7-94d3-150cd58abec7"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-2" x="0" y="0" width="118" height="36" uuid="693c02f0-b839-498f-ac0f-7f9b495bf3f4"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[ICE-UEN Servicio al Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" x="0" y="36" width="118" height="43" uuid="f493b63a-b099-4c5a-8369-11b4323416a1"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="1879" y="55" width="470" height="24" uuid="77684f65-1fcd-4a50-9a21-b0f7cd623bd5"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField-6" x="408" y="36" width="348" height="19" uuid="37c32c8f-1db0-4774-a1d6-f0cfbeadf731"/>
+				<textElement>
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Del " +
+$P{pFechaInicio}+
+" Al "+
+$P{pFechaFin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-10" stretchType="RelativeToTallestObject" x="0" y="79" width="2349" height="23" isPrintWhenDetailOverflows="true" forecolor="#FF0000" uuid="51eb470f-efc8-44c5-bbac-62b8e45cc7a9">
+					<printWhenExpression><![CDATA[new Boolean($F{NUMINTERRUP}==null)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[No hay información para generar el reporte.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-11" x="408" y="0" width="348" height="36" uuid="92fc030b-3ea4-4ad8-81f2-b53c9f092c2d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Reporte de Tiempo por Vehículo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-12" x="408" y="55" width="348" height="24" uuid="822c5cca-7506-435c-9011-d46b95a708b6"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-34" x="118" y="0" width="290" height="79" uuid="df89207f-b0b7-4ad4-9dfd-fec61094b4f7"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-35" x="756" y="0" width="1123" height="79" uuid="f7fee9f6-a130-492d-9a6e-321bd8e75dba"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-13" x="0" y="0" width="118" height="22" uuid="c94a3a44-5fb6-462c-abcb-a3ee029d9a8f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Número de Vehículo: ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-8" x="118" y="0" width="290" height="22" isPrintWhenDetailOverflows="true" uuid="04b09713-5455-48ef-8604-1d39d9c15d9c"/>
+				<textElement>
+					<font isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{pVehiculo}.toString()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-14" x="0" y="22" width="118" height="24" uuid="860c3a96-aadb-49f3-bdc4-5475fd24792e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Interrupción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-15" x="118" y="22" width="144" height="24" uuid="f7ba0a01-8ce8-468b-be0f-3024be4270a5"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Lugar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-16" x="262" y="22" width="80" height="24" uuid="72eaf8c2-68b0-4291-aad6-22104e556767"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Localización Falla]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-17" x="342" y="22" width="107" height="24" uuid="267f7c1e-e7b5-48a5-9473-e45875879a5c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Recepción del Aviso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-18" x="449" y="22" width="107" height="24" uuid="7815ab6c-6ffa-4d19-93a7-62e748dd1e6d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Clor Llama Cuadrilla]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-19" x="556" y="22" width="107" height="24" uuid="0a38386d-5698-44de-b086-6c676632bee9"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Salida de la Cuadrilla]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-20" x="663" y="22" width="93" height="24" uuid="e0cdacbf-a249-4229-aa99-1a642a169b7f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Kilometraje Inicial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-21" x="756" y="22" width="90" height="24" uuid="476b9bed-df8a-459f-8447-d84c6d93de93"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Tiempo de la Cuadrilla]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-23" x="846" y="22" width="107" height="24" uuid="3578e5df-0a1f-489b-a88c-ad23efdfb61b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Kilometraje de Llegada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-24" x="953" y="22" width="107" height="24" uuid="2dd1654f-fa4c-41fb-b61a-32b9bb7fe7fa"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Recorrido al Sitio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-25" x="1060" y="22" width="107" height="24" uuid="8e74119d-6a1c-4409-8a7d-47ac84ac67ec"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Llegada al Sitio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-26" x="1274" y="22" width="107" height="24" uuid="b7dcbc7c-7756-49ca-994e-306ca2cf512c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Hora de Restauración]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-27" x="1381" y="22" width="107" height="24" uuid="1cdcb6ec-239e-4238-ad67-70350463e8d0"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Tiempo de Restauración]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-28" x="1488" y="22" width="107" height="24" uuid="039a76b9-8b4f-4214-b0ea-9701472aec4b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Hora de Retorno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-29" x="1595" y="22" width="95" height="24" uuid="0195808c-f9f9-4f48-a374-d4c24c822c0a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Kilometraje Final]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-30" x="1690" y="22" width="107" height="24" uuid="3b96a5a4-4f22-4bbc-b5b4-245f9921fe37"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Tiempo de Retorno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-31" x="1797" y="22" width="82" height="24" uuid="58a4d0d5-f7e6-4728-afe0-9b045512c6de"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Kilometraje Recorrido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-32" x="1879" y="22" width="218" height="24" uuid="1fb20c95-e810-4078-aa87-e42a7cbcd708"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Observaciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-33" x="2097" y="22" width="252" height="24" uuid="f7660222-44f3-41ff-84a5-3f02fcda64cd"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Cuadrilla]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-38" x="408" y="0" width="1941" height="22" uuid="75faded3-50cb-4d4f-87b0-197c02da104c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="1167" y="22" width="107" height="24" uuid="2fa7226b-4ca8-461e-9f07-d8680f4b8e97"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Tiempo al Sitio]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-9" x="0" y="0" width="118" height="40" isPrintWhenDetailOverflows="true" uuid="22ef984b-a261-42d2-bafd-ff0a49dd26bd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AA}.toString()+"-"+$F{COD_OFICINA}.toString()+"-"+$F{NUMINTERRUP}.toString()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-10" x="118" y="0" width="143" height="40" isPrintWhenDetailOverflows="true" uuid="b092272c-37a6-41dc-924a-1f4bc234b3ab"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LUGAR}.toString()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-11" x="262" y="0" width="80" height="40" isPrintWhenDetailOverflows="true" uuid="1a998132-0fcf-49aa-a618-893cfc15bd61"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{CODPUEBLO}==null)?" ":$F{CODPUEBLO}.toString())+"-"+
+(($F{CODCALLE}==null)?" ":$F{CODCALLE}.toString())+"-"+
+(($F{POSTE}==null)?" ":$F{POSTE}.toString())+"-"+
+(($F{SECUENCIA}==null)?" ":$F{SECUENCIA}.toString())]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-12" x="342" y="0" width="107" height="40" isPrintWhenDetailOverflows="true" uuid="6b447ef4-7c29-44bd-b9f3-d6b967f4cc46"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{FECHA_AVISO})+" "+
+(new java.text.DecimalFormat("#00")).format($F{HORA_AVISO}.intValue())+
+":"
++(new java.text.DecimalFormat("00")).format(($F{HORA_AVISO}.doubleValue()-$F{HORA_AVISO}.intValue())*100)]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="true">
+				<reportElement key="textField-13" x="449" y="0" width="107" height="40" isPrintWhenDetailOverflows="true" uuid="bd9b7716-f662-4c3c-9d19-f6162ca8d589"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIEMPO_AVISO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="true">
+				<reportElement key="textField-14" x="556" y="0" width="107" height="40" isPrintWhenDetailOverflows="true" uuid="a72bfd1d-e1ad-42e7-9b84-a06d2ba0496a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HRS_INICIO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-15" x="663" y="0" width="93" height="40" isPrintWhenDetailOverflows="true" uuid="c0ddaedc-93dd-48ba-a3ab-c42f7b6ce0b7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{KMS_INICIO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-16" x="756" y="0" width="90" height="40" isPrintWhenDetailOverflows="true" uuid="f90b4e37-c5c9-401f-998f-a71eaf79ad59"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(new java.text.DecimalFormat("#00")).format($F{HORACUAD})+
+":"+
+(new java.text.DecimalFormat("00")).format($F{MINCUAD})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-18" x="846" y="0" width="107" height="40" isPrintWhenDetailOverflows="true" uuid="d22e6a9d-6ed7-4b67-81fc-4c3ec840615f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{KMS_LLEGADA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-19" x="953" y="0" width="107" height="40" isPrintWhenDetailOverflows="true" uuid="6b2e2f4f-0190-4902-bc5a-f950b4c1f5ce"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RECORRIDOS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="true">
+				<reportElement key="textField-20" x="1060" y="0" width="107" height="40" isPrintWhenDetailOverflows="true" uuid="c880289f-ac3f-4615-9344-568377663dea"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HRS_LLEGADA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-21" x="1274" y="0" width="107" height="40" isPrintWhenDetailOverflows="true" uuid="fd0e4219-08b4-4870-a532-b0ed3145b37a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{FECFIN})+" "+
+(new java.text.DecimalFormat("#00")).format($F{HORAFIN}.intValue())+
+":"
++(new java.text.DecimalFormat("00")).format(($F{HORAFIN}.doubleValue()-$F{HORAFIN}.intValue())*100)]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-22" x="1381" y="0" width="107" height="40" isPrintWhenDetailOverflows="true" uuid="866a18d2-5203-4dbb-b8d1-88cbb6ec475c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(new java.text.DecimalFormat("#00")).format($F{HORASREST}.intValue())+
+":"
++(new java.text.DecimalFormat("00")).format($F{MINUTOSREST}.intValue())]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="true">
+				<reportElement key="textField-23" x="1488" y="0" width="107" height="40" isPrintWhenDetailOverflows="true" uuid="568a3897-81d0-4ca2-bf97-6015e0844c68"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HRS_RESTABLECE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-24" x="1595" y="0" width="95" height="40" isPrintWhenDetailOverflows="true" uuid="13ba17b3-285c-40e9-9b87-c17db7a9124d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{KMS_FINAL}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-25" x="1690" y="0" width="107" height="40" isPrintWhenDetailOverflows="true" uuid="e959d84f-b3b5-4d02-9246-25ebb0d8d1ca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(new java.text.DecimalFormat("#00")).format($F{HORASRETO}.intValue())+
+":"
++(new java.text.DecimalFormat("00")).format($F{MINUTOSRETO}.intValue())]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-26" x="1797" y="0" width="82" height="40" isPrintWhenDetailOverflows="true" uuid="cc8dbdc5-5b73-47c2-bb4e-7e325a83d70e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{KMRECORRIDO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-27" x="1879" y="0" width="218" height="40" isPrintWhenDetailOverflows="true" uuid="b1a9ec4f-b28e-48f8-a24a-1622fc1c846e"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMENTARIO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="HH:mm" isBlankWhenNull="true">
+				<reportElement key="textField-29" x="1167" y="0" width="107" height="40" isPrintWhenDetailOverflows="true" uuid="8a4bd3ff-93f1-4911-a0f7-92211cf849a8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIEMPOSITIO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-28" x="2097" y="0" width="252" height="40" isPrintWhenDetailOverflows="true" uuid="163b9ee7-6eb0-4668-b389-f1c12707d344"/>
+				<textElement verticalAlignment="Middle"/>
+			</textField>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-1" mode="Opaque" x="2097" y="0" width="252" height="40" isPrintWhenDetailOverflows="true" uuid="a87cc015-aa82-4db8-aebf-281e276f5171"/>
+				<subreportParameter name="pAA">
+					<subreportParameterExpression><![CDATA[$F{AA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pOficina">
+					<subreportParameterExpression><![CDATA[$F{COD_OFICINA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pNumInterrupcion">
+					<subreportParameterExpression><![CDATA[$F{NUMINTERRUP}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SigeItrRepInterrupcionClienteEventoSubCuadrilla2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="30" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="50" splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="50" splitType="Stretch"/>
+	</lastPageFooter>
+	<summary>
+		<band height="50" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="cr.go.ice.interrupciones.domain.EquipoEspecial" table="EVE20M">
+        <composite-id name="equipoEspecialID" class="cr.go.ice.interrupciones.domain.EquipoEspecialID">
+			<key-property name="ano" column="ANO" type="java.lang.Integer" length="4"/>
+			<key-property name="codigoOficina" column="COD_OFICINA" type="java.lang.Integer" length="2"/>
+			<key-property name="numeroInterrupcion" column="NUMINTERRUP" type="java.lang.Long" length="6"/>
+			<key-property name="numeroICE" column="NUMEROICE" type="java.lang.Long" length="8"/>
+        </composite-id>
+        <property name="serie" column="SERIE"  type="java.lang.String" length="25"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SigeItrRepInterrupcionClienteEventoSubCuadrilla2" pageWidth="283" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="283" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5d85820f-b13d-4f0d-a161-e062f855588e">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="pAA" class="java.math.BigDecimal"/>
+	<parameter name="pOficina" class="java.math.BigDecimal"/>
+	<parameter name="pNumInterrupcion" class="java.math.BigDecimal"/>
+	<queryString>
+		<![CDATA[SELECT REPLACE (eve07c.nombre_empleado,'&', ' ') as nombre_empleado,eve07c.cedula FROM eve07c,eve06m WHERE eve07c.cedula = eve06m.cedula
+AND eve06m.reporteinterrup = 1
+AND eve06m.aa = $P{pAA} AND eve06m.cod_oficina = $P{pOficina} AND eve06m.numinterrup = $P{pNumInterrupcion}]]>
+	</queryString>
+	<field name="NOMBRE_EMPLEADO" class="java.lang.String"/>
+	<field name="CEDULA" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="12" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="0" y="0" width="283" height="12" uuid="ff681efd-dda1-4301-a4a3-04dc39c09f91">
+					<printWhenExpression><![CDATA[new Boolean($F{NOMBRE_EMPLEADO}!=null)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CEDULA}.toString()+" - "+$F{NOMBRE_EMPLEADO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-1" x="0" y="0" width="283" height="12" forecolor="#FF0000" uuid="b5e16bcd-8c49-4d0a-8b09-16a33f83c52c">
+					<printWhenExpression><![CDATA[new Boolean($F{NOMBRE_EMPLEADO}==null)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Sin Empleados.]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

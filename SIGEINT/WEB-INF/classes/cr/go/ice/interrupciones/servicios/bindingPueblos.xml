@@ -1,0 +1,39 @@
+<binding>
+
+  <mapping name="TRX0446S"     class="cr.go.ice.interrupciones.servicios.ConsultaPueblos">
+    <structure name="encabezado" field="encabezado" type="cr.go.ice.interrupciones.servicios.Encabezado">
+        <value name="idAplicacion"              field="idAplicacion"/>
+        <value name="idUsuario"                 field="idUsuario"/>
+        <value name="codigoCompletacion"        field="codigoCompletacion"/>
+        <value name="codigoRazon"               field="codigoRazon"/>
+    </structure>
+    <structure name="datos" field="datos" type="cr.go.ice.interrupciones.servicios.DatosConsultaPueblos">
+        <value name="tipoConsulta"               field="tipoConsulta"/> 
+        <value name="nombre"                     field="nombre"/>
+        <value name="pueblo"            		 field="pueblo"/>
+        <value name="agencia"    				 field="agencia"/>
+    </structure>
+  </mapping>
+  
+  <mapping name="TRX0446R"     class="cr.go.ice.interrupciones.servicios.RespuestaConsultaPueblos">
+    <structure name="encabezado" field="encabezado" type="cr.go.ice.interrupciones.servicios.Encabezado">
+        <value name="idAplicacion"              field="idAplicacion"/>
+        <value name="idUsuario"                 field="idUsuario"/>
+        <value name="codigoCompletacion"        field="codigoCompletacion"/>
+        <value name="codigoRazon"               field="codigoRazon"/>
+    </structure>
+    <structure name="datos" field="datos" type="cr.go.ice.interrupciones.servicios.DatosRespuestaConsultaPueblos">
+    	<collection field="pueblos">
+	    	<structure name="pueblo" type="cr.go.ice.sace.sacecon.domain.Pueblo">
+	        	<value name="nombre"         	field="nombre"/>
+	            <value name="agencia"           field="noAgencia"/>
+	            <value name="codigoPueblo"      field="numero"/>    
+	            <value name="codigoProvincia"   field="codigoProvincia"/>
+	            <value name="codigoCanton"     	field="codigoCanton"/>
+	            <value name="codigoDistrito"    field="codigoDistrito"/>
+	        </structure>
+		</collection>
+    </structure>
+  </mapping>
+  
+</binding>

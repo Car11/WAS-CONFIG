@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="cr.go.ice.interrupciones.domain.Provolma" table="EVE08C">
+        <composite-id name="provolmaID" class="cr.go.ice.interrupciones.domain.ProvolmaID">
+            <key-property name="codigoVoltaje" column="COD_VOLTAJE" type="java.lang.Integer" length="3"/>
+            <key-many-to-one name="material" column="COD_MATERIAL" lazy="false"/>
+            <key-many-to-one name="dano" column="COD_DANO" lazy="false"/>
+            <key-many-to-one name="proteccion" column="COD_PROTECCION" lazy="false"/>
+        </composite-id>
+    </class>
+</hibernate-mapping>

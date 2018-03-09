@@ -1,0 +1,2214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SigeItrRepInterrupcionPorPeriodo" pageWidth="3240" pageHeight="852" orientation="Landscape" columnWidth="3180" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="0228a385-b0fc-4f30-9f8b-d9901d1bf8cb">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="4041"/>
+	<property name="ireport.y" value="24"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[".\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="imagePath" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["images/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaInicio" class="java.lang.String"/>
+	<parameter name="fechaFinal" class="java.lang.String"/>
+	<parameter name="codigoOficina" class="java.lang.Integer"/>
+	<parameter name="codigoAgencia" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[(select
+'amadre' as tipo,
+interrupcion.COD_OFICINA as codigooficina,
+interrupcion.AA as ano,
+interrupcion.NUMINTERRUP as numerointerrupcion,
+interrupcion.seccion as seccion,
+null as movimiento,
+interrupcion.CIR,
+interrupcion.SUB,
+interrupcion.SUBREGION,
+interrupcion.REG,
+interrupcion.FECINI,
+interrupcion.FECFIN,
+interrupcion.HORAINI,
+interrupcion.HORAFIN,
+interrupcion.TIEFUE,
+interrupcion.ABO_AFECTA,
+interrupcion.HRS_ABO,
+interrupcion.COD_VOLTAJE,
+interrupcion.CAUSA1,
+interrupcion.COD_MATERIAL,
+interrupcion.COD_DANO,
+interrupcion.COD_PROTECCION,
+interrupcion.COD_PROTECCION_INTERVINO,
+interrupcion.CODPUEBLO_EQUIPO,
+interrupcion.CODPUEBLO,
+interrupcion.CODCALLE_EQUIPO,
+interrupcion.CODCALLE,
+interrupcion.POSTE_EQUIPO,
+interrupcion.POSTE,
+interrupcion.SECUENCIA_EQUIPO,
+interrupcion.SECUENCIA,
+interrupcion.TRIFASICA,
+interrupcion.BITACORA,
+interrupcion.LUGAR,
+interrupcion.IND_SUB,
+interrupcion.OPERADOR,
+interrupcion.COMENTARIO,
+interrupcion.COD_AGENCIA,
+interrupcion.ACOMETIDA,
+interrupcion.TIPOACOMETIDA,
+
+(select vehiculo.num_vehiculo from eve05m vehiculo where
+vehiculo.NUMINTERRUP = interrupcion.NUMINTERRUP and vehiculo.COD_OFICINA = interrupcion.COD_OFICINA and vehiculo.AA = interrupcion.AA and vehiculo.tipo = 0) AS vehiculo,
+
+(select round(vehiculo.HRS_INICIO - interrupcion.fecini, 3)*24 from eve05m vehiculo where
+vehiculo.NUMINTERRUP = interrupcion.NUMINTERRUP and vehiculo.COD_OFICINA = interrupcion.COD_OFICINA and vehiculo.AA = interrupcion.AA and vehiculo.tipo = 0) AS organizacion,
+
+(select round(vehiculo.HRS_LLEGADA - vehiculo.HRS_INICIO, 3)*24 from eve05m vehiculo where
+vehiculo.NUMINTERRUP = interrupcion.NUMINTERRUP and vehiculo.COD_OFICINA = interrupcion.COD_OFICINA and vehiculo.AA = interrupcion.AA and vehiculo.tipo = 0) AS desplazamiento,
+
+(select round(vehiculo.HRS_LLEGADA - interrupcion.fecfin, 3)*24 from eve05m vehiculo where
+vehiculo.NUMINTERRUP = interrupcion.NUMINTERRUP and vehiculo.COD_OFICINA = interrupcion.COD_OFICINA and vehiculo.AA = interrupcion.AA and vehiculo.tipo = 0) AS reparacion,
+
+(select responsable.nombre_empleado from eve07c responsable where responsable.cedula = (select cuadrilla.cedula from eve06m cuadrilla where  cuadrilla.numinterrup = interrupcion.NUMINTERRUP and
+interrupcion.COD_OFICINA   = cuadrilla.COD_OFICINA and interrupcion.AA = cuadrilla.AA and cuadrilla.INDICADOR = 'R' AND cuadrilla.reporteinterrup  = 1)) as nombre_empleado,
+
+(select cuadrilla.cedula from eve06m cuadrilla where  cuadrilla.numinterrup = interrupcion.NUMINTERRUP and
+interrupcion.COD_OFICINA   = cuadrilla.COD_OFICINA and interrupcion.AA = cuadrilla.AA and cuadrilla.INDICADOR = 'R' AND cuadrilla.reporteinterrup  = 1) as cedula
+
+from eve01m interrupcion
+
+where (to_date(to_char(interrupcion.FECINI,'dd/mm/yyyy'),'dd/mm/yyyy') >= to_date($P{fechaInicio},'dd/mm/yyyy')
+and to_date(to_char(interrupcion.FECINI,'dd/mm/yyyy'),'dd/mm/yyyy') <= to_date($P{fechaFinal},'dd/mm/yyyy'))
+
+and ((interrupcion.COD_OFICINA=$P{codigoOficina}) or (interrupcion.COD_AGENCIA=$P{codigoAgencia}))
+
+union all
+
+select
+'cseccionamiento' as tipo,
+interrupcion.COD_OFICINA as codigooficina,
+interrupcion.AA as ano,
+interrupcion.NUMINTERRUP as numerointerrupcion,
+interrupcion.seccion as seccion,
+null as movimiento,
+interrupcion.CIR,
+interrupcion.SUB,
+interrupcion.SUBREGION,
+interrupcion.REGION as REG,
+interrupcion.FECINI,
+interrupcion.FECFIN,
+interrupcion.HORAINI,
+interrupcion.HORAFIN,
+interrupcion.TIEFUE,
+interrupcion.ABO_AFECTA,
+interrupcion.HRS_ABO,
+interrupcion.COD_VOLTAJE,
+interrupcionMadre.CAUSA1 as CAUSA1,
+null as COD_MATERIAL,
+null as COD_DANO,
+null as COD_PROTECCION,
+null as COD_PROTECCION_INTERVINO,
+null as CODPUEBLO_EQUIPO,
+null as CODPUEBLO,
+null as CODCALLE_EQUIPO,
+null as CODCALLE,
+null as POSTE_EQUIPO,
+null as POSTE,
+null as SECUENCIA_EQUIPO,
+null as SECUENCIA,
+interrupcion.TRIFASICA,
+interrupcion.BITACORA,
+interrupcion.LUGAR,
+null as IND_SUB,
+null as OPERADOR,
+null as COMENTARIO,
+null as COD_AGENCIA,
+null as ACOMETIDA,
+null as TIPOACOMETIDA,
+
+(select vehiculo.num_vehiculo from eve05m vehiculo where
+vehiculo.NUMINTERRUP = interrupcion.NUMINTERRUP and vehiculo.COD_OFICINA = interrupcion.COD_OFICINA and vehiculo.AA = interrupcion.AA and vehiculo.tipo = 0) AS vehiculo,
+
+null as organizacion,
+null as desplazamiento,
+null as reparacion,
+
+(select responsable.nombre_empleado from eve07c responsable where responsable.cedula = (select cuadrilla.cedula from eve06m cuadrilla where  cuadrilla.numinterrup = interrupcion.NUMINTERRUP and
+interrupcion.COD_OFICINA   = cuadrilla.COD_OFICINA and interrupcion.AA = cuadrilla.AA and cuadrilla.INDICADOR = 'R' AND cuadrilla.reporteinterrup  = 1)) as nombre_empleado,
+
+(select cuadrilla.cedula from eve06m cuadrilla where  cuadrilla.numinterrup = interrupcion.NUMINTERRUP and
+interrupcion.COD_OFICINA   = cuadrilla.COD_OFICINA and interrupcion.AA = cuadrilla.AA and cuadrilla.INDICADOR = 'R' AND cuadrilla.reporteinterrup  = 1) as cedula
+
+from eve16m interrupcion, eve01m interrupcionMadre
+
+where (to_date(to_char(interrupcion.FECINI,'dd/mm/yyyy'),'dd/mm/yyyy') >= to_date($P{fechaInicio},'dd/mm/yyyy')
+and to_date(to_char(interrupcion.FECINI,'dd/mm/yyyy'),'dd/mm/yyyy') <= to_date($P{fechaFinal},'dd/mm/yyyy'))
+
+and ((interrupcion.COD_OFICINA = $P{codigoOficina} and interrupcionMadre.NUMINTERRUP = interrupcion.NUMINTERRUP
+and interrupcionMadre.COD_OFICINA = interrupcion.COD_OFICINA
+and interrupcionMadre.AA = interrupcion.AA)
+or (interrupcionMadre.COD_AGENCIA = $P{codigoAgencia} and interrupcionMadre.NUMINTERRUP = interrupcion.NUMINTERRUP
+and interrupcionMadre.COD_OFICINA = interrupcion.COD_OFICINA
+and interrupcionMadre.AA = interrupcion.AA))
+
+union all
+
+select
+'bgemela' as tipo,
+interrupcion.COD_OFICINA as codigooficina,
+interrupcion.AA as ano,
+interrupcion.NUMINTERRUP as numerointerrupcion,
+null as seccion,
+interrupcion.num_mov as movimiento,
+null as CIR,
+null as SUB,
+null as SUBREGION,
+null as REG,
+interrupcion.FECINI,
+interrupcion.FECFIN,
+interrupcion.HORAINI,
+interrupcion.HORAFIN,
+interrupcion.TIEFUE,
+interrupcion.ABO_AFECTA,
+interrupcion.HRS_ABO,
+null as COD_VOLTAJE,
+interrupcionMadre.CAUSA1 as CAUSA1,
+null as COD_MATERIAL,
+null as COD_DANO,
+null as COD_PROTECCION,
+null as COD_PROTECCION_INTERVINO,
+null as CODPUEBLO_EQUIPO,
+null as CODPUEBLO,
+null as CODCALLE_EQUIPO,
+null as CODCALLE,
+null as POSTE_EQUIPO,
+null as POSTE,
+null as SECUENCIA_EQUIPO,
+null as SECUENCIA,
+null as TRIFASICA,
+null as BITACORA,
+null as LUGAR,
+null as IND_SUB,
+null as OPERADOR,
+null as COMENTARIO,
+null as COD_AGENCIA,
+null as ACOMETIDA,
+null as TIPOACOMETIDA,
+
+(select vehiculo.num_vehiculo from eve05m vehiculo where
+vehiculo.NUMINTERRUP = interrupcion.NUMINTERRUP and vehiculo.COD_OFICINA = interrupcion.COD_OFICINA and vehiculo.AA = interrupcion.AA and vehiculo.tipo = 0) AS vehiculo,
+
+null as organizacion,
+null as desplazamiento,
+null as reparacion,
+
+(select responsable.nombre_empleado from eve07c responsable where responsable.cedula = (select cuadrilla.cedula from eve06m cuadrilla where  cuadrilla.numinterrup = interrupcion.NUMINTERRUP and
+interrupcion.COD_OFICINA   = cuadrilla.COD_OFICINA and interrupcion.AA = cuadrilla.AA and cuadrilla.INDICADOR = 'R' AND cuadrilla.reporteinterrup  = 1)) as nombre_empleado,
+
+(select cuadrilla.cedula from eve06m cuadrilla where  cuadrilla.numinterrup = interrupcion.NUMINTERRUP and
+interrupcion.COD_OFICINA   = cuadrilla.COD_OFICINA and interrupcion.AA = cuadrilla.AA and cuadrilla.INDICADOR = 'R' AND cuadrilla.reporteinterrup  = 1) as cedula
+
+
+from eve11d interrupcion, eve01m interrupcionMadre
+
+where (to_date(to_char(interrupcion.FECINI,'dd/mm/yyyy'),'dd/mm/yyyy') >= to_date($P{fechaInicio},'dd/mm/yyyy')
+and to_date(to_char(interrupcion.FECINI,'dd/mm/yyyy'),'dd/mm/yyyy') <= to_date($P{fechaFinal},'dd/mm/yyyy'))
+
+and ((interrupcion.COD_OFICINA=$P{codigoOficina} and interrupcionMadre.NUMINTERRUP = interrupcion.NUMINTERRUP
+and interrupcionMadre.COD_OFICINA = interrupcion.COD_OFICINA
+and interrupcionMadre.AA = interrupcion.AA)
+or (interrupcionMadre.COD_AGENCIA=$P{codigoAgencia} and interrupcionMadre.NUMINTERRUP = interrupcion.NUMINTERRUP
+and interrupcionMadre.COD_OFICINA = interrupcion.COD_OFICINA
+and interrupcionMadre.AA = interrupcion.AA))
+
+)
+order by ano, codigooficina, numerointerrupcion, tipo, seccion, movimiento]]>
+	</queryString>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="CODIGOOFICINA" class="java.math.BigDecimal"/>
+	<field name="ANO" class="java.math.BigDecimal"/>
+	<field name="NUMEROINTERRUPCION" class="java.math.BigDecimal"/>
+	<field name="SECCION" class="java.math.BigDecimal"/>
+	<field name="MOVIMIENTO" class="java.math.BigDecimal"/>
+	<field name="CIR" class="java.math.BigDecimal"/>
+	<field name="SUB" class="java.math.BigDecimal"/>
+	<field name="SUBREGION" class="java.math.BigDecimal"/>
+	<field name="REG" class="java.math.BigDecimal"/>
+	<field name="FECINI" class="java.sql.Timestamp"/>
+	<field name="FECFIN" class="java.sql.Timestamp"/>
+	<field name="HORAINI" class="java.math.BigDecimal"/>
+	<field name="HORAFIN" class="java.math.BigDecimal"/>
+	<field name="TIEFUE" class="java.math.BigDecimal"/>
+	<field name="ABO_AFECTA" class="java.math.BigDecimal"/>
+	<field name="HRS_ABO" class="java.math.BigDecimal"/>
+	<field name="COD_VOLTAJE" class="java.math.BigDecimal"/>
+	<field name="CAUSA1" class="java.math.BigDecimal"/>
+	<field name="COD_MATERIAL" class="java.math.BigDecimal"/>
+	<field name="COD_DANO" class="java.math.BigDecimal"/>
+	<field name="COD_PROTECCION" class="java.math.BigDecimal"/>
+	<field name="COD_PROTECCION_INTERVINO" class="java.math.BigDecimal"/>
+	<field name="CODPUEBLO_EQUIPO" class="java.math.BigDecimal"/>
+	<field name="CODPUEBLO" class="java.math.BigDecimal"/>
+	<field name="CODCALLE_EQUIPO" class="java.math.BigDecimal"/>
+	<field name="CODCALLE" class="java.math.BigDecimal"/>
+	<field name="POSTE_EQUIPO" class="java.math.BigDecimal"/>
+	<field name="POSTE" class="java.math.BigDecimal"/>
+	<field name="SECUENCIA_EQUIPO" class="java.math.BigDecimal"/>
+	<field name="SECUENCIA" class="java.math.BigDecimal"/>
+	<field name="TRIFASICA" class="java.math.BigDecimal"/>
+	<field name="BITACORA" class="java.math.BigDecimal"/>
+	<field name="LUGAR" class="java.lang.String"/>
+	<field name="IND_SUB" class="java.math.BigDecimal"/>
+	<field name="OPERADOR" class="java.math.BigDecimal"/>
+	<field name="COMENTARIO" class="java.lang.String"/>
+	<field name="COD_AGENCIA" class="java.math.BigDecimal"/>
+	<field name="ACOMETIDA" class="java.math.BigDecimal"/>
+	<field name="TIPOACOMETIDA" class="java.math.BigDecimal"/>
+	<field name="VEHICULO" class="java.math.BigDecimal"/>
+	<field name="ORGANIZACION" class="java.math.BigDecimal"/>
+	<field name="DESPLAZAMIENTO" class="java.math.BigDecimal"/>
+	<field name="REPARACION" class="java.math.BigDecimal"/>
+	<field name="NOMBRE_EMPLEADO" class="java.lang.String"/>
+	<field name="CEDULA" class="java.math.BigDecimal"/>
+	<variable name="numeroInterrupcion" class="java.lang.String">
+		<variableExpression><![CDATA[$F{ANO} + " - " + $F{CODIGOOFICINA} + " - " + $F{NUMEROINTERRUPCION}]]></variableExpression>
+	</variable>
+	<variable name="horaInicioSTR" class="java.lang.String">
+		<variableExpression><![CDATA[new String(new Integer($F{HORAINI}.intValue()).toString() + ":" + new Long(Math.round(($F{HORAINI}.doubleValue() - $F{HORAINI}.intValue()) * 60)).toString())]]></variableExpression>
+	</variable>
+	<variable name="horaFinSTR" class="java.lang.String">
+		<variableExpression><![CDATA[new String(new Integer($F{HORAFIN}.intValue()).toString() + ":" + new Long(Math.round(($F{HORAFIN}.doubleValue() - $F{HORAFIN}.intValue()) * 60)).toString())]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-29" x="0" y="0" width="2116" height="60" uuid="7caa3f23-d7eb-4afd-87f6-896a96273ef7"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Instituto Costarricense de Electricidad
+Interrupciones e Índices de Calidad
+Informe de Interrupciones Por Período]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-30" x="2116" y="0" width="111" height="20" uuid="69d62e7c-a429-4f6e-bde3-7262f9488339"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-31" x="2116" y="20" width="111" height="20" uuid="a81a24f9-7579-4c4b-a8fc-371df674b319"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField-19" x="2227" y="0" width="111" height="20" uuid="1e27ceab-dc17-4fd8-8b6f-2c70d4359ad4"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm" isBlankWhenNull="false">
+				<reportElement key="textField-20" x="2227" y="20" width="111" height="20" uuid="7280b57e-be6c-4ff3-8062-aacbd484fb3f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-1" mode="Opaque" x="0" y="0" width="120" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="501635ac-7db8-45bc-aa98-20a897f1e0cd"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Interrupción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-2" mode="Opaque" x="120" y="0" width="70" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="5bc62080-7466-4164-89ff-1f711eca81ad"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sección]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" mode="Opaque" x="190" y="0" width="70" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="f3450495-15b5-4ef1-a793-184188d64040"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Circuito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="260" y="0" width="90" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="19cd5340-4f4e-4604-a495-df7fbd6ed13b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Subestación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-5" mode="Opaque" x="350" y="0" width="90" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="0168fc35-632c-4fb6-a557-8ed0d0330f22"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Subregión]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-6" mode="Opaque" x="440" y="0" width="90" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="020c61dd-50ec-4aa4-b895-9dbf6ec36ab0"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Región]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-7" mode="Opaque" x="730" y="0" width="70" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="5526ca85-ac37-43b8-a0a6-ec0ae756247f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora de Inicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-8" mode="Opaque" x="630" y="0" width="100" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="c5bbc9f2-94c2-4b05-a278-c57819b2ddd3"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Fin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-9" mode="Opaque" x="530" y="0" width="100" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="710d54ce-55f4-4898-ad12-7c36850f3941"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Inicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-10" mode="Opaque" x="870" y="0" width="50" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="cd9069a0-9811-43b7-880b-bd29e316c6c9"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Duración]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-11" mode="Opaque" x="800" y="0" width="70" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="e148d05a-d11c-4363-8f19-6790b95a4396"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora de Fin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-12" mode="Opaque" x="1050" y="0" width="50" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="2c894ea8-6e2f-4fd6-b65b-c0daac65b727"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Voltaje]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-13" mode="Opaque" x="1100" y="0" width="50" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="f6498b83-b825-44e4-97d4-7a7cc3a14a56"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Causa 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-15" mode="Opaque" x="980" y="0" width="70" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="e0f57abe-8eff-42a8-98de-fdea139a620b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Horas Abonado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-16" mode="Opaque" x="920" y="0" width="60" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="ca9d2144-2c61-4ebb-8c07-2702fd12f372"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clientes Afectados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-17" mode="Opaque" x="1150" y="0" width="61" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="d98aaf7c-c322-43ae-a2e7-3a45b46063eb"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Material]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-18" mode="Opaque" x="1680" y="0" width="62" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="cc832f80-5e2d-4388-86ac-b4a1bf8c4960"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Trifásica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-19" mode="Opaque" x="1578" y="0" width="102" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="8b8e7e43-610d-4f7e-a9ac-58fd5ddc9346"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Localización Falla]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-20" mode="Opaque" x="1472" y="0" width="106" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="99011a15-f07e-4351-a8d1-82bb15c9bb63"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Localización Equipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-21" mode="Opaque" x="1274" y="0" width="62" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="1c61f5ef-6260-4c71-ab18-2376c64fb85d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Protección]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-22" mode="Opaque" x="1211" y="0" width="63" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="3bcc1653-6fe8-4e92-8a34-d3e883e59d47"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Daño]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-23" mode="Opaque" x="1875" y="0" width="70" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="684cb152-3102-465a-994f-2de1d6e76f49"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Indicador Subestación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-24" mode="Opaque" x="1805" y="0" width="70" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="3c7c5402-b920-419d-a6cd-b620f9f840e6"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lugar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-25" mode="Opaque" x="1742" y="0" width="63" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="5f2cbd87-6aab-4d26-a88e-8087ed106950"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bitácora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-26" mode="Opaque" x="2015" y="0" width="237" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="d229f64d-f4d6-48c6-94e9-ae58b9a4885f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comentario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-27" mode="Opaque" x="1945" y="0" width="70" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="47190d56-19c3-4556-ac15-fd6d33161125"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Operador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-28" mode="Opaque" x="2252" y="0" width="111" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="b2d9832a-d6c2-4986-bda0-1fa892bc3300"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Agencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-32" mode="Opaque" x="2363" y="0" width="111" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="43fdc6d7-b1ce-47a1-9f63-a4936b8985ba"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vehículo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-33" mode="Opaque" x="2474" y="0" width="237" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="50f9948e-c045-4c6d-9040-7825affc3cc0"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Responsable]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-34" mode="Opaque" x="2711" y="0" width="116" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="db5eb11e-58b6-452b-be0c-f547837ae07d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad de metros de acometida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-34" mode="Opaque" x="2827" y="0" width="72" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="b4058463-9a38-4496-90da-a1f6448f08a2"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Calibre Conductor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-21" mode="Opaque" x="1336" y="0" width="136" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="64287d8c-b840-44fb-9017-798f56c1d169"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Equipo de Protección Intervenido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-34" mode="Opaque" x="2899" y="0" width="93" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="b09eb878-25f5-426c-b97e-5b07640b6575"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Organización]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-34" mode="Opaque" x="2992" y="0" width="93" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="97d57b87-fe60-49f9-9982-17b150835225"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desplazamiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-34" mode="Opaque" x="3085" y="0" width="93" height="30" forecolor="#333333" backcolor="#CCCCCC" uuid="885a3e82-0d55-4174-a4a6-fa36f3f570bb"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reparación]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-5" stretchType="RelativeToTallestObject" mode="Transparent" x="120" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="f3b36cbb-ca04-4f43-ad53-ad1f8568c5c5">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SECCION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="190" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="b8592f95-b3b7-462d-9210-b08df602ec26">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CIR}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="260" y="0" width="90" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="1e18cdfa-859c-475e-9350-ce770d75c4fb">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUB}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="350" y="0" width="90" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="496ffcba-723a-4dc7-8862-6e5f0cf7235e">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUBREGION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="440" y="0" width="90" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="4f05a532-ecb3-4a9e-b125-2012a11429a7">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REG}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="530" y="0" width="100" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="3d76624c-5137-4f45-980c-02008ab765d0">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECINI}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="630" y="0" width="100" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="878a4ccd-e6bd-457f-b2bf-17d496884f48">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECFIN}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="870" y="0" width="50" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="f7b7d228-0d16-41ec-a7d9-b53c5eb68368">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIEFUE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="920" y="0" width="60" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="4d8f08b5-1a1c-41d0-bc61-c85e2d08ce27">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ABO_AFECTA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="980" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="d217505c-ae65-40fa-a719-ee7f363787ce">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HRS_ABO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="1050" y="0" width="50" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="fb027db3-bf98-4468-8257-3c39e3dc4dc5">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_VOLTAJE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="1100" y="0" width="50" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="763986b6-b55b-4798-a79a-7bcfbf63db44">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CAUSA1}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="1150" y="0" width="61" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="d9556761-3a5e-4dad-8876-5e21bf99d5be">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_MATERIAL}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="1211" y="0" width="63" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="33654834-2a3e-48fa-a814-eec884709718">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_DANO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="1274" y="0" width="62" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="b3a2fef2-e28e-4202-8279-6f86e200325a">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_PROTECCION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="1472" y="0" width="106" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="904ab148-c493-4643-93b0-c234ffd7898d">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{CODPUEBLO_EQUIPO}.toString() != null) ? $F{CODPUEBLO_EQUIPO}.toString() : "") +"-"+
+(($F{CODCALLE_EQUIPO}.toString() != null) ? $F{CODCALLE_EQUIPO}.toString() : "") +"-"+
+(($F{POSTE_EQUIPO}.toString() != null) ? $F{POSTE_EQUIPO}.toString() : "") +"-"+
+(($F{SECUENCIA_EQUIPO}.toString() != null) ? $F{SECUENCIA_EQUIPO}.toString() : "")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="1679" y="0" width="63" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="9de24260-1419-4045-92e3-fdf894a661ad">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TRIFASICA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="1742" y="0" width="63" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="d0808302-e173-40bc-a48b-017ae86cdf64">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BITACORA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="1805" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="97a3a1a6-18bd-4595-ab72-81759db4a8b6">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LUGAR}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="1875" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="d56a26d7-0832-499a-9ea8-484be797e69e">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IND_SUB}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="1945" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="09a64ff7-d0ff-4a20-869e-5c47fe3636fb">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OPERADOR}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="2015" y="0" width="237" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="2ebb57a2-1590-45a0-8c34-e01ac087766b">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMENTARIO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="2252" y="0" width="111" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="b5519baa-802b-4d8d-9c5a-aa814ca5be30">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_AGENCIA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="0" width="120" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="8878bfff-4d45-418f-b775-7fbb42202d12">
+					<printWhenExpression><![CDATA[new Boolean ($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{numeroInterrupcion}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-21" stretchType="RelativeToTallestObject" mode="Transparent" x="1211" y="0" width="63" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="b475f5b8-bcc6-4b71-8e8e-6b938b22c96b">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_DANO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-22" stretchType="RelativeToTallestObject" mode="Transparent" x="1274" y="0" width="62" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="7c492e98-e63d-4e23-b4c9-bca8197308a7">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_PROTECCION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-23" stretchType="RelativeToTallestObject" mode="Transparent" x="1472" y="0" width="106" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="6ddcaa88-3c56-47a6-b036-febd31d5a302">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{CODPUEBLO_EQUIPO}.toString() != null) ? $F{CODPUEBLO_EQUIPO}.toString() : "") +"-"+
+(($F{CODCALLE_EQUIPO}.toString() != null) ? $F{CODCALLE_EQUIPO}.toString() : "") +"-"+
+(($F{POSTE_EQUIPO}.toString() != null) ? $F{POSTE_EQUIPO}.toString() : "") +"-"+
+(($F{SECUENCIA_EQUIPO}.toString() != null) ? $F{SECUENCIA_EQUIPO}.toString() : "")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-26" stretchType="RelativeToTallestObject" mode="Transparent" x="1742" y="0" width="63" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="272efda2-bca6-4b5d-9888-79ec9228eaf6">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BITACORA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-27" stretchType="RelativeToTallestObject" mode="Transparent" x="1805" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="6fa3f72f-94d0-43ae-b8e1-de1d97c88096">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LUGAR}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-28" stretchType="RelativeToTallestObject" mode="Transparent" x="1875" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="a81917b3-b85e-41bc-94f0-9bcbef25b8d0">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IND_SUB}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-29" stretchType="RelativeToTallestObject" mode="Transparent" x="1945" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="f4ffe6be-cafe-4502-a83d-28510943d278">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OPERADOR}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-30" stretchType="RelativeToTallestObject" mode="Transparent" x="2015" y="0" width="237" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="aad3a10a-60d4-4a8f-9110-e37a72bfdff5">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMENTARIO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-31" stretchType="RelativeToTallestObject" x="2252" y="0" width="111" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="7aba6bf0-d333-401e-871f-8745da8a78db">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_AGENCIA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-32" stretchType="RelativeToTallestObject" mode="Transparent" x="440" y="0" width="90" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="bae7c37a-bcd2-4f30-97fa-5e9d55773ade">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REG}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField-33" stretchType="RelativeToTallestObject" mode="Transparent" x="530" y="0" width="100" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="480dd41b-632a-4033-ab0b-5a30196fecf7">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECINI}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField-34" stretchType="RelativeToTallestObject" mode="Transparent" x="630" y="0" width="100" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="2795456c-7a3d-4363-bbd3-22a12f811175">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECFIN}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-35" stretchType="RelativeToTallestObject" mode="Transparent" x="870" y="0" width="50" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="fc22ce52-bd6e-4dee-8eb6-f8367154c238">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIEFUE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-36" stretchType="RelativeToTallestObject" mode="Transparent" x="920" y="0" width="60" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="a1baa680-1355-441e-8584-828daf52feb7">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ABO_AFECTA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-37" stretchType="RelativeToTallestObject" mode="Transparent" x="980" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="73e632e6-a6c3-4792-9439-c59574567898">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HRS_ABO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-38" stretchType="RelativeToTallestObject" mode="Transparent" x="1050" y="0" width="50" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="d4c2c2d6-498b-4a0b-b678-c297d6d79bfe">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_VOLTAJE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-39" stretchType="RelativeToTallestObject" mode="Transparent" x="1100" y="0" width="50" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="431fd322-231c-4eec-a7f6-9ba197012492">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CAUSA1}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-40" stretchType="RelativeToTallestObject" mode="Transparent" x="1150" y="0" width="61" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="648922c7-5259-411f-bb00-bad8be9d0386">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_MATERIAL}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-43" stretchType="RelativeToTallestObject" mode="Transparent" x="120" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="e9917642-4c87-4cb3-a223-e079df674914">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SECCION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-44" stretchType="RelativeToTallestObject" mode="Transparent" x="190" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="7db99b24-6062-4158-860b-1ae0bc3f6df1">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CIR}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-45" stretchType="RelativeToTallestObject" mode="Transparent" x="260" y="0" width="90" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="64819e04-fc06-4e8d-8221-49f51f9f4ceb">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUB}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-46" stretchType="RelativeToTallestObject" mode="Transparent" x="350" y="0" width="90" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="3fb8ff7b-65fc-4479-9f7e-634d70cc09a7">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUBREGION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-48" stretchType="RelativeToTallestObject" mode="Transparent" x="1211" y="0" width="63" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="ceaf52fb-2dde-410a-b2d0-2f0795f60bf0">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_DANO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-49" stretchType="RelativeToTallestObject" mode="Transparent" x="1274" y="0" width="62" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="a82185df-a524-40d1-8eb2-c15e240d4dd5">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_PROTECCION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-50" stretchType="RelativeToTallestObject" mode="Transparent" x="1472" y="0" width="106" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="bc93f3e7-ca22-410d-80ff-e5038310d8a4">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{CODPUEBLO_EQUIPO}.toString() != null) ? $F{CODPUEBLO_EQUIPO}.toString() : "") +"-"+
+(($F{CODCALLE_EQUIPO}.toString() != null) ? $F{CODCALLE_EQUIPO}.toString() : "") +"-"+
+(($F{POSTE_EQUIPO}.toString() != null) ? $F{POSTE_EQUIPO}.toString() : "") +"-"+
+(($F{SECUENCIA_EQUIPO}.toString() != null) ? $F{SECUENCIA_EQUIPO}.toString() : "")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-53" stretchType="RelativeToTallestObject" mode="Transparent" x="1742" y="0" width="63" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="23e53292-c972-4ab5-81f6-b5e8de3b38ea">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BITACORA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-54" stretchType="RelativeToTallestObject" mode="Transparent" x="1805" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="5f36c70a-e66b-4dd5-856c-6f76106e7b29">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LUGAR}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-55" stretchType="RelativeToTallestObject" mode="Transparent" x="1875" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="2ece55a8-a266-4f85-98c0-b666e59cc7ff">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IND_SUB}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-56" stretchType="RelativeToTallestObject" mode="Transparent" x="1945" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="e43ce0f5-4219-418c-89b0-29cd5cbd59e4">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OPERADOR}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-57" stretchType="RelativeToTallestObject" mode="Transparent" x="2015" y="0" width="237" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="e998a1d8-d6c0-43ac-b6a8-b8addadf215b">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMENTARIO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-58" stretchType="RelativeToTallestObject" mode="Transparent" x="2252" y="0" width="111" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="b03cbbe4-8721-4555-b207-ff468598b7b5">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_AGENCIA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-59" stretchType="RelativeToTallestObject" mode="Transparent" x="440" y="0" width="90" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="e52dbd98-e4d4-410d-bdce-41da28030e6a">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REG}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField-60" stretchType="RelativeToTallestObject" mode="Transparent" x="530" y="0" width="100" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="1277f146-41a8-486e-bc5f-dd1209d2caf4">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECINI}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField-61" stretchType="RelativeToTallestObject" mode="Transparent" x="630" y="0" width="100" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="c6f3f699-2fb3-4dc7-b0fe-cb8637c93d4d">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECFIN}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-62" stretchType="RelativeToTallestObject" mode="Transparent" x="870" y="0" width="50" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="2a09b6bb-ef51-4faf-b127-cfd3a92afc91">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIEFUE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-63" stretchType="RelativeToTallestObject" mode="Transparent" x="920" y="0" width="60" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="cc7e444b-be34-4e73-bc16-42433a3512c9">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ABO_AFECTA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-64" stretchType="RelativeToTallestObject" mode="Transparent" x="980" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="205c7db3-955f-4094-9116-f0d6d3a13096">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HRS_ABO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-65" stretchType="RelativeToTallestObject" mode="Transparent" x="1050" y="0" width="50" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="f931b765-c04c-40ea-ab13-e4fb9895639d">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_VOLTAJE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-66" stretchType="RelativeToTallestObject" mode="Transparent" x="1100" y="0" width="50" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="11cad787-bbd0-4cd5-a50a-92f39de608b2">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CAUSA1}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-67" stretchType="RelativeToTallestObject" mode="Transparent" x="1150" y="0" width="61" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="c66abafb-b08e-4425-8dbd-23919ef00ea1">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_MATERIAL}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-71" stretchType="RelativeToTallestObject" mode="Transparent" x="190" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="07f902ab-4172-4d97-8bae-9ac2a95e2b4b">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CIR}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-72" stretchType="RelativeToTallestObject" mode="Transparent" x="260" y="0" width="90" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="42528e25-1157-49b7-8828-3c8e535cffce">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUB}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-73" stretchType="RelativeToTallestObject" mode="Transparent" x="350" y="0" width="90" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="f947df6b-db37-4706-8be6-cd1c69ebfbde">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUBREGION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" x="730" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="d41151d0-d2cb-482f-9f37-8021ded61a15">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORAINI}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement key="textField-74" stretchType="RelativeToTallestObject" x="730" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="78f36feb-6631-466c-b52e-f7a7072e5d40">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORAINI}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement key="textField-75" stretchType="RelativeToTallestObject" x="730" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="d7581dd2-acdf-42ed-aa8a-4eefe7fb6043">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORAINI}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement key="textField-76" stretchType="RelativeToTallestObject" x="800" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="12fad436-5172-4a14-9172-2d9608e2b7e1">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORAFIN}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement key="textField-77" stretchType="RelativeToTallestObject" x="800" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="75ef321b-91d9-4901-8511-362c48800baa">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORAFIN}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement key="textField-78" stretchType="RelativeToTallestObject" x="800" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="0e7b1505-2665-43bb-9419-888859f7da3c">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORAFIN}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-79" stretchType="RelativeToTallestObject" mode="Transparent" x="2363" y="0" width="111" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="dac43739-0363-4d85-b75f-51f15b06818a">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VEHICULO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-80" stretchType="RelativeToTallestObject" x="2363" y="0" width="111" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="8498fc54-eb9c-4734-8c76-1b0ab0f6b6b9">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VEHICULO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-81" stretchType="RelativeToTallestObject" mode="Transparent" x="2363" y="0" width="111" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="45cde1a4-3e72-42fa-80dc-5f3654309e51">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VEHICULO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-82" stretchType="RelativeToTallestObject" mode="Transparent" x="2474" y="0" width="237" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="a705b086-f5b8-46a8-b432-e328813db833">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[( $F{CEDULA} == null ? "" : $F{CEDULA}.toString() ) +" "+ ( $F{NOMBRE_EMPLEADO} == null ? "" : $F{NOMBRE_EMPLEADO} )]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-83" stretchType="RelativeToTallestObject" x="2474" y="0" width="237" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="d8a879da-2e9c-4d2a-8df1-93888466bb34">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[( $F{CEDULA} == null ? "" : $F{CEDULA}.toString() ) +" "+ ( $F{NOMBRE_EMPLEADO} == null ? "" : $F{NOMBRE_EMPLEADO} )]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-84" stretchType="RelativeToTallestObject" mode="Transparent" x="2474" y="0" width="237" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="2685613b-efe5-4798-bd72-ac84cc9863c1">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{CEDULA} == null ? "" : $F{CEDULA}.toString() ) +" "+ ( $F{NOMBRE_EMPLEADO} == null ? "" : $F{NOMBRE_EMPLEADO} )]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="1578" y="0" width="101" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="02b1792e-ddd6-4145-bfbc-cd9ad8a89a3d">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{CODPUEBLO}.toString() != null) ? $F{CODPUEBLO}.toString() : "") +"-"+
+(($F{CODCALLE}.toString() != null) ? $F{CODCALLE}.toString() : "") +"-"+
+(($F{POSTE}.toString() != null) ? $F{POSTE}.toString() : "") +"-"+
+(($F{SECUENCIA}.toString() != null) ? $F{SECUENCIA}.toString() : "")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-51" stretchType="RelativeToTallestObject" mode="Transparent" x="1578" y="0" width="101" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="e2b069aa-c2d8-452c-a9a4-128d89275834">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{CODPUEBLO}.toString() != null) ? $F{CODPUEBLO}.toString() : "") +"-"+
+(($F{CODCALLE}.toString() != null) ? $F{CODCALLE}.toString() : "") +"-"+
+(($F{POSTE}.toString() != null) ? $F{POSTE}.toString() : "") +"-"+
+(($F{SECUENCIA}.toString() != null) ? $F{SECUENCIA}.toString() : "")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-25" stretchType="RelativeToTallestObject" mode="Transparent" x="1679" y="0" width="63" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="5a37f581-b881-4549-a47e-4536f1e577b8">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TRIFASICA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-52" stretchType="RelativeToTallestObject" mode="Transparent" x="1679" y="0" width="63" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="51370d21-cd9a-4ec0-8aa7-b9c9f9bcc49d">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TRIFASICA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Transparent" x="1336" y="0" width="136" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="3bc22ab7-f0aa-4c5a-942d-b4e115990e70">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_PROTECCION_INTERVINO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-22" stretchType="RelativeToTallestObject" mode="Transparent" x="1336" y="0" width="136" height="28" isPrintWhenDetailOverflows="true" forecolor="#3333FF" backcolor="#FFFFFF" uuid="dbb66b1f-a6fd-44b0-9a43-a22ef26c7a2f">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("cseccionamiento"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_PROTECCION_INTERVINO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-49" stretchType="RelativeToTallestObject" mode="Transparent" x="1336" y="0" width="136" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="0f3d9ab7-d6ce-4f93-93c0-994eebe9cd72">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_PROTECCION_INTERVINO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-70" stretchType="RelativeToTallestObject" mode="Transparent" x="120" y="0" width="70" height="28" isPrintWhenDetailOverflows="true" forecolor="#FF9900" backcolor="#FFFFFF" uuid="b8f90d00-59fa-4c78-888c-d71e3a189cb6">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("bgemela"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SECCION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-70" stretchType="RelativeToTallestObject" mode="Transparent" x="2711" y="0" width="116" height="28" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="6a249474-6a19-432b-87da-74ce3535d883">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ACOMETIDA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-70" stretchType="RelativeToTallestObject" mode="Transparent" x="2827" y="0" width="72" height="28" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="69c3f47f-a58d-4170-813b-3dc8a87ee878">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIPOACOMETIDA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" x="2899" y="0" width="93" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="3dcf609f-006a-4b84-8803-cd100ce30b16">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ORGANIZACION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" x="2992" y="0" width="93" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="a95b0dc9-0017-40dc-afbc-265729777a18">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESPLAZAMIENTO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" x="3085" y="0" width="93" height="28" isPrintWhenDetailOverflows="true" forecolor="#333333" backcolor="#FFFFFF" uuid="4ca920a7-6c71-4b99-83f7-c22cc0fff557">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("amadre"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REPARACION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="SigeItrRepInterrupcionPorCausaSeccionHistoricoSubReporteComparativo"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="612"
+		 pageHeight="792"
+		 columnWidth="612"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="AllSectionsNoDetail"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="DPIR" isForPrompting="true" class="java.lang.Boolean">
+		<defaultValueExpression ><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Cantidad" isForPrompting="true" class="java.lang.Boolean">
+		<defaultValueExpression ><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Comparativo" isForPrompting="true" class="java.lang.Boolean">
+		<defaultValueExpression ><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="mesFechaFinal" isForPrompting="true" class="java.lang.Integer"/>
+	<parameter name="cantidadVoltajes" isForPrompting="true" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="circuito" isForPrompting="true" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigoCausa" isForPrompting="true" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="subregion" isForPrompting="true" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tipoInterrupcion" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[new java.lang.String("tipoInterrupcion")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cantidadSecciones" isForPrompting="true" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigoCausaCatastrofe" isForPrompting="true" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="voltajesSTR" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="region" isForPrompting="true" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombreOficina" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[new java.lang.String("nombreOficina")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="anoFechaFinal" isForPrompting="true" class="java.lang.Integer"/>
+	<parameter name="seccionesSTR" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigoOficina" isForPrompting="true" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new java.lang.Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaInicio" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFinal" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="subestacion" isForPrompting="true" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="seccion" isForPrompting="false" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tituloCodigoRed" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[SELECT interrupcion.seccion AS
+codigoNivelRed,
+(select nom_seccion from eve06c where sub = interrupcion.sub and cir = interrupcion.cir and seccion = interrupcion.seccion) as nombreNivelRed,
+  interrupcion.causa1 AS
+codigoCausa,
+(select nom_causa from eve09c where cod_causa = interrupcion.causa1) as nombreCausa,
+  COUNT(*) AS
+cantidadInterrupciones,
+  SUM(interrupcion.tiefue) AS
+tiempoFuera,
+  SUM(interrupcion.abo_afecta) AS
+abonadosafectados,
+  SUM(interrupcion.hrs_abo) AS
+horasabonado,
+DECODE(SUM(interrupcion.tiefue)/DECODE((COUNT(*)),0,1,(COUNT(*))),0,SUM(interrupcion.tiefue),SUM(interrupcion.tiefue)/DECODE((COUNT(*)),0,1,(COUNT(*))))  as DPA,
+DECODE(SUM(interrupcion.hrs_abo)/DECODE((select NVL(sum(abon_seccion),0) from eve06h where reg = interrupcion.reg and subregion = interrupcion.subregion and sub = interrupcion.sub and cir = interrupcion.cir and seccion = interrupcion.seccion and mes = $P{mesFechaFinal} and aa = $P{anoFechaFinal}),0,1,(select NVL(sum(abon_seccion),0) from eve06h where reg = interrupcion.reg and subregion = interrupcion.subregion and sub = interrupcion.sub and cir = interrupcion.cir and seccion = interrupcion.seccion and mes = $P{mesFechaFinal} and aa = $P{anoFechaFinal})),SUM(interrupcion.hrs_abo),0,SUM(interrupcion.hrs_abo)/DECODE((select NVL(sum(abon_seccion),0) from eve06h where reg = interrupcion.reg and subregion = interrupcion.subregion and sub = interrupcion.sub and cir = interrupcion.cir and seccion = interrupcion.seccion and mes = $P{mesFechaFinal} and aa = $P{anoFechaFinal}),0,1,(select NVL(sum(abon_seccion),0) from eve06h where reg = interrupcion.reg and subregion = interrupcion.subregion and sub = interrupcion.sub and cir = interrupcion.cir and seccion = interrupcion.seccion and mes = $P{mesFechaFinal} and aa = $P{anoFechaFinal}))) AS DPIR,
+DECODE(SUM(interrupcion.abo_afecta)/DECODE((select NVL(sum(abon_seccion),0) from eve06h where reg = interrupcion.reg and subregion = interrupcion.subregion and sub = interrupcion.sub and cir = interrupcion.cir and seccion = interrupcion.seccion and mes = $P{mesFechaFinal} and aa = $P{anoFechaFinal}),0,1,(select NVL(sum(abon_seccion),0) from eve06h where reg = interrupcion.reg and subregion = interrupcion.subregion and sub = interrupcion.sub and cir = interrupcion.cir and seccion = interrupcion.seccion and mes = $P{mesFechaFinal} and aa = $P{anoFechaFinal})),SUM(interrupcion.abo_afecta),0,SUM(interrupcion.abo_afecta)/DECODE((select NVL(sum(abon_seccion),0) from eve06h where reg = interrupcion.reg and subregion = interrupcion.subregion and sub = interrupcion.sub and cir = interrupcion.cir and seccion = interrupcion.seccion and mes = $P{mesFechaFinal} and aa = $P{anoFechaFinal}),0,1,(select NVL(sum(abon_seccion),0) from eve06h where reg = interrupcion.reg and subregion = interrupcion.subregion and sub = interrupcion.sub and cir = interrupcion.cir and seccion = interrupcion.seccion and mes = $P{mesFechaFinal} and aa = $P{anoFechaFinal}))) AS FPI,
+(select NVL(sum(abon_seccion),0) from eve06h where reg = interrupcion.reg and subregion = interrupcion.subregion and sub = interrupcion.sub and cir = interrupcion.cir and seccion = interrupcion.seccion and mes = $P{mesFechaFinal} and aa = $P{anoFechaFinal}) AS clientesatendidosnivelred
+FROM eve01m interrupcion
+WHERE(interrupcion.cod_oficina = $P{codigoOficina} OR $P{codigoOficina} = 0)
+ AND TO_DATE(interrupcion.fecini) >= to_date($P{fechaInicio},'dd/mm/yyyy')
+ AND TO_DATE(interrupcion.fecfin) <= to_date($P{fechaFinal},'dd/mm/yyyy')
+ AND(interrupcion.causa1 = $P{codigoCausa} OR $P{codigoCausa} = 0)
+ AND(interrupcion.reg = $P{region})
+ AND(interrupcion.subregion = $P{subregion})
+ AND(interrupcion.sub = $P{subestacion})
+ AND(interrupcion.cir = $P{circuito})
+AND(interrupcion.seccion = $P{seccion})
+ AND(interrupcion.seccion IN ($P!{seccionesSTR}) OR $P{cantidadSecciones}=0)
+ AND(interrupcion.tipo_voltaje IN($P!{voltajesSTR}) OR $P{cantidadVoltajes}=0)
+ AND interrupcion.causa1 <> $P{codigoCausaCatastrofe}
+GROUP BY interrupcion.reg, interrupcion.subregion, interrupcion.sub, interrupcion.cir, interrupcion.seccion,
+  interrupcion.causa1
+ORDER BY interrupcion.reg, interrupcion.subregion, interrupcion.sub, interrupcion.cir, interrupcion.seccion,
+  interrupcion.causa1]]></queryString>
+
+	<field name="CODIGONIVELRED" class="java.math.BigDecimal"/>
+	<field name="NOMBRENIVELRED" class="java.lang.String"/>
+	<field name="CODIGOCAUSA" class="java.math.BigDecimal"/>
+	<field name="NOMBRECAUSA" class="java.lang.String"/>
+	<field name="CANTIDADINTERRUPCIONES" class="java.math.BigDecimal"/>
+	<field name="TIEMPOFUERA" class="java.math.BigDecimal"/>
+	<field name="ABONADOSAFECTADOS" class="java.math.BigDecimal"/>
+	<field name="HORASABONADO" class="java.math.BigDecimal"/>
+	<field name="DPA" class="java.math.BigDecimal"/>
+	<field name="DPIR" class="java.math.BigDecimal"/>
+	<field name="FPI" class="java.math.BigDecimal"/>
+	<field name="CLIENTESATENDIDOSNIVELRED" class="java.math.BigDecimal"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="430"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$P{Comparativo}]]></printWhenExpression>
+				<barChart>
+					<chart isShowLegend="false"  hyperlinkTarget="Self"  customizerClass="cr.go.ice.interrupciones.reportes.customs.ChartLabelCustomizer" >
+					<reportElement
+						x="0"
+						y="0"
+						width="612"
+						height="430"
+						key="element-1">
+							<printWhenExpression><![CDATA[$P{Comparativo}]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+						<chartTitle color="#000000" >
+								<titleExpression><![CDATA["Cantidad y DPIR por Causa por " + $P{tipoInterrupcion}+'\n'+ "A nivel de: Sección"+'\n'+ "Del: "+ $P{fechaInicio}+ " Al: "+ $P{fechaFinal} +'\n'+$P{tituloCodigoRed}]]></titleExpression>
+					</chartTitle>
+					</chart>
+					<categoryDataset>
+						<dataset >
+						</dataset>
+						<categorySeries>
+							<seriesExpression><![CDATA["comparativa"]]></seriesExpression>
+							<categoryExpression><![CDATA[$F{NOMBRECAUSA} + 
+($F{DPIR} != null ? "; " + (new DecimalFormat("###0.0###")).format($F{DPIR}.doubleValue()) : "")]]></categoryExpression>
+							<valueExpression><![CDATA[$F{CANTIDADINTERRUPCIONES}]]></valueExpression>
+							<labelExpression><![CDATA[$F{CANTIDADINTERRUPCIONES}.toString()]]></labelExpression>
+				<itemHyperlink >
+				</itemHyperlink>
+						</categorySeries>
+					</categoryDataset>
+					<barPlot isShowLabels="true" >
+						<plot labelRotation="45.0" />
+						<categoryAxisFormat>
+							<axisFormat axisLineColor="#000000" >
+								<labelFont>
+					<font fontName="SansSerif" pdfFontName="Helvetica" size="3" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" isPdfEmbedded="false" pdfEncoding="Cp1252"/>
+								</labelFont>
+								<tickLabelFont>
+					<font fontName="SansSerif" pdfFontName="Helvetica" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" isPdfEmbedded="false" pdfEncoding="Cp1252"/>
+								</tickLabelFont>
+							</axisFormat>
+						</categoryAxisFormat>
+						<valueAxisFormat>
+							<axisFormat axisLineColor="#000000" >
+								<labelFont>
+					<font fontName="SansSerif" pdfFontName="Helvetica" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" isPdfEmbedded="false" pdfEncoding="Cp1252"/>
+								</labelFont>
+								<tickLabelFont>
+								</tickLabelFont>
+							</axisFormat>
+						</valueAxisFormat>
+					</barPlot>
+				</barChart>
+			</band>
+		</summary>
+</jasperReport>

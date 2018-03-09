@@ -1,0 +1,936 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SigeItrRepRangoGrupoSeccionH" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="a724f175-25b6-46ab-a0c1-8e7c1a34d3c9">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="ISO-8859-1"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="codigoOficina" class="java.lang.Integer"/>
+	<parameter name="nombreOficina" class="java.lang.String"/>
+	<parameter name="fechaInicio" class="java.lang.String"/>
+	<parameter name="fechaFinal" class="java.lang.String"/>
+	<parameter name="tipoInterrupcionSTR" class="java.lang.String"/>
+	<parameter name="tipoVoltaje" class="java.lang.String"/>
+	<parameter name="causaCatastrofe1" class="java.lang.Integer"/>
+	<parameter name="subestacion" class="java.lang.Integer"/>
+	<parameter name="circuito" class="java.lang.Integer"/>
+	<parameter name="itemsSTR" class="java.lang.String"/>
+	<parameter name="cantidadItems" class="java.lang.Integer"/>
+	<parameter name="seccionInicial" class="java.lang.Long"/>
+	<parameter name="seccionFinal" class="java.lang.Long"/>
+	<parameter name="causaCatastrofe2" class="java.lang.Integer"/>
+	<parameter name="nombreSeccionInicial" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="nombreSeccionFinal" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[(SELECT
+eve01m.SECCION as seccion, eve06c.NOM_SECCION, eve01m.CIR, eve01m.SUB,
+
+(select NVL(sum(abon_seccion),0)
+from eve06h where (TO_CHAR(TO_DATE($P{fechaFinal}, 'dd/MM/yyyy'),'yyyy') = eve06h.AA) and (TO_CHAR(TO_DATE($P{fechaFinal}, 'dd/MM/yyyy'),'mm') = eve06h.MES)
+and reg = eve01m.reg and subregion = eve01m.subregion
+and sub = eve01m.sub and cir = eve01m.cir and seccion = eve01m.seccion) as ABON_SECCION_EVE06H,
+
+(select NVL(sum(kms_seccion),0)
+from eve06h where (TO_CHAR(TO_DATE($P{fechaFinal}, 'dd/MM/yyyy'),'yyyy') = eve06h.AA) and (TO_CHAR(TO_DATE($P{fechaFinal}, 'dd/MM/yyyy'),'mm') = eve06h.MES)
+and reg = eve01m.reg and subregion = eve01m.subregion
+and sub = eve01m.sub and cir = eve01m.cir and seccion = eve01m.seccion) as KMS_SECCION_EVE06H,
+
+COUNT(eve01m.SECCION) AS NUMERO_INTERRUPCIONES,
+SUM(eve01m.TIEFUE) AS DURACION_EVE01M,
+SUM(eve01m.ABO_AFECTA) AS CLIENTES_AFECTADOS_EVE01M,
+SUM(eve01m.HRS_ABO) AS HORAS_ABONADO_EVE01M,
+
+(SELECT
+nvl(SUM(eve16m.TIEFUE) ,0)
+FROM eve16m
+
+WHERE (TO_DATE(eve16m.FECINI) >= TO_DATE($P{fechaInicio}, 'dd/mm/yyyy') )
+  AND (TO_DATE(eve16m.FECFIN) <= TO_DATE($P{fechaFinal}, 'dd/mm/yyyy') )
+  AND (eve16m.COD_OFICINA = $P{codigoOficina}  )
+  AND (eve16m.TIPO_VOLTAJE IN ($P!{tipoVoltaje}))
+  AND (eve16m.SUB = $P{subestacion} )
+  AND (eve16m.CIR = $P{subestacion} )
+  AND (eve16m.SECCION = eve01m.SECCION)) as DURACION_EVE16M,
+
+(SELECT
+nvl(SUM(eve16m.ABO_AFECTA) ,0)
+FROM eve16m
+
+WHERE (TO_DATE(eve16m.FECINI) >= TO_DATE($P{fechaInicio}, 'dd/mm/yyyy') )
+  AND (TO_DATE(eve16m.FECFIN) <= TO_DATE($P{fechaFinal}, 'dd/mm/yyyy') )
+  AND (eve16m.COD_OFICINA = $P{codigoOficina}  )
+  AND (eve16m.TIPO_VOLTAJE IN ($P!{tipoVoltaje}))
+  AND (eve16m.SUB = $P{subestacion} )
+  AND (eve16m.CIR = $P{subestacion} )
+  AND (eve16m.SECCION = eve01m.SECCION)) as CLIENTES_AFECTADOS_EVE16M,
+
+(SELECT
+nvl(SUM(eve16m.HRS_ABO) ,0)
+FROM eve16m
+
+WHERE (TO_DATE(eve16m.FECINI) >= TO_DATE($P{fechaInicio}, 'dd/mm/yyyy') )
+  AND (TO_DATE(eve16m.FECFIN) <= TO_DATE($P{fechaFinal}, 'dd/mm/yyyy') )
+  AND (eve16m.COD_OFICINA = $P{codigoOficina}  )
+  AND (eve16m.TIPO_VOLTAJE IN ($P!{tipoVoltaje}))
+  AND (eve16m.SUB = $P{subestacion})
+  AND (eve16m.CIR = $P{subestacion} )
+  AND (eve16m.SECCION = eve01m.SECCION)) as HORAS_ABONADO_EVE16M,
+
+TO_NUMBER(TO_DATE($P{fechaFinal}, 'DD-MM-YYYY') - TO_DATE($P{fechaInicio}, 'DD-MM-YYYY')) AS DIF_DIAS,
+TO_NUMBER((TO_NUMBER(TO_DATE($P{fechaFinal}, 'DD-MM-YYYY') - TO_DATE($P{fechaInicio}, 'DD-MM-YYYY'))) * 24) AS HP
+
+FROM eve01m
+INNER JOIN eve06c ON (eve01m.SECCION = eve06c.SECCION) AND (eve01m.SUB = eve06c.SUB) AND (eve01m.CIR = eve06c.CIR)
+
+WHERE (TO_DATE(eve01m.FECINI) >= TO_DATE($P{fechaInicio}, 'dd/mm/yyyy') )
+  AND (TO_DATE(eve01m.FECFIN) <= TO_DATE($P{fechaFinal}, 'dd/mm/yyyy') )
+  AND (eve01m.CAUSA1 <> $P{causaCatastrofe1} )
+  AND (eve01m.CAUSA1 = $P{causaCatastrofe2} OR $P{causaCatastrofe2} = 0 )
+  AND (eve01m.COD_OFICINA = $P{codigoOficina} )
+  AND (eve01m.TIPO_VOLTAJE IN ($P!{tipoVoltaje}))
+  AND (eve01m.SUB = $P{subestacion} )
+  AND (eve01m.CIR = $P{circuito} )
+  AND (eve01m.SECCION IN ($P!{itemsSTR}) OR $P{cantidadItems} = 0 OR  $P{seccionFinal} > 0)
+  AND ((eve01m.SECCION >= $P{seccionInicial} AND eve01m.SECCION <= $P{seccionFinal}) OR 0 = $P{seccionFinal})
+
+GROUP BY eve01m.SECCION, eve01m.CIR, eve01m.SUB, eve01m.subregion, eve01m.reg, eve06c.NOM_SECCION
+--ORDER BY eve01m.SECCION ASC
+
+union all
+
+SELECT
+
+eve16m.SECCION as seccion, eve06c.NOM_SECCION, eve16m.CIR, eve16m.SUB,
+eve06c.ABON_SECCION AS ABON_SECCION_EVE06C,
+eve06c.KMS_SECCION AS KMS_SECCION_EVE06C,
+COUNT(eve16m.SECCION) AS NUMERO_INTERRUPCIONES,
+SUM(eve16m.TIEFUE) AS DURACION_EVE01M,
+SUM(eve16m.ABO_AFECTA) AS CLIENTES_AFECTADOS_EVE01M,
+SUM(eve16m.HRS_ABO) AS HORAS_ABONADO_EVE01M,
+0 AS DURACION_EVE16M,
+0 AS CLIENTES_AFECTADOS_EVE16M,
+0 AS HORAS_ABONADO_EVE16M,
+TO_NUMBER(TO_DATE($P{fechaFinal}, 'DD-MM-YYYY') - TO_DATE($P{fechaInicio}, 'DD-MM-YYYY')) AS DIF_DIAS,
+TO_NUMBER((TO_NUMBER(TO_DATE($P{fechaFinal}, 'DD-MM-YYYY') - TO_DATE($P{fechaInicio}, 'DD-MM-YYYY'))) * 24) AS HP
+
+FROM eve16m
+INNER JOIN eve06c ON (eve16m.SECCION = eve06c.SECCION) AND (eve16m.SUB = eve06c.SUB) AND (eve16m.CIR = eve06c.CIR)
+WHERE
+(TO_DATE(eve16m.FECINI) >= TO_DATE($P{fechaInicio}, 'dd/mm/yyyy') )
+  AND (TO_DATE(eve16m.FECFIN) <= TO_DATE($P{fechaFinal}, 'dd/mm/yyyy') )
+  AND (eve16m.COD_OFICINA = $P{codigoOficina} )
+  AND (eve16m.TIPO_VOLTAJE IN ($P!{tipoVoltaje}))
+  AND (eve16m.SUB = $P{subestacion} )
+  AND (eve16m.CIR = $P{circuito})
+  AND (eve16m.SECCION IN ($P!{itemsSTR}) OR $P{cantidadItems} = 0 OR  $P{seccionFinal} > 0)
+  AND ((eve16m.SECCION >= $P{seccionInicial} AND eve16m.SECCION <= $P{seccionFinal}) OR 0 = $P{seccionFinal})
+  AND (eve16m.seccion) NOT IN (SELECT DISTINCT eve01m.seccion FROM eve01m
+WHERE
+(TO_DATE(eve01m.FECINI) >= TO_DATE($P{fechaInicio}, 'dd/mm/yyyy') )
+  AND (TO_DATE(eve01m.FECFIN) <= TO_DATE($P{fechaFinal}, 'dd/mm/yyyy') )
+  AND (eve01m.CAUSA1 <> $P{causaCatastrofe1} )
+  AND (eve01m.CAUSA1 = $P{causaCatastrofe2} OR $P{causaCatastrofe2} = 0 )
+  AND (eve01m.COD_OFICINA = $P{codigoOficina} )
+  AND (eve01m.TIPO_VOLTAJE IN ($P!{tipoVoltaje}))
+  AND (eve01m.SUB = $P{subestacion} )
+  AND (eve01m.CIR = $P{circuito} )
+  AND (eve01m.SECCION IN ($P!{itemsSTR}) OR $P{cantidadItems} = 0 OR  $P{seccionFinal} > 0)
+  AND ((eve01m.SECCION >= $P{seccionInicial} AND eve01m.SECCION <= $P{seccionFinal}) OR 0 = $P{seccionFinal})
+)
+GROUP BY eve16m.SUB, eve16m.CIR, eve16m.SECCION, eve06c.NOM_SECCION, eve06c.KMS_SECCION, eve06c.ABON_SECCION
+)
+order by seccion]]>
+	</queryString>
+	<field name="SECCION" class="java.lang.Integer"/>
+	<field name="NOM_SECCION" class="java.lang.String"/>
+	<field name="CIR" class="java.lang.Integer"/>
+	<field name="SUB" class="java.lang.Integer"/>
+	<field name="KMS_SECCION_EVE06H" class="java.lang.Double"/>
+	<field name="ABON_SECCION_EVE06H" class="java.lang.Integer"/>
+	<field name="NUMERO_INTERRUPCIONES" class="java.lang.Integer"/>
+	<field name="DURACION_EVE01M" class="java.lang.Double"/>
+	<field name="DURACION_EVE16M" class="java.lang.Double"/>
+	<field name="CLIENTES_AFECTADOS_EVE01M" class="java.lang.Long"/>
+	<field name="CLIENTES_AFECTADOS_EVE16M" class="java.lang.Long"/>
+	<field name="HORAS_ABONADO_EVE01M" class="java.lang.Double"/>
+	<field name="HORAS_ABONADO_EVE16M" class="java.lang.Double"/>
+	<field name="DIF_DIAS" class="java.lang.Double"/>
+	<field name="HP" class="java.lang.Integer"/>
+	<variable name="DPA" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{NUMERO_INTERRUPCIONES}.intValue()==0 ?
+	new Double(000.0000)
+	: new Double(($F{DURACION_EVE01M}.doubleValue()+$F{DURACION_EVE16M}.doubleValue())/$F{NUMERO_INTERRUPCIONES}.doubleValue())
+)]]></variableExpression>
+	</variable>
+	<variable name="DPIR" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{ABON_SECCION_EVE06H}.intValue()==0 ?
+	new Double(0.0)
+	: new Double(($F{HORAS_ABONADO_EVE01M}.doubleValue()+$F{HORAS_ABONADO_EVE16M}.doubleValue())/$F{ABON_SECCION_EVE06H}.doubleValue())
+)]]></variableExpression>
+	</variable>
+	<variable name="FPI" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{ABON_SECCION_EVE06H}.doubleValue()==0.0 ?
+	new Double(0.0)
+	: new Double(($F{CLIENTES_AFECTADOS_EVE01M}.doubleValue()+$F{CLIENTES_AFECTADOS_EVE16M}.doubleValue())/$F{ABON_SECCION_EVE06H}.doubleValue())
+)]]></variableExpression>
+	</variable>
+	<variable name="DPIC" class="java.lang.Double">
+		<variableExpression><![CDATA[($V{FPI}.doubleValue()==0.0 ?
+	new Double(0.0)
+	: new Double($V{DPIR}.doubleValue()/$V{FPI}.doubleValue())
+)]]></variableExpression>
+	</variable>
+	<variable name="DPS" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{HP}.doubleValue()==0.0 ?
+	new Double(0.0)
+	: new Double((1-$V{DPIR}.doubleValue()/$F{HP}.doubleValue())*100.00)
+)]]></variableExpression>
+	</variable>
+	<variable name="Interrup/km" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{KMS_SECCION_EVE06H}.doubleValue()==0.0 ?
+	new Double(0.0)
+	: new Double($F{NUMERO_INTERRUPCIONES}.doubleValue()/$F{KMS_SECCION_EVE06H}.doubleValue())
+)]]></variableExpression>
+	</variable>
+	<variable name="Total_Kilometros" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{KMS_SECCION_EVE06H}]]></variableExpression>
+	</variable>
+	<variable name="Total_Clientes_Atendidos" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{ABON_SECCION_EVE06H}]]></variableExpression>
+	</variable>
+	<variable name="Total_Num_Interrupciones" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{NUMERO_INTERRUPCIONES}]]></variableExpression>
+	</variable>
+	<variable name="Total_Duracion" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[new Double($F{DURACION_EVE01M}.doubleValue()+$F{DURACION_EVE16M}.doubleValue())]]></variableExpression>
+	</variable>
+	<variable name="Total_Clientes_Afectados" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[new Long($F{CLIENTES_AFECTADOS_EVE01M}.longValue()+$F{CLIENTES_AFECTADOS_EVE16M}.longValue())]]></variableExpression>
+	</variable>
+	<variable name="Total_Horas_Abonado" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[new Double($F{HORAS_ABONADO_EVE01M}.doubleValue()+$F{HORAS_ABONADO_EVE16M}.doubleValue())]]></variableExpression>
+	</variable>
+	<variable name="Total_DPA" class="java.lang.Double">
+		<variableExpression><![CDATA[($V{Total_Num_Interrupciones}.intValue()==0 ?
+	new Double(000.0000)
+	: new Double(($V{Total_Duracion}.doubleValue())/$V{Total_Num_Interrupciones}.doubleValue())
+)]]></variableExpression>
+	</variable>
+	<variable name="Total_DPIR" class="java.lang.Double">
+		<variableExpression><![CDATA[($V{Total_Clientes_Atendidos}.intValue()==0 ?
+	new Double(0.0)
+	: new Double($V{Total_Horas_Abonado}.doubleValue()/$V{Total_Clientes_Atendidos}.doubleValue())
+)]]></variableExpression>
+	</variable>
+	<variable name="Total_FPI" class="java.lang.Double">
+		<variableExpression><![CDATA[($V{Total_Clientes_Atendidos}.doubleValue()==0.0 ?
+	new Double(0.0)
+	: new Double($V{Total_Clientes_Afectados}.doubleValue()/$V{Total_Clientes_Atendidos}.doubleValue())
+)]]></variableExpression>
+	</variable>
+	<variable name="Total_DPIC" class="java.lang.Double">
+		<variableExpression><![CDATA[($V{Total_FPI}.doubleValue()==0.0 ?
+	new Double(0.0)
+	: new Double($V{Total_DPIR}.doubleValue()/$V{Total_FPI}.doubleValue())
+)]]></variableExpression>
+	</variable>
+	<variable name="Total_Interrup/km" class="java.lang.Double">
+		<variableExpression><![CDATA[($V{Total_Kilometros}.doubleValue()==0.0 ?
+	new Double(0.0)
+	: new Double($V{Total_Num_Interrupciones}.doubleValue()/$V{Total_Kilometros}.doubleValue())
+)]]></variableExpression>
+	</variable>
+	<variable name="Total_DPS" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{HP}.intValue()==0 ?
+	new Double(0.00)
+	: new Double((1-$V{Total_DPIR}.doubleValue()/$F{HP}.doubleValue())*100.00)
+)]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="60" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-1" x="672" y="12" width="110" height="12" uuid="25f4cf1a-0746-4ba5-a35b-4881866b0488"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fecha: "+new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-2" x="672" y="0" width="63" height="12" uuid="720b1434-87c7-43a7-8557-262c33fa2065"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página: "+$V{PAGE_NUMBER}+ " de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-3" x="735" y="0" width="47" height="12" uuid="49667ddc-d13e-4138-b77b-1d08e1976b84"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-4" x="115" y="12" width="557" height="12" uuid="33a05160-7e09-45ed-97e7-7e4162109fc7"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Tipo interrupción: "+ (($P{tipoInterrupcionSTR} == null) ? "" : ($P{tipoInterrupcionSTR}))]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-6" x="0" y="24" width="782" height="12" uuid="c200a1a5-4a00-4fbc-9abe-45bb380d2460"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Del: " +
+(($P{fechaInicio}==null) ? " " : ($P{fechaInicio})) + " Al: " +
+(($P{fechaFinal}== null)? " " : ($P{fechaFinal}))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-1" x="0" y="0" width="166" height="12" uuid="94eca447-0da2-486a-b55d-0783813d2569"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[ICE - UEN Servicio al Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" x="0" y="12" width="115" height="12" uuid="1d6b8b4e-e240-4f53-b219-ddfa1094a953"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-16" x="166" y="0" width="506" height="12" uuid="2bb59648-aaf4-4b2f-85c3-369a732bac89"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Índices Globales por " +
+(($P{seccionFinal} == null)?  "" : ($P{seccionFinal}.longValue() > 0 ? "rango" : "grupo"))
++ " de secciones"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-18" x="0" y="36" width="782" height="12" uuid="845880c8-b736-459b-849b-dd689b1f271c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{seccionFinal} != null && $P{seccionFinal}.longValue() > 0 ?
+"Rango de sección: " + $P{seccionInicial}.toString() + " - " + $P{nombreSeccionInicial}
++ " a la " + $P{seccionFinal}.toString() + " - " + $P{nombreSeccionFinal} : "")]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-19" x="0" y="1" width="115" height="26" uuid="6c4a3b4d-99ec-4f80-936f-ae44d0409267"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Sección]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-20" x="115" y="1" width="51" height="26" uuid="3fb0aeed-8c44-46e5-9cae-36006e0d3706"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Longitud Km]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-21" x="166" y="1" width="56" height="26" uuid="cf1c5f96-2a61-46f5-bcf7-8745ca5f79fc"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Clientes atendidos
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-22" x="222" y="1" width="75" height="26" uuid="35f7dff3-14f8-489e-a828-555adeff9225"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Número Interrupciones ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-23" x="297" y="1" width="45" height="26" uuid="0070a661-1115-48f2-9113-223ff1998f16"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Duración ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-24" x="342" y="1" width="55" height="26" uuid="2d8dc731-2aa4-4bea-9b2f-ca99727a0632"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Clientes Afectados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-25" x="397" y="1" width="55" height="26" uuid="de0222f2-67a4-4913-93c6-31c52cbbe8ba"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Horas Abonado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-26" x="452" y="1" width="55" height="26" uuid="9c88cae1-a1a7-4ede-b9ca-6720ce7188eb"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[DPA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-27" x="507" y="1" width="55" height="26" uuid="3d0bc88f-a23c-4c8f-ab59-3177c2505d3a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[DPIR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-28" x="562" y="1" width="55" height="26" uuid="16e39d02-bc8d-42e0-bc06-b2850ff6b5cf"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[FPI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-29" x="617" y="1" width="55" height="26" uuid="8deea933-09ff-4098-ac98-8b03255f515c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[DPIC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-30" x="672" y="1" width="63" height="26" uuid="f9c9020a-45d3-4530-a4de-ca9a2599d36c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[DPS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-31" x="735" y="1" width="47" height="26" uuid="ff34378e-b0c1-4113-bbf4-a50bc20f2573"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Interrup/km
+]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-5" x="0" y="0" width="782" height="1" uuid="1a88cd1d-513d-4d4d-9573-462401d1d801"/>
+			</line>
+			<line>
+				<reportElement key="line-6" x="0" y="27" width="782" height="1" uuid="d9561ba0-25bc-4a97-805a-c7095eb3f1e5"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="452" y="0" width="55" height="26" uuid="6a192948-693b-4fbb-bce4-5440389b8901"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DPA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="507" y="0" width="55" height="26" uuid="c83e1ea3-4488-4d26-bb52-f2e0df4ca7ba"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DPIR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="562" y="0" width="55" height="26" uuid="9f5f9c10-be0a-4918-acf9-1f4cdf7b76fb"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{FPI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="617" y="0" width="55" height="26" uuid="a04a8f67-f6ab-4424-8c65-8dd98d5ebe49"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DPIC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="672" y="0" width="63" height="26" uuid="6b9e4e3b-4bcd-47ab-936d-d61b8024dcdb"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DPS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="735" y="0" width="47" height="26" uuid="f398c1c8-c42f-42fa-af6b-c81349f748e3"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Interrup/km}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField-9" x="115" y="0" width="51" height="26" uuid="f9488248-17b1-45a6-b416-82f9ba83b22e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{KMS_SECCION_EVE06H}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement key="textField-10" x="166" y="0" width="56" height="26" uuid="c51048ff-62bc-4a3f-a6a9-e2ee473a5a3c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ABON_SECCION_EVE06H}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement key="textField-11" x="222" y="0" width="76" height="26" uuid="77d830a0-e469-4f9a-822f-5e36b4012b1d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{NUMERO_INTERRUPCIONES}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField-12" x="298" y="0" width="44" height="26" uuid="28836f00-535c-4e7b-9414-e03665e32787"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new Double($F{DURACION_EVE01M}.doubleValue()+$F{DURACION_EVE16M}.doubleValue())]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement key="textField-13" x="342" y="0" width="55" height="26" uuid="72a04d91-8b08-45f5-95f0-7db80375434a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[new Long($F{CLIENTES_AFECTADOS_EVE01M}.longValue()+$F{CLIENTES_AFECTADOS_EVE16M}.longValue())]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField-14" x="397" y="0" width="55" height="26" uuid="527d9f8e-00cb-4413-9e7a-886a87886bfa"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Double($F{HORAS_ABONADO_EVE01M}.doubleValue()+$F{HORAS_ABONADO_EVE16M}.doubleValue())]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField-15" x="0" y="0" width="34" height="26" uuid="f33e0144-7957-4718-b4d2-b431358f133f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{SECCION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="34" y="0" width="81" height="26" uuid="6e471c21-721e-42bf-9809-8df99e3c4d6f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{NOM_SECCION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-18" x="0" y="2" width="115" height="28" uuid="808f20cf-f38b-428c-8fa7-34ecadaa3bba"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Totales:]]></text>
+			</staticText>
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="115" y="2" width="51" height="28" uuid="44c444bf-eb05-4893-aba1-f0ccddd6ec27"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total_Kilometros}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement key="textField" x="166" y="2" width="56" height="28" uuid="d6a90f9d-034e-4875-9e09-b30ce87c67fc"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total_Clientes_Atendidos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement key="textField" x="222" y="2" width="76" height="28" uuid="a4ce2ce9-4bcf-4240-baea-1ef717945bbd"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total_Num_Interrupciones}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="298" y="2" width="44" height="28" uuid="a94a3a55-23b3-45c4-a1f0-e87ff0792048"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total_Duracion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement key="textField" x="342" y="2" width="55" height="28" uuid="2e815699-29ca-401a-873f-5e13903b3ab9"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total_Clientes_Afectados}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="397" y="2" width="55" height="28" uuid="518f0a39-3b88-4917-8297-87368c83143c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total_Horas_Abonado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="452" y="2" width="55" height="28" uuid="b213fe63-b46c-401c-bfc8-4c70d188440e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total_DPA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="507" y="2" width="55" height="28" uuid="fdfcdc25-71ea-4d88-9117-31c2f28bbaef"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total_DPIR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="562" y="2" width="55" height="28" uuid="81432122-dcfc-4925-a338-81a0e7a32d79"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total_FPI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="735" y="2" width="47" height="28" uuid="7ef9fcb0-829e-47ff-aef6-4bc0df75d57f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total_Interrup/km}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="617" y="2" width="55" height="28" uuid="9ec7ab01-98b9-4b5d-86f4-3d14b0f18517"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total_DPIC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement key="textField" x="672" y="2" width="63" height="28" uuid="4843264a-f1ec-409d-9e5c-c89a9266e044"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total_DPS}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-17" x="0" y="30" width="782" height="18" uuid="a2a5e79f-5ceb-46c5-a4d2-040bafbb3cfb"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="12" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{SECCION} == null)&&($F{NOM_SECCION} == null)&&
+($F{SUB} == null)&&($F{CIR} == null))&&($F{SECCION} == null)?
+("No hay informaciï¿½n para generar el reporte.") :
+("")]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-4" x="0" y="1" width="782" height="1" uuid="1a34d623-c040-4030-9acc-01056b7e9a01"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

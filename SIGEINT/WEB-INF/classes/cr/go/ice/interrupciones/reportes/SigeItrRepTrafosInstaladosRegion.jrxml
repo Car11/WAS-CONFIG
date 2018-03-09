@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SigeItrRepTrafosInstaladosRegion" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="2da0b027-d234-4364-9142-1efac1d077c8">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="fechaInicio" class="java.lang.String"/>
+	<parameter name="fechaFinal" class="java.lang.String"/>
+	<parameter name="region" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="itemsSTR" class="java.lang.String"/>
+	<parameter name="cantidadItems" class="java.lang.Integer"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+COUNT(eve01m.REG),
+eve05c.NOM_REGION,
+eve01m.REG,
+t.tipo as TIPO_INSTALA,
+t.cod_capacidad as CAPACIDAD_INSTALA,
+m.descripcion
+
+FROM eve01m
+INNER JOIN eve05c ON (eve01m.REG = eve05c.REG)
+INNER JOIN eve03m ON (eve01m.AA = eve03m.AA) AND (eve01m.COD_OFICINA = eve03m.COD_OFICINA) AND (eve01m.NUMINTERRUP = eve03m.NUMINTERRUP) AND (eve03m.tipo_mov = 1)
+LEFT OUTER JOIN trf_transformador t ON (t.numero_ice = eve03m.numeroice)
+LEFT OUTER JOIN trf12m m ON (m.codmarca = t.cod_marca)
+
+WHERE
+  eve01m.cod_material=232
+  AND (TO_DATE(eve01m.FECINI) >= TO_DATE($P{fechaInicio}, 'dd/mm/yyyy') )
+  AND (TO_DATE(eve01m.FECFIN) <= TO_DATE($P{fechaFinal}, 'dd/mm/yyyy') )
+  AND (eve01m.reg IN ($P!{itemsSTR}) OR $P{cantidadItems} = 0)
+
+GROUP BY eve01m.REG, t.tipo, t.cod_capacidad, eve05c.NOM_REGION, m.descripcion
+ORDER BY eve01m.REG, t.tipo, t.cod_capacidad]]>
+	</queryString>
+	<field name="COUNT(EVE01M.REG)" class="java.math.BigDecimal"/>
+	<field name="NOM_REGION" class="java.lang.String"/>
+	<field name="REG" class="java.math.BigDecimal"/>
+	<field name="TIPO_INSTALA" class="java.math.BigDecimal"/>
+	<field name="CAPACIDAD_INSTALA" class="java.math.BigDecimal"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<variable name="TotalContador" class="java.lang.Integer" resetType="Group" resetGroup="nivel" calculation="Sum">
+		<variableExpression><![CDATA[new Integer($F{COUNT(EVE01M.REG)}.intValue())]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	</variable>
+	<group name="nivel">
+		<groupExpression><![CDATA[$F{REG}]]></groupExpression>
+		<groupHeader>
+			<band height="60" splitType="Stretch">
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-19" x="0" y="22" width="535" height="17" uuid="1d436d42-00bb-47ea-9c1e-e60f337aaee9"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{REG} != null ?
+"Región: " + $F{REG} + " " + $F{NOM_REGION}
+: ""]]></textFieldExpression>
+				</textField>
+				<line direction="BottomUp">
+					<reportElement key="line-1" x="174" y="59" width="361" height="1" uuid="c59489d6-59db-4222-b226-65723ec4899a"/>
+				</line>
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-20" x="265" y="39" width="90" height="20" uuid="0cd5aaa1-61b3-4680-a938-34a73479279a"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Tipo de transformador"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-21" x="355" y="39" width="90" height="20" uuid="8bda171f-a4c1-4f1d-bf63-c635e46f355b"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Capacidad "]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-22" x="175" y="39" width="90" height="20" uuid="af514c0b-4eb5-4556-987f-43364e834a7c"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Cantidad "]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-25" x="445" y="39" width="90" height="20" uuid="7de4f37b-e277-4415-b425-6623024327c2"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Marca"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="26" splitType="Stretch">
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-26" x="0" y="0" width="174" height="26" uuid="f7148fc5-3cb2-4ea1-9e5d-5457d65c34fa">
+						<printWhenExpression><![CDATA[new Boolean($F{REG} != null )]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="false" pdfFontName="Helvetica"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total general por región "]]></textFieldExpression>
+				</textField>
+				<textField pattern="##0" isBlankWhenNull="false">
+					<reportElement key="textField" x="174" y="0" width="91" height="26" uuid="40cd46de-d930-4254-b218-5b1d281b07ff">
+						<printWhenExpression><![CDATA[new Boolean($F{REG} != null )]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{TotalContador}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="nivel2">
+		<groupExpression><![CDATA[$F{REG}]]></groupExpression>
+		<groupHeader>
+			<band splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="17" splitType="Stretch">
+				<subreport isUsingCache="true">
+					<reportElement key="subreport-3" x="0" y="0" width="535" height="17" uuid="84b8d655-c99b-4ca6-bdc6-db31f03c65d1"/>
+					<subreportParameter name="sql">
+						<subreportParameterExpression><![CDATA[new String("SELECT COUNT(eve01m.REG) AS CONTADOR,t.tipo AS CAPACIDAD,eve01m.REG AS NIVELRED FROM eve01m INNER JOIN eve03m ON (eve01m.AA = eve03m.AA) AND (eve01m.COD_OFICINA = eve03m.COD_OFICINA) AND (eve01m.NUMINTERRUP = eve03m.NUMINTERRUP) AND (eve03m.tipo_mov = 1) LEFT OUTER JOIN trf_transformador t ON (t.numero_ice = eve03m.numeroice)  WHERE eve01m.cod_material=232 AND (TO_DATE(eve01m.FECINI) >= TO_DATE('"+ $P{fechaInicio}+"', 'dd/mm/yyyy') )   AND (TO_DATE(eve01m.FECFIN) <= TO_DATE('"+ $P{fechaFinal}+"', 'dd/mm/yyyy') )   AND (eve01m.reg IN ("+ $F{REG}+") OR "+ $F{REG}+" = 0) GROUP BY eve01m.REG, t.tipo ORDER BY eve01m.REG, t.tipo")]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="totalPorCapacidad">
+						<subreportParameterExpression><![CDATA[new Boolean(false)]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SigeItrRepTrafosInstaladosRetiradosTotales.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="nivel3">
+		<groupExpression><![CDATA[$F{REG}]]></groupExpression>
+		<groupHeader>
+			<band splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="18" splitType="Stretch">
+				<line direction="BottomUp">
+					<reportElement key="line-2" x="174" y="0" width="361" height="1" uuid="e881871d-37d0-406c-8bc3-d38690febeb4"/>
+				</line>
+				<subreport isUsingCache="true">
+					<reportElement key="subreport-1" x="0" y="0" width="535" height="18" uuid="0a2acbde-b407-48c0-ac0d-0e600299089a"/>
+					<subreportParameter name="sql">
+						<subreportParameterExpression><![CDATA[new String("SELECT COUNT(eve01m.REG) AS CONTADOR,t.cod_capacidad AS CAPACIDAD,eve01m.REG AS NIVELRED FROM eve01m INNER JOIN eve03m ON (eve01m.AA = eve03m.AA) AND (eve01m.COD_OFICINA = eve03m.COD_OFICINA) AND (eve01m.NUMINTERRUP = eve03m.NUMINTERRUP) AND (eve03m.tipo_mov = 1) LEFT OUTER JOIN trf_transformador t ON (t.numero_ice = eve03m.numeroice)  WHERE eve01m.cod_material=232 AND (TO_DATE(eve01m.FECINI) >= TO_DATE('"+ $P{fechaInicio}+"', 'dd/mm/yyyy') )   AND (TO_DATE(eve01m.FECFIN) <= TO_DATE('"+ $P{fechaFinal}+"', 'dd/mm/yyyy') )   AND (eve01m.reg IN ("+ $F{REG}+") OR "+ $F{REG}+" = 0) GROUP BY t.cod_capacidad, eve01m.REG ORDER BY eve01m.REG, t.cod_capacidad")]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="totalPorCapacidad">
+						<subreportParameterExpression><![CDATA[new Boolean(true)]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SigeItrRepTrafosInstaladosRetiradosTotales.jasper"]]></subreportExpression>
+				</subreport>
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-27" x="0" y="1" width="265" height="17" uuid="855ac705-a2f2-4ddf-806b-94aa4aaa8b24"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="false" pdfFontName="Helvetica"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{REG} == null ?  "No hay información para generar el reporte" : "")]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="36" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-1" x="355" y="12" width="180" height="12" uuid="a64123fe-993e-4756-936f-a73a8f2db207"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fecha: "+new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-2" x="355" y="0" width="90" height="12" uuid="6ce907f6-50fc-4f94-85ce-0942119c2e40"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página: "+$V{PAGE_NUMBER}+ " de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-3" x="445" y="0" width="90" height="12" uuid="cdc88cad-2f86-40d9-93b2-5e44ede8b42c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-6" x="175" y="24" width="180" height="12" uuid="634d60af-10a6-4442-baeb-c68fef88fc0c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Del: " + $P{fechaInicio} + " Al: " + $P{fechaFinal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-1" x="0" y="0" width="175" height="12" uuid="249f59ba-733c-4370-a7c3-c5c73fea64cb"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[ICE - UEN Servicio al Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" x="0" y="12" width="175" height="12" uuid="2c99ba16-895f-46a1-bfd2-fedd032e56de"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-17" x="175" y="0" width="180" height="12" uuid="0bf29ab2-5034-40d5-9ae3-2fc19bbe4d9a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Transformadores Instalados"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-24" x="175" y="12" width="180" height="12" uuid="4e0df989-9357-4949-80a4-658a1755ae40"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["A nivel de Región "]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField pattern="##0" isBlankWhenNull="true">
+				<reportElement key="textField" x="265" y="0" width="90" height="16" uuid="f4567019-7047-436a-a4b7-071fbddce404"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TIPO_INSTALA}.intValue() == 0 ? "Convencional" : ($F{TIPO_INSTALA}.intValue() == 1 ? "Autoprotegido" :
+($F{TIPO_INSTALA}.intValue() == 2 ? "Pedestal" : ""))]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement key="textField" x="355" y="0" width="90" height="16" uuid="15183363-7b7a-45dc-9bf0-cf4e677da7df"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CAPACIDAD_INSTALA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField" x="175" y="0" width="90" height="16" uuid="d6d70f1f-8ee0-426f-90fd-9a57cd421468"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{COUNT(EVE01M.REG)}.toString()]]></textFieldExpression>
+			</textField>
+			<textField pattern="##0" isBlankWhenNull="true">
+				<reportElement key="textField-28" x="445" y="0" width="90" height="16" uuid="404b8b88-d108-4575-9599-1e2758106f4b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

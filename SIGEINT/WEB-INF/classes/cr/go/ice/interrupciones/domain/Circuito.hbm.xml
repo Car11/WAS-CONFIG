@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="cr.go.ice.interrupciones.domain.Circuito" table="EVE01C">
+        <composite-id name="circuitoID" class="cr.go.ice.interrupciones.domain.CircuitoID">
+            <key-many-to-one name="subEstacion" lazy="false" column="SUB"/>
+            <key-property name="circuito" column="CIR" type="java.lang.Integer" length="4"/>
+        </composite-id>
+        <property name="nombreCircuito" 	column="NOM_CIRCUITO"  	type="java.lang.String" 	length="20"/>
+        <property name="abonadoCircuito" 	column="ABON_CIRCUITO" 	type="java.lang.Long" 		length="6"/>
+        <property name="kmsCircuito" 		column="KMS_CIRCUITO" 	type="java.lang.Double" 	length="10" precision="2"/>
+        <property name="tipo" 				column="TIPO" 			type="java.lang.Integer" 	length="1"/>
+        <property name="circuitoAresep" 	column="CIR_ARESEP" 	type="java.lang.Integer" 	length="4"/>
+    </class>
+</hibernate-mapping>

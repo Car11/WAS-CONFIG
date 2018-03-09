@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="cr.go.ice.interrupciones.domain.Glosario" table="SIGE01C">
+        <id name="termino" column="TERMINO" type="java.lang.String" length="15">
+            <generator class="assigned"/>
+        </id>
+        <property name="descripcion" column="DESCRIPCION" type="java.lang.String" length="250"/>
+    </class>
+</hibernate-mapping>

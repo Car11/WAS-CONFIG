@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="cr.go.ice.interrupciones.domain.Dano" table="EVE11C">
+        <id name="codigoDano" column="COD_DANO" type="java.lang.Integer" length="3">
+            <generator class="assigned"/>
+        </id>
+        <property name="nombreDano" column="NOM_DANO"  type="java.lang.String" length="50"/>
+    </class>
+</hibernate-mapping>

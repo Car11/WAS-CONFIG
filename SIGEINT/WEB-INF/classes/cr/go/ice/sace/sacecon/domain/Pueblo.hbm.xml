@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cr.go.ice.sace.sacecon.domain">
+    <class name="Pueblo" table="PUEBLO">
+        <id name="numero" column="PUEBLO" type="java.lang.Integer" length="4">
+            <generator class="assigned" />
+        </id>
+        <property name="nombre"             column="NOMBRE1"            type="java.lang.String"     length="20"/>
+        <property name="noAgencia"          column="AGENCIA"            type="java.lang.Integer"    length="2"/>
+        <property name="alumbrado"          column="ALUMBRADO"          type="java.lang.Integer"    length="1"/>
+        <property name="centroOp"           column="COPER05"            type="java.lang.Integer"    length="2"/>
+        <property name="distrito"           column="DISTRITO"           type="java.lang.Integer"    length="5"/>
+        <property name="subEstacion"        column="HG_100"             type="java.lang.Integer"    length="3"/>
+        <property name="puntoMedicion"      column="PTOMED"             type="java.lang.Integer"    length="2"/>
+        <property name="alumbradoPub"       column="URBA_RURAL"         type="java.lang.Integer"    length="1"/>
+        <property name="codigoProvincia"    column="CODIGO_PROVINCIA"   type="java.lang.Integer"    length="1"/>
+        <property name="codigoCanton"       column="CODIGO_CANTON"      type="java.lang.Integer"    length="3"/>
+        <property name="codigoDistrito"     column="CODIGO_DISTRITO"    type="java.lang.Integer"    length="3"/>
+    </class>
+</hibernate-mapping>
+

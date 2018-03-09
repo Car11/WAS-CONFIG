@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SigeItrRepTrafosInstaladosRetiradosTotales" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="24a27e4f-af69-49ad-b4d8-673f92b0709f">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="sql" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new String("SELECT COUNT(*) AS CONTADOR,eve04m.CAPACIDAD_INSTALA AS CAPACIDAD, 1 as NIVELRED FROM eve01m INNER JOIN eve04m ON (eve01m.AA = eve04m.AA) AND (eve01m.COD_OFICINA = eve04m.COD_OFICINA) AND (eve01m.NUMINTERRUP = eve04m.NUMINTERRUP) WHERE (TO_DATE(eve01m.FECINI) >= TO_DATE('01/01/2003', 'dd/mm/yyyy') )   AND (TO_DATE(eve01m.FECFIN) <= TO_DATE('01/01/2004', 'dd/mm/yyyy') )   AND (eve01m.reg IN (2,4) OR 2 = 0) GROUP BY eve04m.CAPACIDAD_INSTALA ORDER BY eve04m.CAPACIDAD_INSTALA")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="totalPorCapacidad" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[$P!{sql}]]>
+	</queryString>
+	<field name="CONTADOR" class="java.math.BigDecimal"/>
+	<field name="CAPACIDAD" class="java.math.BigDecimal"/>
+	<field name="NIVELRED" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" x="265" y="0" width="270" height="16" uuid="b4d10017-b0fe-43f7-a921-b3a39b8a1ad6"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[($P{totalPorCapacidad}.booleanValue() == true ? $F{CAPACIDAD}.toString() :
+
+($F{CAPACIDAD}.intValue() == 0 ? "Convencional" : ($F{CAPACIDAD}.intValue() == 1 ? "Autoprotegido" :
+($F{CAPACIDAD}.intValue() == 2 ? "Pedestal" : "")))
+
+)]]></textFieldExpression>
+			</textField>
+			<textField pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField" x="175" y="0" width="90" height="16" uuid="59cbf0bb-5c5a-4fb4-824a-6ebf5676d9a0"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CONTADOR}.toString()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-1" x="0" y="0" width="175" height="16" uuid="4593035e-a1b3-4137-902b-1b0432ffb77c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{totalPorCapacidad}.booleanValue() == true ? "Total por capacidad" : "Total por transformador")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

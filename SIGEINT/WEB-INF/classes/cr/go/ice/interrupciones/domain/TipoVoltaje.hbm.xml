@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="cr.go.ice.interrupciones.domain.TipoVoltaje" table="EVE13C">
+        <composite-id name="tipoVoltajeID" class="cr.go.ice.interrupciones.domain.TipoVoltajeID">
+            <key-property name="codigoVoltaje" column="COD_VOLTAJE" type="java.lang.Integer" length="3"/>
+            <key-property name="tipoVoltaje" column="TIPO_VOLTAJE" type="java.lang.Integer" length="2"/>
+        </composite-id>
+        <property name="codigoDescripcion" column="COD_DESCRIP" type="java.lang.String" length="10"/>
+        <property name="nombreVoltaje" column="NOM_VOLTAJE" type="java.lang.String" length="50"/>
+    </class>
+</hibernate-mapping>

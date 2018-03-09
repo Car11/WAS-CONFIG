@@ -1,0 +1,2015 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#SigeItrActOficinas.xhtml"
+  PATH="/SigeItrActOficinas.xhtml" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActOficinas.xhtml:0" NAME="item"
+   PATH="/SigeItrActOficinas.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{oficinaController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{oficinaController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActCausas.xhtml"
+  PATH="/SigeItrActCausas.xhtml" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActCausas.xhtml:0" NAME="item"
+   PATH="/SigeItrActCausas.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{causaController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{causaController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActDanos.xhtml"
+  PATH="/SigeItrActDanos.xhtml" SHAPE="32,241,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActDanos.xhtml:0" NAME="item"
+   PATH="/SigeItrActDanos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{danoController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{danoController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMateriales.xhtml"
+  PATH="/SigeItrActMateriales.xhtml" SHAPE="32,353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMateriales.xhtml:0" NAME="item"
+   PATH="/SigeItrActMateriales.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{materialController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{materialController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActProtecciones.xhtml"
+  PATH="/SigeItrActProtecciones.xhtml" SHAPE="32,465,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActProtecciones.xhtml:0" NAME="item"
+   PATH="/SigeItrActProtecciones.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{proteccionController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{proteccionController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActAnimales.xhtml"
+  PATH="/SigeItrActAnimales.xhtml" SHAPE="32,577,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActAnimales.xhtml:0" NAME="item"
+   PATH="/SigeItrActAnimales.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{animalController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{animalController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActGlosario.xhtml"
+  PATH="/SigeItrActGlosario.xhtml" SHAPE="32,7249,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActGlosario.xhtml:0" NAME="item"
+   PATH="/SigeItrActGlosario.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="::#SigeItrActGlosario.xhtml" NAME="output"
+    PATH="/SigeItrActGlosario.xhtml"
+    TARGET="rules:#SigeItrActGlosario.xhtml" TITLE="[any]" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActGlosarios.xhtml"
+  PATH="/SigeItrActGlosarios.xhtml" SHAPE="32,689,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActGlosarios.xhtml:0" NAME="item"
+   PATH="/SigeItrActGlosarios.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{glosarioController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{glosarioController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActSubEstaciones.xhtml"
+  PATH="/SigeItrActSubEstaciones.xhtml" SHAPE="32,801,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActSubEstaciones.xhtml:0" NAME="item"
+   PATH="/SigeItrActSubEstaciones.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{subEstacionController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{subEstacionController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActCircuitos.xhtml"
+  PATH="/SigeItrActCircuitos.xhtml" SHAPE="32,913,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActCircuitos.xhtml:0" NAME="item"
+   PATH="/SigeItrActCircuitos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{circuitoController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{circuitoController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActCorreos.xhtml"
+  PATH="/SigeItrActCorreos.xhtml" SHAPE="32,1025,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActCorreos.xhtml:0" NAME="item"
+   PATH="/SigeItrActCorreos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{correoController.modificarCorreoLista}:#SigeItrModCorreos.xhtml"
+    NAME="output" PATH="/SigeItrModCorreos.xhtml"
+    TARGET="rules:#SigeItrModCorreos.xhtml"
+    TITLE="#{correoController.modificarCorreoLista}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{correoController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output1" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{correoController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrModCorreos.xhtml"
+  PATH="/SigeItrModCorreos.xhtml" SHAPE="304,1041,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrModCorreos.xhtml:0" NAME="item"
+   PATH="/SigeItrModCorreos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{correoController.modificar}:#SigeItrActCorreos.xhtml"
+    NAME="output" PATH="/SigeItrActCorreos.xhtml"
+    TARGET="rules:#SigeItrActCorreos.xhtml"
+    TITLE="#{correoController.modificar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrMantTiposCausa.xhtml"
+  PATH="/SigeItrMantTiposCausa.xhtml" SHAPE="304,7265,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrMantTiposCausa.xhtml:0" NAME="item"
+   PATH="/SigeItrMantTiposCausa.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoTiposCausaController.agregar}:#SigeItrMantTiposCausa.xhtml"
+    NAME="output" PATH="/SigeItrMantTiposCausa.xhtml"
+    TARGET="rules:#SigeItrMantTiposCausa.xhtml"
+    TITLE="#{mantenimientoTiposCausaController.agregar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoTiposCausaController.modificar}:#SigeItrMantTiposCausa.xhtml"
+    NAME="output1" PATH="/SigeItrMantTiposCausa.xhtml"
+    TARGET="rules:#SigeItrMantTiposCausa.xhtml"
+    TITLE="#{mantenimientoTiposCausaController.modificar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoTiposCausaController.buscar}:#SigeItrMantTiposCausa.xhtml"
+    NAME="output2" PATH="/SigeItrMantTiposCausa.xhtml"
+    TARGET="rules:#SigeItrMantTiposCausa.xhtml"
+    TITLE="#{mantenimientoTiposCausaController.buscar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoTiposCausaController.eliminar}:#SigeItrMantTiposCausa.xhtml"
+    NAME="output3" PATH="/SigeItrMantTiposCausa.xhtml"
+    TARGET="rules:#SigeItrMantTiposCausa.xhtml"
+    TITLE="#{mantenimientoTiposCausaController.eliminar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoTiposCausaController.cancelar}:#SigeItrMantTiposCausa.xhtml"
+    NAME="output4" PATH="/SigeItrMantTiposCausa.xhtml"
+    TARGET="rules:#SigeItrMantTiposCausa.xhtml"
+    TITLE="#{mantenimientoTiposCausaController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrMantTiposCausaEspecifica.xhtml"
+  PATH="/SigeItrMantTiposCausaEspecifica.xhtml" SHAPE="512,7249,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrMantTiposCausaEspecifica.xhtml:0"
+   NAME="item" PATH="/SigeItrMantTiposCausaEspecifica.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoTiposCausaEspecificaController.agregar}:#SigeItrMantTiposCausaEspecifica.xhtml"
+    NAME="output" PATH="/SigeItrMantTiposCausaEspecifica.xhtml"
+    TARGET="rules:#SigeItrMantTiposCausaEspecifica.xhtml"
+    TITLE="#{mantenimientoTiposCausaEspecificaController.agregar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoTiposCausaEspecificaController.modificar}:#SigeItrMantTiposCausaEspecifica.xhtml"
+    NAME="output1" PATH="/SigeItrMantTiposCausaEspecifica.xhtml"
+    TARGET="rules:#SigeItrMantTiposCausaEspecifica.xhtml"
+    TITLE="#{mantenimientoTiposCausaEspecificaController.modificar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoTiposCausaEspecificaController.buscar}:#SigeItrMantTiposCausaEspecifica.xhtml"
+    NAME="output2" PATH="/SigeItrMantTiposCausaEspecifica.xhtml"
+    TARGET="rules:#SigeItrMantTiposCausaEspecifica.xhtml"
+    TITLE="#{mantenimientoTiposCausaEspecificaController.buscar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoTiposCausaEspecificaController.eliminar}:#SigeItrMantTiposCausaEspecifica.xhtml"
+    NAME="output3" PATH="/SigeItrMantTiposCausaEspecifica.xhtml"
+    TARGET="rules:#SigeItrMantTiposCausaEspecifica.xhtml"
+    TITLE="#{mantenimientoTiposCausaEspecificaController.eliminar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoTiposCausaEspecificaController.cancelar}:#SigeItrMantTiposCausaEspecifica.xhtml"
+    NAME="output4" PATH="/SigeItrMantTiposCausaEspecifica.xhtml"
+    TARGET="rules:#SigeItrMantTiposCausaEspecifica.xhtml"
+    TITLE="#{mantenimientoTiposCausaEspecificaController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMayorCincoMin1.xhtml"
+  PATH="/SigeItrActMayorCincoMin1.xhtml" SHAPE="640,2065,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMayorCincoMin1.xhtml:0" NAME="item"
+   PATH="/SigeItrActMayorCincoMin1.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.irPagina2}:#SigeItrActMayorCincoMin2.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2.xhtml"
+    TITLE="#{mayorCincoMinController.irPagina2}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.cancelar}:#main.xhtml"
+    NAME="output1" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{mayorCincoMinController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrMantDetalleCausa.xhtml"
+  PATH="/SigeItrMantDetalleCausa.xhtml" SHAPE="720,7265,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrMantDetalleCausa.xhtml:0" NAME="item"
+   PATH="/SigeItrMantDetalleCausa.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoDetalleCausaController.agregar}:#SigeItrMantDetalleCausa.xhtml"
+    NAME="output" PATH="/SigeItrMantDetalleCausa.xhtml"
+    TARGET="rules:#SigeItrMantDetalleCausa.xhtml"
+    TITLE="#{mantenimientoDetalleCausaController.agregar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoDetalleCausaController.modificar}:#SigeItrMantDetalleCausa.xhtml"
+    NAME="output1" PATH="/SigeItrMantDetalleCausa.xhtml"
+    TARGET="rules:#SigeItrMantDetalleCausa.xhtml"
+    TITLE="#{mantenimientoDetalleCausaController.modificar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoDetalleCausaController.buscar}:#SigeItrMantDetalleCausa.xhtml"
+    NAME="output2" PATH="/SigeItrMantDetalleCausa.xhtml"
+    TARGET="rules:#SigeItrMantDetalleCausa.xhtml"
+    TITLE="#{mantenimientoDetalleCausaController.buscar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoDetalleCausaController.eliminar}:#SigeItrMantDetalleCausa.xhtml"
+    NAME="output3" PATH="/SigeItrMantDetalleCausa.xhtml"
+    TARGET="rules:#SigeItrMantDetalleCausa.xhtml"
+    TITLE="#{mantenimientoDetalleCausaController.eliminar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoDetalleCausaController.cancelar}:#SigeItrMantDetalleCausa.xhtml"
+    NAME="output4" PATH="/SigeItrMantDetalleCausa.xhtml"
+    TARGET="rules:#SigeItrMantDetalleCausa.xhtml"
+    TITLE="#{mantenimientoDetalleCausaController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrMantUbicaGeneralDano.xhtml"
+  PATH="/SigeItrMantUbicaGeneralDano.xhtml" SHAPE="928,7249,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrMantUbicaGeneralDano.xhtml:0"
+   NAME="item" PATH="/SigeItrMantUbicaGeneralDano.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUbicacionGeneralDanoController.agregar}:#SigeItrMantUbicaGeneralDano.xhtml"
+    NAME="output" PATH="/SigeItrMantUbicaGeneralDano.xhtml"
+    TARGET="rules:#SigeItrMantUbicaGeneralDano.xhtml"
+    TITLE="#{mantenimientoUbicacionGeneralDanoController.agregar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUbicacionGeneralDanoController.modificar}:#SigeItrMantUbicaGeneralDano.xhtml"
+    NAME="output1" PATH="/SigeItrMantUbicaGeneralDano.xhtml"
+    TARGET="rules:#SigeItrMantUbicaGeneralDano.xhtml"
+    TITLE="#{mantenimientoUbicacionGeneralDanoController.modificar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUbicacionGeneralDanoController.buscar}:#SigeItrMantUbicaGeneralDano.xhtml"
+    NAME="output2" PATH="/SigeItrMantUbicaGeneralDano.xhtml"
+    TARGET="rules:#SigeItrMantUbicaGeneralDano.xhtml"
+    TITLE="#{mantenimientoUbicacionGeneralDanoController.buscar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUbicacionGeneralDanoController.eliminar}:#SigeItrMantUbicaGeneralDano.xhtml"
+    NAME="output3" PATH="/SigeItrMantUbicaGeneralDano.xhtml"
+    TARGET="rules:#SigeItrMantUbicaGeneralDano.xhtml"
+    TITLE="#{mantenimientoUbicacionGeneralDanoController.eliminar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUbicacionGeneralDanoController.cancelar}:#SigeItrMantUbicaGeneralDano.xhtml"
+    NAME="output4" PATH="/SigeItrMantUbicaGeneralDano.xhtml"
+    TARGET="rules:#SigeItrMantUbicaGeneralDano.xhtml"
+    TITLE="#{mantenimientoUbicacionGeneralDanoController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrMantUbicaEspecifiDano.xhtml"
+  PATH="/SigeItrMantUbicaEspecifiDano.xhtml" SHAPE="1136,7265,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrMantUbicaEspecifiDano.xhtml:0"
+   NAME="item" PATH="/SigeItrMantUbicaEspecifiDano.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUbicacionEspecificaDanoController.agregar}:#SigeItrMantUbicaEspecifiDano.xhtml"
+    NAME="output" PATH="/SigeItrMantUbicaEspecifiDano.xhtml"
+    TARGET="rules:#SigeItrMantUbicaEspecifiDano.xhtml"
+    TITLE="#{mantenimientoUbicacionEspecificaDanoController.agregar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUbicacionEspecificaDanoController.modificar}:#SigeItrMantUbicaEspecifiDano.xhtml"
+    NAME="output1" PATH="/SigeItrMantUbicaEspecifiDano.xhtml"
+    TARGET="rules:#SigeItrMantUbicaEspecifiDano.xhtml"
+    TITLE="#{mantenimientoUbicacionEspecificaDanoController.modificar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUbicacionEspecificaDanoController.buscar}:#SigeItrMantUbicaEspecifiDano.xhtml"
+    NAME="output2" PATH="/SigeItrMantUbicaEspecifiDano.xhtml"
+    TARGET="rules:#SigeItrMantUbicaEspecifiDano.xhtml"
+    TITLE="#{mantenimientoUbicacionEspecificaDanoController.buscar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUbicacionEspecificaDanoController.eliminar}:#SigeItrMantUbicaEspecifiDano.xhtml"
+    NAME="output3" PATH="/SigeItrMantUbicaEspecifiDano.xhtml"
+    TARGET="rules:#SigeItrMantUbicaEspecifiDano.xhtml"
+    TITLE="#{mantenimientoUbicacionEspecificaDanoController.eliminar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUbicacionEspecificaDanoController.cancelar}:#SigeItrMantUbicaEspecifiDano.xhtml"
+    NAME="output4" PATH="/SigeItrMantUbicaEspecifiDano.xhtml"
+    TARGET="rules:#SigeItrMantUbicaEspecifiDano.xhtml"
+    TITLE="#{mantenimientoUbicacionEspecificaDanoController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMayorCincoMin4.xhtml"
+  PATH="/SigeItrActMayorCincoMin4.xhtml" SHAPE="640,2209,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMayorCincoMin4.xhtml:0" NAME="item"
+   PATH="/SigeItrActMayorCincoMin4.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.regresarDePag4}:#SigeItrActMayorCincoMin2.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2.xhtml"
+    TITLE="#{mayorCincoMinController.regresarDePag4}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.agregarEmpleadoCuadrilla}:#SigeItrActMayorCincoMin4.xhtml"
+    NAME="output1" PATH="/SigeItrActMayorCincoMin4.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin4.xhtml"
+    TITLE="#{mayorCincoMinController.agregarEmpleadoCuadrilla}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.eliminarEmpleadoCuadrilla}:#SigeItrActMayorCincoMin4.xhtml"
+    NAME="output2" PATH="/SigeItrActMayorCincoMin4.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin4.xhtml"
+    TITLE="#{mayorCincoMinController.eliminarEmpleadoCuadrilla}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.cancelarCuadrillaVehiculo}:#SigeItrActMayorCincoMin2.xhtml"
+    NAME="output3" PATH="/SigeItrActMayorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2.xhtml"
+    TITLE="#{mayorCincoMinController.cancelarCuadrillaVehiculo}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="saltar:#{mayorCincoMinController.regresarDePag4}:#SigeItrActMayorCincoMin2.xhtml"
+    NAME="output4" PATH="/SigeItrActMayorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2.xhtml"
+    TITLE="#{mayorCincoMinController.regresarDePag4}:saltar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMayorCincoMin3.xhtml"
+  PATH="/SigeItrActMayorCincoMin3.xhtml" SHAPE="368,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMayorCincoMin3.xhtml:0" NAME="item"
+   PATH="/SigeItrActMayorCincoMin3.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.regresar}:#SigeItrActMayorCincoMin2.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2.xhtml"
+    TITLE="#{mayorCincoMinController.regresar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.irPagina4}:#SigeItrActMayorCincoMin4.xhtml"
+    NAME="output1" PATH="/SigeItrActMayorCincoMin4.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin4.xhtml"
+    TITLE="#{mayorCincoMinController.irPagina4}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.agregarFusible}:#SigeItrActMayorCincoMin3.xhtml"
+    NAME="output2" PATH="/SigeItrActMayorCincoMin3.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin3.xhtml"
+    TITLE="#{mayorCincoMinController.agregarFusible}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.eliminarFusible}:#SigeItrActMayorCincoMin3.xhtml"
+    NAME="output3" PATH="/SigeItrActMayorCincoMin3.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin3.xhtml"
+    TITLE="#{mayorCincoMinController.eliminarFusible}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.cancelarFusiblesTrafos}:#SigeItrActMayorCincoMin2.xhtml"
+    NAME="output4" PATH="/SigeItrActMayorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2.xhtml"
+    TITLE="#{mayorCincoMinController.cancelarFusiblesTrafos}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.agregarTrafo}:#SigeItrActMayorCincoMin3.xhtml"
+    NAME="output5" PATH="/SigeItrActMayorCincoMin3.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin3.xhtml"
+    TITLE="#{mayorCincoMinController.agregarTrafo}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.eliminarTrafo}:#SigeItrActMayorCincoMin3.xhtml"
+    NAME="output6" PATH="/SigeItrActMayorCincoMin3.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin3.xhtml"
+    TITLE="#{mayorCincoMinController.eliminarTrafo}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMayorCincoMin6.xhtml"
+  PATH="/SigeItrActMayorCincoMin6.xhtml" SHAPE="640,4433,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMayorCincoMin6.xhtml:0" NAME="item"
+   PATH="/SigeItrActMayorCincoMin6.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.eliminarGemela}:#SigeItrActMayorCincoMin6.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin6.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin6.xhtml"
+    TITLE="#{mayorCincoMinController.eliminarGemela}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.agregarGemela}:#SigeItrActMayorCincoMin6.xhtml"
+    NAME="output1" PATH="/SigeItrActMayorCincoMin6.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin6.xhtml"
+    TITLE="#{mayorCincoMinController.agregarGemela}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.regresarDeGemelas}:#SigeItrActMayorCincoMin2.xhtml"
+    NAME="output2" PATH="/SigeItrActMayorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2.xhtml"
+    TITLE="#{mayorCincoMinController.regresarDeGemelas}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.cancelarGemelas}:#SigeItrActMayorCincoMin2.xhtml"
+    NAME="output3" PATH="/SigeItrActMayorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2.xhtml"
+    TITLE="#{mayorCincoMinController.cancelarGemelas}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActBuscarEmpleado.xhtml"
+  PATH="/SigeItrActBuscarEmpleado.xhtml" SHAPE="96,2641,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActBuscarEmpleado.xhtml:0" NAME="item"
+   PATH="/SigeItrActBuscarEmpleado.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.buscarEmpleado}:#SigeItrActBuscarEmpleado.xhtml"
+    NAME="output" PATH="/SigeItrActBuscarEmpleado.xhtml"
+    TARGET="rules:#SigeItrActBuscarEmpleado.xhtml"
+    TITLE="#{mayorCincoMinController.buscarEmpleado}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.cargarEmpleadoCuadrillaTabla}:#SigeItrActMayorCincoMin3.xhtml"
+    NAME="output1" PATH="/SigeItrActMayorCincoMin3.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin3.xhtml"
+    TITLE="#{mayorCincoMinController.cargarEmpleadoCuadrillaTabla}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.regresar}:#SigeItrActMayorCincoMin3.xhtml"
+    NAME="output2" PATH="/SigeItrActMayorCincoMin3.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin3.xhtml"
+    TITLE="#{mayorCincoMinController.regresar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMayorCincoMin2Postes.xhtml"
+  PATH="/SigeItrActMayorCincoMin2Postes.xhtml" SHAPE="640,2641,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMayorCincoMin2Postes.xhtml:0"
+   NAME="item" PATH="/SigeItrActMayorCincoMin2Postes.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.agregarPoste}:#SigeItrActMayorCincoMin2Postes.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin2Postes.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Postes.xhtml"
+    TITLE="#{mayorCincoMinController.agregarPoste}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.eliminarPoste}:#SigeItrActMayorCincoMin2Postes.xhtml"
+    NAME="output1" PATH="/SigeItrActMayorCincoMin2Postes.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Postes.xhtml"
+    TITLE="#{mayorCincoMinController.eliminarPoste}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.regresarDePostes}:#SigeItrActMayorCincoMin2.xhtml"
+    NAME="output2" PATH="/SigeItrActMayorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2.xhtml"
+    TITLE="#{mayorCincoMinController.regresarDePostes}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.cancelarPostes}:#SigeItrActMayorCincoMin2.xhtml"
+    NAME="output3" PATH="/SigeItrActMayorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2.xhtml"
+    TITLE="#{mayorCincoMinController.cancelarPostes}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#SigeItrActMayorCincoMin2EquipoEspecial.xhtml"
+  PATH="/SigeItrActMayorCincoMin2EquipoEspecial.xhtml"
+  SHAPE="640,2849,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#SigeItrActMayorCincoMin2EquipoEspecial.xhtml:0"
+   NAME="item" PATH="/SigeItrActMayorCincoMin2EquipoEspecial.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.agregarEquipo}:#SigeItrActMayorCincoMin2EquipoEspecial.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin2EquipoEspecial.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2EquipoEspecial.xhtml"
+    TITLE="#{mayorCincoMinController.agregarEquipo}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.eliminarEquipo}:#SigeItrActMayorCincoMin2EquipoEspecial.xhtml"
+    NAME="output1" PATH="/SigeItrActMayorCincoMin2EquipoEspecial.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2EquipoEspecial.xhtml"
+    TITLE="#{mayorCincoMinController.eliminarEquipo}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.regresarDeEquipoEspecial}:#SigeItrActMayorCincoMin2.xhtml"
+    NAME="output2" PATH="/SigeItrActMayorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2.xhtml"
+    TITLE="#{mayorCincoMinController.regresarDeEquipoEspecial}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.cancelarEquipos}:#SigeItrActMayorCincoMin2.xhtml"
+    NAME="output3" PATH="/SigeItrActMayorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2.xhtml"
+    TITLE="#{mayorCincoMinController.cancelarEquipos}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMenorCincoMin1.xhtml"
+  PATH="/SigeItrActMenorCincoMin1.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMenorCincoMin1.xhtml:0" NAME="item"
+   PATH="/SigeItrActMenorCincoMin1.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.irPagina2}:#SigeItrActMenorCincoMin2.xhtml"
+    NAME="output" PATH="/SigeItrActMenorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMin2.xhtml"
+    TITLE="#{menorCincoMinController.irPagina2}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.cancelar}:#main.xhtml"
+    NAME="output1" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{menorCincoMinController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMenorCincoMin2.xhtml"
+  PATH="/SigeItrActMenorCincoMin2.xhtml" SHAPE="640,3057,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMenorCincoMin2.xhtml:0" NAME="item"
+   PATH="/SigeItrActMenorCincoMin2.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.irPagina3}:#SigeItrActMenorCincoMin3.xhtml"
+    NAME="output" PATH="/SigeItrActMenorCincoMin3.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMin3.xhtml"
+    TITLE="#{menorCincoMinController.irPagina3}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.cancelar}:#main.xhtml"
+    NAME="output1" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{menorCincoMinController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.guardarReporte}:#SigeItrActMenorCincoMinGuardar.xhtml"
+    NAME="output2" PATH="/SigeItrActMenorCincoMinGuardar.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMinGuardar.xhtml"
+    TITLE="#{menorCincoMinController.guardarReporte}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="successEdicion:#{menorCincoMinController.regresarDePaginaDos}:#SigeItrActEditMenorCincoMin1.xhtml"
+    NAME="output3" PATH="/SigeItrActEditMenorCincoMin1.xhtml"
+    TARGET="rules:#SigeItrActEditMenorCincoMin1.xhtml"
+    TITLE="#{menorCincoMinController.regresarDePaginaDos}:successEdicion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="successIngreso:#{menorCincoMinController.regresarDePaginaDos}:#SigeItrActMenorCincoMin1.xhtml"
+    NAME="output4" PATH="/SigeItrActMenorCincoMin1.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMin1.xhtml"
+    TITLE="#{menorCincoMinController.regresarDePaginaDos}:successIngreso" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMenorCincoMin3.xhtml"
+  PATH="/SigeItrActMenorCincoMin3.xhtml" SHAPE="368,3073,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMenorCincoMin3.xhtml:0" NAME="item"
+   PATH="/SigeItrActMenorCincoMin3.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.guardarReporte}:#SigeItrActMenorCincoMinGuardar.xhtml"
+    NAME="output" PATH="/SigeItrActMenorCincoMinGuardar.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMinGuardar.xhtml"
+    TITLE="#{menorCincoMinController.guardarReporte}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.agregarEmpleadoCuadrilla}:#SigeItrActMenorCincoMin3.xhtml"
+    NAME="output1" PATH="/SigeItrActMenorCincoMin3.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMin3.xhtml"
+    TITLE="#{menorCincoMinController.agregarEmpleadoCuadrilla}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.eliminarEmpleadoCuadrilla}:#SigeItrActMenorCincoMin3.xhtml"
+    NAME="output2" PATH="/SigeItrActMenorCincoMin3.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMin3.xhtml"
+    TITLE="#{menorCincoMinController.eliminarEmpleadoCuadrilla}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.cancelarCuadrillaVehiculo}:#SigeItrActMenorCincoMin2.xhtml"
+    NAME="output3" PATH="/SigeItrActMenorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMin2.xhtml"
+    TITLE="#{menorCincoMinController.cancelarCuadrillaVehiculo}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.regresarDePag3}:#SigeItrActMenorCincoMin2.xhtml"
+    NAME="output4" PATH="/SigeItrActMenorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMin2.xhtml"
+    TITLE="#{menorCincoMinController.regresarDePag3}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActInterrupcion.xhtml"
+  PATH="/SigeItrActInterrupcion.xhtml" SHAPE="96,3297,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActInterrupcion.xhtml:0" NAME="item"
+   PATH="/SigeItrActInterrupcion.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="mas5min:#{actInterrupcionController.modificar}:#SigeItrActEditMayorCincoMin1.xhtml"
+    NAME="output" PATH="/SigeItrActEditMayorCincoMin1.xhtml"
+    TARGET="rules:#SigeItrActEditMayorCincoMin1.xhtml"
+    TITLE="#{actInterrupcionController.modificar}:mas5min" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="menos5min:#{actInterrupcionController.modificar}:#SigeItrActEditMenorCincoMin1.xhtml"
+    NAME="output1" PATH="/SigeItrActEditMenorCincoMin1.xhtml"
+    TARGET="rules:#SigeItrActEditMenorCincoMin1.xhtml"
+    TITLE="#{actInterrupcionController.modificar}:menos5min" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{actInterrupcionController.cancelar}:#main.xhtml"
+    NAME="output2" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{actInterrupcionController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMayorCincoMin7Lista.xhtml"
+  PATH="/SigeItrActMayorCincoMin7Lista.xhtml" SHAPE="640,4225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMayorCincoMin7Lista.xhtml:0"
+   NAME="item" PATH="/SigeItrActMayorCincoMin7Lista.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{seccionamientoController.regresarInterup}:#SigeItrActMayorCincoMin2.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2.xhtml"
+    TITLE="#{seccionamientoController.regresarInterup}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{seccionamientoController.actualizarDatosTabla}:#SigeItrActMayorCincoMin7Lista.xhtml"
+    NAME="output1" PATH="/SigeItrActMayorCincoMin7Lista.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin7Lista.xhtml"
+    TITLE="#{seccionamientoController.actualizarDatosTabla}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{seccionamientoController.cancelar}:#SigeItrActMayorCincoMin2.xhtml"
+    NAME="output2" PATH="/SigeItrActMayorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2.xhtml"
+    TITLE="#{seccionamientoController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActEditMayorCincoMin1.xhtml"
+  PATH="/SigeItrActEditMayorCincoMin1.xhtml" SHAPE="640,3297,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActEditMayorCincoMin1.xhtml:0"
+   NAME="item" PATH="/SigeItrActEditMayorCincoMin1.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.irPagina2}:#SigeItrActMayorCincoMin2.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2.xhtml"
+    TITLE="#{mayorCincoMinController.irPagina2}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.cancelar}:#main.xhtml"
+    NAME="output1" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{mayorCincoMinController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActEditMenorCincoMin1.xhtml"
+  PATH="/SigeItrActEditMenorCincoMin1.xhtml" SHAPE="368,3313,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActEditMenorCincoMin1.xhtml:0"
+   NAME="item" PATH="/SigeItrActEditMenorCincoMin1.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.irPagina2}:#SigeItrActMenorCincoMin2.xhtml"
+    NAME="output" PATH="/SigeItrActMenorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMin2.xhtml"
+    TITLE="#{menorCincoMinController.irPagina2}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.cancelar}:#main.xhtml"
+    NAME="output1" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{menorCincoMinController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#SigeItrRepInterrupcionPorIndiceContinuidadServicio.xhtml"
+  PATH="/SigeItrRepInterrupcionPorIndiceContinuidadServicio.xhtml"
+  SHAPE="912,2657,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#SigeItrRepInterrupcionPorIndiceContinuidadServicio.xhtml:0"
+   NAME="item"
+   PATH="/SigeItrRepInterrupcionPorIndiceContinuidadServicio.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionIndiceContinuidadController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteInterrupcionIndiceContinuidadController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepIndicesNacReg.xhtml"
+  PATH="/SigeItrRepIndicesNacReg.xhtml" SHAPE="912,2865,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepIndicesNacReg.xhtml:0" NAME="item"
+   PATH="/SigeItrRepIndicesNacReg.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionIndiceNacionalRegionalController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteInterrupcionIndiceNacionalRegionalController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepInterrupcionMayorCincoMin.xhtml"
+  PATH="/SigeItrRepInterrupcionMayorCincoMin.xhtml" SHAPE="912,3313,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepInterrupcionMayorCincoMin.xhtml:0"
+   NAME="item" PATH="/SigeItrRepInterrupcionMayorCincoMin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionMayorCincoMinController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteInterrupcionMayorCincoMinController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepDesplazamientoCincoMin.xhtml"
+  PATH="/SigeItrRepDesplazamientoCincoMin.xhtml" SHAPE="912,3489,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepDesplazamientoCincoMin.xhtml:0"
+   NAME="item" PATH="/SigeItrRepDesplazamientoCincoMin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteDesplazamientoController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteDesplazamientoController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepPerturbaciones.xhtml"
+  PATH="/SigeItrRepPerturbaciones.xhtml" SHAPE="912,3921,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepPerturbaciones.xhtml:0" NAME="item"
+   PATH="/SigeItrRepPerturbaciones.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionPerturbacionController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteInterrupcionPerturbacionController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepInterrupcionMenorCincoMin.xhtml"
+  PATH="/SigeItrRepInterrupcionMenorCincoMin.xhtml" SHAPE="912,4033,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepInterrupcionMenorCincoMin.xhtml:0"
+   NAME="item" PATH="/SigeItrRepInterrupcionMenorCincoMin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionMenorCincoMinController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteInterrupcionMenorCincoMinController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepResumenIndicesAcumMen.xhtml"
+  PATH="/SigeItrRepResumenIndicesAcumMen.xhtml" SHAPE="912,4241,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepResumenIndicesAcumMen.xhtml:0"
+   NAME="item" PATH="/SigeItrRepResumenIndicesAcumMen.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionResumenIndicesMensAcumController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteInterrupcionResumenIndicesMensAcumController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrIndicesCalidad.xhtml"
+  PATH="/SigeItrIndicesCalidad.xhtml" SHAPE="912,4449,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrIndicesCalidad.xhtml:0" NAME="item"
+   PATH="/SigeItrIndicesCalidad.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteIndiceCalidadController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteIndiceCalidadController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepInterrupcion.xhtml"
+  PATH="/SigeItrRepInterrupcion.xhtml" SHAPE="912,4657,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepInterrupcion.xhtml:0" NAME="item"
+   PATH="/SigeItrRepInterrupcion.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteInterrupcionController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionController.imprimir}:#SigeItrRepInterrupcion.xhtml"
+    NAME="output1" PATH="/SigeItrRepInterrupcion.xhtml"
+    TARGET="rules:#SigeItrRepInterrupcion.xhtml"
+    TITLE="#{reporteInterrupcionController.imprimir}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMayorCincoMin7ListaTotal.xhtml"
+  PATH="/SigeItrActMayorCincoMin7ListaTotal.xhtml" SHAPE="640,4017,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMayorCincoMin7ListaTotal.xhtml:0"
+   NAME="item" PATH="/SigeItrActMayorCincoMin7ListaTotal.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{seccionamientoController.actualizarDatosTabla}:#SigeItrActMayorCincoMin7ListaTotal.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin7ListaTotal.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin7ListaTotal.xhtml"
+    TITLE="#{seccionamientoController.actualizarDatosTabla}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{seccionamientoController.regresarInterup}:#SigeItrActMayorCincoMin2.xhtml"
+    NAME="output1" PATH="/SigeItrActMayorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2.xhtml"
+    TITLE="#{seccionamientoController.regresarInterup}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{seccionamientoController.cancelar}:#SigeItrActMayorCincoMin2.xhtml"
+    NAME="output2" PATH="/SigeItrActMayorCincoMin2.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2.xhtml"
+    TITLE="#{seccionamientoController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMayorCincoMin1Admin.xhtml"
+  PATH="/SigeItrActMayorCincoMin1Admin.xhtml" SHAPE="368,2657,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMayorCincoMin1Admin.xhtml:0"
+   NAME="item" PATH="/SigeItrActMayorCincoMin1Admin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.irPagina2}:#SigeItrActMayorCincoMin2Admin.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+    TITLE="#{mayorCincoMinController.irPagina2}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.cancelar}:#main.xhtml"
+    NAME="output1" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{mayorCincoMinController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+  PATH="/SigeItrActMayorCincoMin2Admin.xhtml" SHAPE="640,3473,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMayorCincoMin2Admin.xhtml:0"
+   NAME="item" PATH="/SigeItrActMayorCincoMin2Admin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.irPagina3}:#SigeItrActMayorCincoMin3Admin.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin3Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin3Admin.xhtml"
+    TITLE="#{mayorCincoMinController.irPagina3}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="201:#{mayorCincoMinController.detalleMaterial}:#SigeItrActMayorCincoMin2PostesAdmin.xhtml"
+    NAME="output1" PATH="/SigeItrActMayorCincoMin2PostesAdmin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2PostesAdmin.xhtml"
+    TITLE="#{mayorCincoMinController.detalleMaterial}:201" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="230234:#{mayorCincoMinController.detalleMaterial}:#SigeItrActMayorCincoMin2EquipoEspecialAdmin.xhtml"
+    NAME="output2"
+    PATH="/SigeItrActMayorCincoMin2EquipoEspecialAdmin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2EquipoEspecialAdmin.xhtml"
+    TITLE="#{mayorCincoMinController.detalleMaterial}:230234" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.cancelar}:#main.xhtml"
+    NAME="output3" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{mayorCincoMinController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.irPagina4}:#SigeItrActMayorCincoMin4Admin.xhtml"
+    NAME="output4" PATH="/SigeItrActMayorCincoMin4Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin4Admin.xhtml"
+    TITLE="#{mayorCincoMinController.irPagina4}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.guardarInterrupcion}:#SigeItrActMayorCincoMinGuardar.xhtml"
+    NAME="output5" PATH="/SigeItrActMayorCincoMinGuardar.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMinGuardar.xhtml"
+    TITLE="#{mayorCincoMinController.guardarInterrupcion}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="total:#{mayorCincoMinController.irSeccionamientos}:#SigeItrActMayorCincoMin7ListaTotalAdmin.xhtml"
+    NAME="output6" PATH="/SigeItrActMayorCincoMin7ListaTotalAdmin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin7ListaTotalAdmin.xhtml"
+    TITLE="#{mayorCincoMinController.irSeccionamientos}:total" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="parcial:#{mayorCincoMinController.irSeccionamientos}:#SigeItrActMayorCincoMin7ListaAdmin.xhtml"
+    NAME="output7" PATH="/SigeItrActMayorCincoMin7ListaAdmin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin7ListaAdmin.xhtml"
+    TITLE="#{mayorCincoMinController.irSeccionamientos}:parcial" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.irGemelas}:#SigeItrActMayorCincoMin6Admin.xhtml"
+    NAME="output8" PATH="/SigeItrActMayorCincoMin6Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin6Admin.xhtml"
+    TITLE="#{mayorCincoMinController.irGemelas}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="successIngreso:#{mayorCincoMinController.regresarDePaginaDos}:#SigeItrActMayorCincoMin1Admin.xhtml"
+    NAME="output9" PATH="/SigeItrActMayorCincoMin1Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin1Admin.xhtml"
+    TITLE="#{mayorCincoMinController.regresarDePaginaDos}:successIngreso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="successEdicion:#{mayorCincoMinController.regresarDePaginaDos}:#SigeItrActEditMayorCincoMin1Admin.xhtml"
+    NAME="output10" PATH="/SigeItrActEditMayorCincoMin1Admin.xhtml"
+    TARGET="rules:#SigeItrActEditMayorCincoMin1Admin.xhtml"
+    TITLE="#{mayorCincoMinController.regresarDePaginaDos}:successEdicion" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMayorCincoMin4Admin.xhtml"
+  PATH="/SigeItrActMayorCincoMin4Admin.xhtml" SHAPE="368,3489,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMayorCincoMin4Admin.xhtml:0"
+   NAME="item" PATH="/SigeItrActMayorCincoMin4Admin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.regresarDePag4}:#SigeItrActMayorCincoMin2Admin.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+    TITLE="#{mayorCincoMinController.regresarDePag4}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.agregarEmpleadoCuadrilla}:#SigeItrActMayorCincoMin4Admin.xhtml"
+    NAME="output1" PATH="/SigeItrActMayorCincoMin4Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin4Admin.xhtml"
+    TITLE="#{mayorCincoMinController.agregarEmpleadoCuadrilla}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.eliminarEmpleadoCuadrilla}:#SigeItrActMayorCincoMin4Admin.xhtml"
+    NAME="output2" PATH="/SigeItrActMayorCincoMin4Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin4Admin.xhtml"
+    TITLE="#{mayorCincoMinController.eliminarEmpleadoCuadrilla}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.cancelarCuadrillaVehiculo}:#SigeItrActMayorCincoMin2Admin.xhtml"
+    NAME="output3" PATH="/SigeItrActMayorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+    TITLE="#{mayorCincoMinController.cancelarCuadrillaVehiculo}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="saltar:#{mayorCincoMinController.regresarDePag4}:#SigeItrActMayorCincoMin2Admin.xhtml"
+    NAME="output4" PATH="/SigeItrActMayorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+    TITLE="#{mayorCincoMinController.regresarDePag4}:saltar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMayorCincoMin3Admin.xhtml"
+  PATH="/SigeItrActMayorCincoMin3Admin.xhtml" SHAPE="96,3473,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMayorCincoMin3Admin.xhtml:0"
+   NAME="item" PATH="/SigeItrActMayorCincoMin3Admin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.regresar}:#SigeItrActMayorCincoMin2Admin.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+    TITLE="#{mayorCincoMinController.regresar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.irPagina4}:#SigeItrActMayorCincoMin4Admin.xhtml"
+    NAME="output1" PATH="/SigeItrActMayorCincoMin4Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin4Admin.xhtml"
+    TITLE="#{mayorCincoMinController.irPagina4}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.agregarFusible}:#SigeItrActMayorCincoMin3Admin.xhtml"
+    NAME="output2" PATH="/SigeItrActMayorCincoMin3Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin3Admin.xhtml"
+    TITLE="#{mayorCincoMinController.agregarFusible}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.eliminarFusible}:#SigeItrActMayorCincoMin3Admin.xhtml"
+    NAME="output3" PATH="/SigeItrActMayorCincoMin3Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin3Admin.xhtml"
+    TITLE="#{mayorCincoMinController.eliminarFusible}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.cancelarFusiblesTrafos}:#SigeItrActMayorCincoMin2Admin.xhtml"
+    NAME="output4" PATH="/SigeItrActMayorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+    TITLE="#{mayorCincoMinController.cancelarFusiblesTrafos}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.agregarTrafo}:#SigeItrActMayorCincoMin3Admin.xhtml"
+    NAME="output5" PATH="/SigeItrActMayorCincoMin3Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin3Admin.xhtml"
+    TITLE="#{mayorCincoMinController.agregarTrafo}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.eliminarTrafo}:#SigeItrActMayorCincoMin3Admin.xhtml"
+    NAME="output6" PATH="/SigeItrActMayorCincoMin3Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin3Admin.xhtml"
+    TITLE="#{mayorCincoMinController.eliminarTrafo}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMayorCincoMin6Admin.xhtml"
+  PATH="/SigeItrActMayorCincoMin6Admin.xhtml" SHAPE="368,4033,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMayorCincoMin6Admin.xhtml:0"
+   NAME="item" PATH="/SigeItrActMayorCincoMin6Admin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.eliminarGemela}:#SigeItrActMayorCincoMin6Admin.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin6Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin6Admin.xhtml"
+    TITLE="#{mayorCincoMinController.eliminarGemela}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.agregarGemela}:#SigeItrActMayorCincoMin6Admin.xhtml"
+    NAME="output1" PATH="/SigeItrActMayorCincoMin6Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin6Admin.xhtml"
+    TITLE="#{mayorCincoMinController.agregarGemela}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.regresarDeGemelas}:#SigeItrActMayorCincoMin2Admin.xhtml"
+    NAME="output2" PATH="/SigeItrActMayorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+    TITLE="#{mayorCincoMinController.regresarDeGemelas}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.cancelarGemelas}:#SigeItrActMayorCincoMin2Admin.xhtml"
+    NAME="output3" PATH="/SigeItrActMayorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+    TITLE="#{mayorCincoMinController.cancelarGemelas}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMayorCincoMin2PostesAdmin.xhtml"
+  PATH="/SigeItrActMayorCincoMin2PostesAdmin.xhtml" SHAPE="368,4241,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMayorCincoMin2PostesAdmin.xhtml:0"
+   NAME="item" PATH="/SigeItrActMayorCincoMin2PostesAdmin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.agregarPoste}:#SigeItrActMayorCincoMin2PostesAdmin.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin2PostesAdmin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2PostesAdmin.xhtml"
+    TITLE="#{mayorCincoMinController.agregarPoste}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.eliminarPoste}:#SigeItrActMayorCincoMin2PostesAdmin.xhtml"
+    NAME="output1" PATH="/SigeItrActMayorCincoMin2PostesAdmin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2PostesAdmin.xhtml"
+    TITLE="#{mayorCincoMinController.eliminarPoste}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.regresarDePostes}:#SigeItrActMayorCincoMin2Admin.xhtml"
+    NAME="output2" PATH="/SigeItrActMayorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+    TITLE="#{mayorCincoMinController.regresarDePostes}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.cancelarPostes}:#SigeItrActMayorCincoMin2Admin.xhtml"
+    NAME="output3" PATH="/SigeItrActMayorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+    TITLE="#{mayorCincoMinController.cancelarPostes}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#SigeItrActMayorCincoMin2EquipoEspecialAdmin.xhtml"
+  PATH="/SigeItrActMayorCincoMin2EquipoEspecialAdmin.xhtml"
+  SHAPE="368,2865,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#SigeItrActMayorCincoMin2EquipoEspecialAdmin.xhtml:0"
+   NAME="item" PATH="/SigeItrActMayorCincoMin2EquipoEspecialAdmin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.agregarEquipo}:#SigeItrActMayorCincoMin2EquipoEspecialAdmin.xhtml"
+    NAME="output"
+    PATH="/SigeItrActMayorCincoMin2EquipoEspecialAdmin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2EquipoEspecialAdmin.xhtml"
+    TITLE="#{mayorCincoMinController.agregarEquipo}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.eliminarEquipo}:#SigeItrActMayorCincoMin2EquipoEspecialAdmin.xhtml"
+    NAME="output1"
+    PATH="/SigeItrActMayorCincoMin2EquipoEspecialAdmin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2EquipoEspecialAdmin.xhtml"
+    TITLE="#{mayorCincoMinController.eliminarEquipo}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.regresarDeEquipoEspecial}:#SigeItrActMayorCincoMin2Admin.xhtml"
+    NAME="output2" PATH="/SigeItrActMayorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+    TITLE="#{mayorCincoMinController.regresarDeEquipoEspecial}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.cancelarEquipos}:#SigeItrActMayorCincoMin2Admin.xhtml"
+    NAME="output3" PATH="/SigeItrActMayorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+    TITLE="#{mayorCincoMinController.cancelarEquipos}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMayorCincoMin7ListaAdmin.xhtml"
+  PATH="/SigeItrActMayorCincoMin7ListaAdmin.xhtml" SHAPE="368,4449,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMayorCincoMin7ListaAdmin.xhtml:0"
+   NAME="item" PATH="/SigeItrActMayorCincoMin7ListaAdmin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{seccionamientoController.regresarInterup}:#SigeItrActMayorCincoMin2Admin.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+    TITLE="#{seccionamientoController.regresarInterup}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{seccionamientoController.actualizarDatosTabla}:#SigeItrActMayorCincoMin7ListaAdmin.xhtml"
+    NAME="output1" PATH="/SigeItrActMayorCincoMin7ListaAdmin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin7ListaAdmin.xhtml"
+    TITLE="#{seccionamientoController.actualizarDatosTabla}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{seccionamientoController.cancelar}:#SigeItrActMayorCincoMin2Admin.xhtml"
+    NAME="output2" PATH="/SigeItrActMayorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+    TITLE="#{seccionamientoController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActEditMayorCincoMin1Admin.xhtml"
+  PATH="/SigeItrActEditMayorCincoMin1Admin.xhtml" SHAPE="912,4833,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActEditMayorCincoMin1Admin.xhtml:0"
+   NAME="item" PATH="/SigeItrActEditMayorCincoMin1Admin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.irPagina2}:#SigeItrActMayorCincoMin2Admin.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+    TITLE="#{mayorCincoMinController.irPagina2}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.cancelar}:#main.xhtml"
+    NAME="output1" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{mayorCincoMinController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#SigeItrActMayorCincoMin7ListaTotalAdmin.xhtml"
+  PATH="/SigeItrActMayorCincoMin7ListaTotalAdmin.xhtml"
+  SHAPE="368,4657,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#SigeItrActMayorCincoMin7ListaTotalAdmin.xhtml:0"
+   NAME="item" PATH="/SigeItrActMayorCincoMin7ListaTotalAdmin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{seccionamientoController.actualizarDatosTabla}:#SigeItrActMayorCincoMin7ListaTotalAdmin.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin7ListaTotalAdmin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin7ListaTotalAdmin.xhtml"
+    TITLE="#{seccionamientoController.actualizarDatosTabla}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{seccionamientoController.regresarInterup}:#SigeItrActMayorCincoMin2Admin.xhtml"
+    NAME="output1" PATH="/SigeItrActMayorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+    TITLE="#{seccionamientoController.regresarInterup}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{seccionamientoController.cancelar}:#SigeItrActMayorCincoMin2Admin.xhtml"
+    NAME="output2" PATH="/SigeItrActMayorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Admin.xhtml"
+    TITLE="#{seccionamientoController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMenorCincoMin1Admin.xhtml"
+  PATH="/SigeItrActMenorCincoMin1Admin.xhtml" SHAPE="912,5073,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMenorCincoMin1Admin.xhtml:0"
+   NAME="item" PATH="/SigeItrActMenorCincoMin1Admin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.irPagina2}:#SigeItrActMenorCincoMin2Admin.xhtml"
+    NAME="output" PATH="/SigeItrActMenorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMin2Admin.xhtml"
+    TITLE="#{menorCincoMinController.irPagina2}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.cancelar}:#main.xhtml"
+    NAME="output1" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{menorCincoMinController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMenorCincoMin2Admin.xhtml"
+  PATH="/SigeItrActMenorCincoMin2Admin.xhtml" SHAPE="640,4817,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMenorCincoMin2Admin.xhtml:0"
+   NAME="item" PATH="/SigeItrActMenorCincoMin2Admin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.irPagina3}:#SigeItrActMenorCincoMin3Admin.xhtml"
+    NAME="output" PATH="/SigeItrActMenorCincoMin3Admin.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMin3Admin.xhtml"
+    TITLE="#{menorCincoMinController.irPagina3}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.cancelar}:#main.xhtml"
+    NAME="output1" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{menorCincoMinController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.guardarReporte}:#SigeItrActMenorCincoMinGuardarAdmin.xhtml"
+    NAME="output2" PATH="/SigeItrActMenorCincoMinGuardarAdmin.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMinGuardarAdmin.xhtml"
+    TITLE="#{menorCincoMinController.guardarReporte}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="successEdicion:#{menorCincoMinController.regresarDePaginaDos}:#SigeItrActEditMenorCincoMin1Admin.xhtml"
+    NAME="output3" PATH="/SigeItrActEditMenorCincoMin1Admin.xhtml"
+    TARGET="rules:#SigeItrActEditMenorCincoMin1Admin.xhtml"
+    TITLE="#{menorCincoMinController.regresarDePaginaDos}:successEdicion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="successIngreso:#{menorCincoMinController.regresarDePaginaDos}:#SigeItrActMenorCincoMin1Admin.xhtml"
+    NAME="output4" PATH="/SigeItrActMenorCincoMin1Admin.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMin1Admin.xhtml"
+    TITLE="#{menorCincoMinController.regresarDePaginaDos}:successIngreso" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMenorCincoMin3Admin.xhtml"
+  PATH="/SigeItrActMenorCincoMin3Admin.xhtml" SHAPE="368,5073,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMenorCincoMin3Admin.xhtml:0"
+   NAME="item" PATH="/SigeItrActMenorCincoMin3Admin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.guardarReporte}:#SigeItrActMenorCincoMinGuardarAdmin.xhtml"
+    NAME="output" PATH="/SigeItrActMenorCincoMinGuardarAdmin.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMinGuardarAdmin.xhtml"
+    TITLE="#{menorCincoMinController.guardarReporte}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.agregarEmpleadoCuadrilla}:#SigeItrActMenorCincoMin3Admin.xhtml"
+    NAME="output1" PATH="/SigeItrActMenorCincoMin3Admin.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMin3Admin.xhtml"
+    TITLE="#{menorCincoMinController.agregarEmpleadoCuadrilla}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.eliminarEmpleadoCuadrilla}:#SigeItrActMenorCincoMin3Admin.xhtml"
+    NAME="output2" PATH="/SigeItrActMenorCincoMin3Admin.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMin3Admin.xhtml"
+    TITLE="#{menorCincoMinController.eliminarEmpleadoCuadrilla}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.cancelarCuadrillaVehiculo}:#SigeItrActMenorCincoMin2Admin.xhtml"
+    NAME="output3" PATH="/SigeItrActMenorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMin2Admin.xhtml"
+    TITLE="#{menorCincoMinController.cancelarCuadrillaVehiculo}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.regresarDePag3}:#SigeItrActMenorCincoMin2Admin.xhtml"
+    NAME="output4" PATH="/SigeItrActMenorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMin2Admin.xhtml"
+    TITLE="#{menorCincoMinController.regresarDePag3}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActEditMenorCincoMin1Admin.xhtml"
+  PATH="/SigeItrActEditMenorCincoMin1Admin.xhtml" SHAPE="368,4833,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActEditMenorCincoMin1Admin.xhtml:0"
+   NAME="item" PATH="/SigeItrActEditMenorCincoMin1Admin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.irPagina2}:#SigeItrActMenorCincoMin2Admin.xhtml"
+    NAME="output" PATH="/SigeItrActMenorCincoMin2Admin.xhtml"
+    TARGET="rules:#SigeItrActMenorCincoMin2Admin.xhtml"
+    TITLE="#{menorCincoMinController.irPagina2}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{menorCincoMinController.cancelar}:#main.xhtml"
+    NAME="output1" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{menorCincoMinController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActInterrupcionAdmin.xhtml"
+  PATH="/SigeItrActInterrupcionAdmin.xhtml" SHAPE="96,4817,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActInterrupcionAdmin.xhtml:0"
+   NAME="item" PATH="/SigeItrActInterrupcionAdmin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="mas5min:#{actInterrupcionController.modificar}:#SigeItrActEditMayorCincoMin1Admin.xhtml"
+    NAME="output" PATH="/SigeItrActEditMayorCincoMin1Admin.xhtml"
+    TARGET="rules:#SigeItrActEditMayorCincoMin1Admin.xhtml"
+    TITLE="#{actInterrupcionController.modificar}:mas5min" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="menos5min:#{actInterrupcionController.modificar}:#SigeItrActEditMenorCincoMin1Admin.xhtml"
+    NAME="output1" PATH="/SigeItrActEditMenorCincoMin1Admin.xhtml"
+    TARGET="rules:#SigeItrActEditMenorCincoMin1Admin.xhtml"
+    TITLE="#{actInterrupcionController.modificar}:menos5min" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{actInterrupcionController.cancelar}:#main.xhtml"
+    NAME="output2" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{actInterrupcionController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepInterrupcionAdmin.xhtml"
+  PATH="/SigeItrRepInterrupcionAdmin.xhtml" SHAPE="912,5537,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepInterrupcionAdmin.xhtml:0"
+   NAME="item" PATH="/SigeItrRepInterrupcionAdmin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteInterrupcionController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionController.imprimir}:#SigeItrRepInterrupcionAdmin.xhtml"
+    NAME="output1" PATH="/SigeItrRepInterrupcionAdmin.xhtml"
+    TARGET="rules:#SigeItrRepInterrupcionAdmin.xhtml"
+    TITLE="#{reporteInterrupcionController.imprimir}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#ayuda.xhtml" PATH="/ayuda.xhtml"
+  SHAPE="640,3905,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#ayuda.xhtml:0" NAME="item"
+   PATH="/ayuda.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{glosarioController.irListaTerminos}:#SigeItrLisGlosarios.xhtml"
+    NAME="output" PATH="/SigeItrLisGlosarios.xhtml"
+    TARGET="rules:#SigeItrLisGlosarios.xhtml"
+    TITLE="#{glosarioController.irListaTerminos}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActCalculoIndicesGlobales.xhtml"
+  PATH="/SigeItrActCalculoIndicesGlobales.xhtml" SHAPE="48,7489,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActCalculoIndicesGlobales.xhtml:0"
+   NAME="item" PATH="/SigeItrActCalculoIndicesGlobales.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{calculoIndicesController.cancelar}:#SigeItrActCalculoIndicesGlobales.xhtml"
+    NAME="output" PATH="/SigeItrActCalculoIndicesGlobales.xhtml"
+    TARGET="rules:#SigeItrActCalculoIndicesGlobales.xhtml"
+    TITLE="#{calculoIndicesController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID=":#{calculoIndicesController.ejecutarCalculoIndicesGlobales}:#SigeItrActCalculoIndicesGlobales.xhtml"
+    NAME="output1" PATH="/SigeItrActCalculoIndicesGlobales.xhtml"
+    TARGET="rules:#SigeItrActCalculoIndicesGlobales.xhtml"
+    TITLE="#{calculoIndicesController.ejecutarCalculoIndicesGlobales}:[any]" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActCalculoIndicesCausa.xhtml"
+  PATH="/SigeItrActCalculoIndicesCausa.xhtml" SHAPE="256,7505,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActCalculoIndicesCausa.xhtml:0"
+   NAME="item" PATH="/SigeItrActCalculoIndicesCausa.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{calculoIndicesController.cancelar}:#SigeItrActCalculoIndicesCausa.xhtml"
+    NAME="output" PATH="/SigeItrActCalculoIndicesCausa.xhtml"
+    TARGET="rules:#SigeItrActCalculoIndicesCausa.xhtml"
+    TITLE="#{calculoIndicesController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID=":#{calculoIndicesController.ejecutarCalculoIndicesCausa}:#SigeItrActCalculoIndicesCausa.xhtml"
+    NAME="output1" PATH="/SigeItrActCalculoIndicesCausa.xhtml"
+    TARGET="rules:#SigeItrActCalculoIndicesCausa.xhtml"
+    TITLE="#{calculoIndicesController.ejecutarCalculoIndicesCausa}:[any]" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#SigeItrActCalculoIndicesPropiosNoPropios.xhtml"
+  PATH="/SigeItrActCalculoIndicesPropiosNoPropios.xhtml"
+  SHAPE="464,7489,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#SigeItrActCalculoIndicesPropiosNoPropios.xhtml:0"
+   NAME="item" PATH="/SigeItrActCalculoIndicesPropiosNoPropios.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{calculoIndicesController.cancelar}:#SigeItrActCalculoIndicesPropiosNoPropios.xhtml"
+    NAME="output" PATH="/SigeItrActCalculoIndicesPropiosNoPropios.xhtml"
+    TARGET="rules:#SigeItrActCalculoIndicesPropiosNoPropios.xhtml"
+    TITLE="#{calculoIndicesController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID=":#{calculoIndicesController.ejecutarCalculoIndicesPropiosNoPropios}:#SigeItrActCalculoIndicesPropiosNoPropios.xhtml"
+    NAME="output1"
+    PATH="/SigeItrActCalculoIndicesPropiosNoPropios.xhtml"
+    TARGET="rules:#SigeItrActCalculoIndicesPropiosNoPropios.xhtml"
+    TITLE="#{calculoIndicesController.ejecutarCalculoIndicesPropiosNoPropios}:[any]" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActCalculoIndicesTrifasicos.xhtml"
+  PATH="/SigeItrActCalculoIndicesTrifasicos.xhtml" SHAPE="672,7505,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActCalculoIndicesTrifasicos.xhtml:0"
+   NAME="item" PATH="/SigeItrActCalculoIndicesTrifasicos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{calculoIndicesController.cancelar}:#SigeItrActCalculoIndicesTrifasicos.xhtml"
+    NAME="output" PATH="/SigeItrActCalculoIndicesTrifasicos.xhtml"
+    TARGET="rules:#SigeItrActCalculoIndicesTrifasicos.xhtml"
+    TITLE="#{calculoIndicesController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID=":#{calculoIndicesController.ejecutarCalculoIndicesTrifasicos}:#SigeItrActCalculoIndicesTrifasicos.xhtml"
+    NAME="output1" PATH="/SigeItrActCalculoIndicesTrifasicos.xhtml"
+    TARGET="rules:#SigeItrActCalculoIndicesTrifasicos.xhtml"
+    TITLE="#{calculoIndicesController.ejecutarCalculoIndicesTrifasicos}:[any]" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepInterrupcionCircuito.xhtml"
+  PATH="/SigeItrRepInterrupcionCircuito.xhtml" SHAPE="912,5681,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepInterrupcionCircuito.xhtml:0"
+   NAME="item" PATH="/SigeItrRepInterrupcionCircuito.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{informeController.cancelar}:#main.xhtml" NAME="output"
+    PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{informeController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepInterrupcionPeriodo.xhtml"
+  PATH="/SigeItrRepInterrupcionPeriodo.xhtml" SHAPE="912,5793,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepInterrupcionPeriodo.xhtml:0"
+   NAME="item" PATH="/SigeItrRepInterrupcionPeriodo.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{informeController.cancelar}:#main.xhtml" NAME="output"
+    PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{informeController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepRespuesta.xhtml"
+  PATH="/SigeItrRepRespuesta.xhtml" SHAPE="640,5777,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepRespuesta.xhtml:0" NAME="item"
+   PATH="/SigeItrRepRespuesta.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{informeController.regresar}:#SigeItrRepInterrupcionPeriodo.xhtml"
+    NAME="output" PATH="/SigeItrRepInterrupcionPeriodo.xhtml"
+    TARGET="rules:#SigeItrRepInterrupcionPeriodo.xhtml"
+    TITLE="#{informeController.regresar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#SigeItrRepRespuestaInterrupcionPorCircuito.xhtml"
+  PATH="/SigeItrRepRespuestaInterrupcionPorCircuito.xhtml"
+  SHAPE="864,7489,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#SigeItrRepRespuestaInterrupcionPorCircuito.xhtml:0"
+   NAME="item" PATH="/SigeItrRepRespuestaInterrupcionPorCircuito.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{informeController.regresar}:#SigeItrRepRespuestaInterrupcionPorCircuito.xhtml"
+    NAME="output"
+    PATH="/SigeItrRepRespuestaInterrupcionPorCircuito.xhtml"
+    TARGET="rules:#SigeItrRepRespuestaInterrupcionPorCircuito.xhtml"
+    TITLE="#{informeController.regresar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepInterrupcionCausa.xhtml"
+  PATH="/SigeItrRepInterrupcionCausa.xhtml" SHAPE="912,5905,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepInterrupcionCausa.xhtml:0"
+   NAME="item" PATH="/SigeItrRepInterrupcionCausa.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionCausaController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteInterrupcionCausaController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepInterrupcionIndicadorGlobal.xhtml"
+  PATH="/SigeItrRepInterrupcionIndicadorGlobal.xhtml"
+  SHAPE="912,6017,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#SigeItrRepInterrupcionIndicadorGlobal.xhtml:0" NAME="item"
+   PATH="/SigeItrRepInterrupcionIndicadorGlobal.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionIndicadorGlobalController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteInterrupcionIndicadorGlobalController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActEmpleados.xhtml"
+  PATH="/SigeItrActEmpleados.xhtml" SHAPE="32,1169,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActEmpleados.xhtml:0" NAME="item"
+   PATH="/SigeItrActEmpleados.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{empleadoController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{empleadoController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActSecciones.xhtml"
+  PATH="/SigeItrActSecciones.xhtml" SHAPE="32,1281,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActSecciones.xhtml:0" NAME="item"
+   PATH="/SigeItrActSecciones.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{seccionController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{seccionController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActSubregiones.xhtml"
+  PATH="/SigeItrActSubregiones.xhtml" SHAPE="32,1393,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActSubregiones.xhtml:0" NAME="item"
+   PATH="/SigeItrActSubregiones.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{subregionController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{subregionController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActRegiones.xhtml"
+  PATH="/SigeItrActRegiones.xhtml" SHAPE="32,1505,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActRegiones.xhtml:0" NAME="item"
+   PATH="/SigeItrActRegiones.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{regionesController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{regionesController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActProvolma.xhtml"
+  PATH="/SigeItrActProvolma.xhtml" SHAPE="32,1617,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActProvolma.xhtml:0" NAME="item"
+   PATH="/SigeItrActProvolma.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{provolmaController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{provolmaController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActTipoVoltaje.xhtml"
+  PATH="/SigeItrActTipoVoltaje.xhtml" SHAPE="32,1729,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActTipoVoltaje.xhtml:0" NAME="item"
+   PATH="/SigeItrActTipoVoltaje.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{tipoVoltajeController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{tipoVoltajeController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActConsecAnoAnterior.xhtml"
+  PATH="/SigeItrActConsecAnoAnterior.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActConsecAnoAnterior.xhtml:0"
+   NAME="item" PATH="/SigeItrActConsecAnoAnterior.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consAnoAnteriorController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{consAnoAnteriorController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrParametro.xhtml"
+  PATH="/SigeItrParametro.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrParametro.xhtml:0" NAME="item"
+   PATH="/SigeItrParametro.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{parametroController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{parametroController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrTrasSecciones.xhtml"
+  PATH="/SigeItrTrasSecciones.xhtml" SHAPE="32,1841,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrTrasSecciones.xhtml:0" NAME="item"
+   PATH="/SigeItrTrasSecciones.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{trasSeccionController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{trasSeccionController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrLisGlosarios.xhtml"
+  PATH="/SigeItrLisGlosarios.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrLisGlosarios.xhtml:0" NAME="item"
+   PATH="/SigeItrLisGlosarios.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{glosarioController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{glosarioController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepInterrupcionIndicadorCausa.xhtml"
+  PATH="/SigeItrRepInterrupcionIndicadorCausa.xhtml"
+  SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepInterrupcionIndicadorCausa.xhtml:0"
+   NAME="item" PATH="/SigeItrRepInterrupcionIndicadorCausa.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionIndicadorCausaController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteInterrupcionIndicadorCausaController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#SigeItrRepInterrupcionIndicadorTrifasico.xhtml"
+  PATH="/SigeItrRepInterrupcionIndicadorTrifasico.xhtml"
+  SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#SigeItrRepInterrupcionIndicadorTrifasico.xhtml:0"
+   NAME="item" PATH="/SigeItrRepInterrupcionIndicadorTrifasico.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionIndicadorTrifasicoController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteInterrupcionIndicadorTrifasicoController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#SigeItrRepInterrupcionIndicadorPropioNoPropioSeccion.xhtml"
+  PATH="/SigeItrRepInterrupcionIndicadorPropioNoPropioSeccion.xhtml"
+  SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#SigeItrRepInterrupcionIndicadorPropioNoPropioSeccion.xhtml:0"
+   NAME="item"
+   PATH="/SigeItrRepInterrupcionIndicadorPropioNoPropioSeccion.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionIndicadorPropioNoPropioController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteInterrupcionIndicadorPropioNoPropioController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepDifTiempos.xhtml"
+  PATH="/SigeItrRepDifTiempos.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepDifTiempos.xhtml:0" NAME="item"
+   PATH="/SigeItrRepDifTiempos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteDiferenciaTiemposController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteDiferenciaTiemposController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepFusiblesInstRet.xhtml"
+  PATH="/SigeItrRepFusiblesInstRet.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepFusiblesInstRet.xhtml:0"
+   NAME="item" PATH="/SigeItrRepFusiblesInstRet.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteFusibleInstRetController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteFusibleInstRetController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#SigeItrRepInterrupcionProteccionCircuito.xhtml"
+  PATH="/SigeItrRepInterrupcionProteccionCircuito.xhtml"
+  SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#SigeItrRepInterrupcionProteccionCircuito.xhtml:0"
+   NAME="item" PATH="/SigeItrRepInterrupcionProteccionCircuito.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionProteccionCircuitoController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteInterrupcionProteccionCircuitoController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepFusiblesInstRetSeccion.xhtml"
+  PATH="/SigeItrRepFusiblesInstRetSeccion.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepFusiblesInstRetSeccion.xhtml:0"
+   NAME="item" PATH="/SigeItrRepFusiblesInstRetSeccion.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteFusibleInstRetSeccionController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteFusibleInstRetSeccionController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepIndiceGlobalSeccion.xhtml"
+  PATH="/SigeItrRepIndiceGlobalSeccion.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepIndiceGlobalSeccion.xhtml:0"
+   NAME="item" PATH="/SigeItrRepIndiceGlobalSeccion.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteIndiceGlobalSeccionController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteIndiceGlobalSeccionController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepInterrupcionIndMesAcum.xhtml"
+  PATH="/SigeItrRepInterrupcionIndMesAcum.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepInterrupcionIndMesAcum.xhtml:0"
+   NAME="item" PATH="/SigeItrRepInterrupcionIndMesAcum.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionIndiceMAController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteInterrupcionIndiceMAController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeSigeconConsultaRegion.xhtml"
+  PATH="/SigeSigeconConsultaRegion.xhtml" SHAPE="32,6113,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeSigeconConsultaRegion.xhtml:0"
+   NAME="item" PATH="/SigeSigeconConsultaRegion.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaRegionController.mostrarSubRegiones}:#SigeSigeconConsultaSubRegiones.xhtml"
+    NAME="output" PATH="/SigeSigeconConsultaSubRegiones.xhtml"
+    TARGET="rules:#SigeSigeconConsultaSubRegiones.xhtml"
+    TITLE="#{consultaRegionController.mostrarSubRegiones}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeSigeconConsultaSubRegiones.xhtml"
+  PATH="/SigeSigeconConsultaSubRegiones.xhtml" SHAPE="256,6129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeSigeconConsultaSubRegiones.xhtml:0"
+   NAME="item" PATH="/SigeSigeconConsultaSubRegiones.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaSubRegionController.mostrarSubEstaciones}:#SigeSigeconConsultaSubEstacion.xhtml"
+    NAME="output" PATH="/SigeSigeconConsultaSubEstacion.xhtml"
+    TARGET="rules:#SigeSigeconConsultaSubEstacion.xhtml"
+    TITLE="#{consultaSubRegionController.mostrarSubEstaciones}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaSubRegionController.regresar}:#SigeSigeconConsultaRegion.xhtml"
+    NAME="output1" PATH="/SigeSigeconConsultaRegion.xhtml"
+    TARGET="rules:#SigeSigeconConsultaRegion.xhtml"
+    TITLE="#{consultaSubRegionController.regresar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeSigeconConsultaSubEstacion.xhtml"
+  PATH="/SigeSigeconConsultaSubEstacion.xhtml" SHAPE="480,6113,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeSigeconConsultaSubEstacion.xhtml:0"
+   NAME="item" PATH="/SigeSigeconConsultaSubEstacion.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaSubEstacionController.verCircuitos}:#SigeSigeconConsultaCircuitos.xhtml"
+    NAME="output" PATH="/SigeSigeconConsultaCircuitos.xhtml"
+    TARGET="rules:#SigeSigeconConsultaCircuitos.xhtml"
+    TITLE="#{consultaSubEstacionController.verCircuitos}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaSubEstacionController.regresar}:#SigeSigeconConsultaSubRegiones.xhtml"
+    NAME="output1" PATH="/SigeSigeconConsultaSubRegiones.xhtml"
+    TARGET="rules:#SigeSigeconConsultaSubRegiones.xhtml"
+    TITLE="#{consultaSubEstacionController.regresar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeSigeconConsultaSubEstacion2.xhtml"
+  PATH="/SigeSigeconConsultaSubEstacion2.xhtml" SHAPE="32,6257,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeSigeconConsultaSubEstacion2.xhtml:0"
+   NAME="item" PATH="/SigeSigeconConsultaSubEstacion2.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaSubEstacionController.abrirCircuitos}:#SigeSigeconConsultaCircuitos2.xhtml"
+    NAME="output" PATH="/SigeSigeconConsultaCircuitos2.xhtml"
+    TARGET="rules:#SigeSigeconConsultaCircuitos2.xhtml"
+    TITLE="#{consultaSubEstacionController.abrirCircuitos}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeSigeconConsultaCircuitos.xhtml"
+  PATH="/SigeSigeconConsultaCircuitos.xhtml" SHAPE="704,6129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeSigeconConsultaCircuitos.xhtml:0"
+   NAME="item" PATH="/SigeSigeconConsultaCircuitos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaCircuitoController.verSecciones}:#SigeSigeconConsultaSecciones.xhtml"
+    NAME="output" PATH="/SigeSigeconConsultaSecciones.xhtml"
+    TARGET="rules:#SigeSigeconConsultaSecciones.xhtml"
+    TITLE="#{consultaCircuitoController.verSecciones}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaCircuitoController.regresar}:#SigeSigeconConsultaSubEstacion.xhtml"
+    NAME="output1" PATH="/SigeSigeconConsultaSubEstacion.xhtml"
+    TARGET="rules:#SigeSigeconConsultaSubEstacion.xhtml"
+    TITLE="#{consultaCircuitoController.regresar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeSigeconConsultaCircuitos2.xhtml"
+  PATH="/SigeSigeconConsultaCircuitos2.xhtml" SHAPE="256,6273,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeSigeconConsultaCircuitos2.xhtml:0"
+   NAME="item" PATH="/SigeSigeconConsultaCircuitos2.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaCircuitoController.abrirSecciones}:#SigeSigeconConsultaSecciones2.xhtml"
+    NAME="output" PATH="/SigeSigeconConsultaSecciones2.xhtml"
+    TARGET="rules:#SigeSigeconConsultaSecciones2.xhtml"
+    TITLE="#{consultaCircuitoController.abrirSecciones}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaCircuitoController.regresarSub}:#SigeSigeconConsultaSubEstacion2.xhtml"
+    NAME="output1" PATH="/SigeSigeconConsultaSubEstacion2.xhtml"
+    TARGET="rules:#SigeSigeconConsultaSubEstacion2.xhtml"
+    TITLE="#{consultaCircuitoController.regresarSub}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeSigeconConsultaSecciones.xhtml"
+  PATH="/SigeSigeconConsultaSecciones.xhtml" SHAPE="928,6113,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeSigeconConsultaSecciones.xhtml:0"
+   NAME="item" PATH="/SigeSigeconConsultaSecciones.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaSeccionController.regresar}:#SigeSigeconConsultaCircuitos.xhtml"
+    NAME="output" PATH="/SigeSigeconConsultaCircuitos.xhtml"
+    TARGET="rules:#SigeSigeconConsultaCircuitos.xhtml"
+    TITLE="#{consultaSeccionController.regresar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeSigeconConsultaSecciones2.xhtml"
+  PATH="/SigeSigeconConsultaSecciones2.xhtml" SHAPE="480,6257,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeSigeconConsultaSecciones2.xhtml:0"
+   NAME="item" PATH="/SigeSigeconConsultaSecciones2.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaSeccionController.regresarCir}:#SigeSigeconConsultaCircuitos2.xhtml"
+    NAME="output" PATH="/SigeSigeconConsultaCircuitos2.xhtml"
+    TARGET="rules:#SigeSigeconConsultaCircuitos2.xhtml"
+    TITLE="#{consultaSeccionController.regresarCir}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrConsultaCausa.xhtml"
+  PATH="/SigeItrConsultaCausa.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrConsultaCausa.xhtml:0" NAME="item"
+   PATH="/SigeItrConsultaCausa.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaCausaController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{consultaCausaController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrConsultaDano.xhtml"
+  PATH="/SigeItrConsultaDano.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrConsultaDano.xhtml:0" NAME="item"
+   PATH="/SigeItrConsultaDano.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaDanoController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{consultaDanoController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrConsultaProteccion.xhtml"
+  PATH="/SigeItrConsultaProteccion.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrConsultaProteccion.xhtml:0"
+   NAME="item" PATH="/SigeItrConsultaProteccion.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaProteccionController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{consultaProteccionController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrConsultaOficina.xhtml"
+  PATH="/SigeItrConsultaOficina.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrConsultaOficina.xhtml:0" NAME="item"
+   PATH="/SigeItrConsultaOficina.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaOficinaController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{consultaOficinaController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrConsultaAnimal.xhtml"
+  PATH="/SigeItrConsultaAnimal.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrConsultaAnimal.xhtml:0" NAME="item"
+   PATH="/SigeItrConsultaAnimal.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaAnimalController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{consultaAnimalController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrConsultaCorreo.xhtml"
+  PATH="/SigeItrConsultaCorreo.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrConsultaCorreo.xhtml:0" NAME="item"
+   PATH="/SigeItrConsultaCorreo.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaCorreoController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{consultaCorreoController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrConsultaProvolma.xhtml"
+  PATH="/SigeItrConsultaProvolma.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrConsultaProvolma.xhtml:0" NAME="item"
+   PATH="/SigeItrConsultaProvolma.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaProvolmaController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{consultaProvolmaController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrConsultaMaterial.xhtml"
+  PATH="/SigeItrConsultaMaterial.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrConsultaMaterial.xhtml:0" NAME="item"
+   PATH="/SigeItrConsultaMaterial.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaMaterialController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{consultaMaterialController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrConsultaTipoVoltaje.xhtml"
+  PATH="/SigeItrConsultaTipoVoltaje.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrConsultaTipoVoltaje.xhtml:0"
+   NAME="item" PATH="/SigeItrConsultaTipoVoltaje.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{consultaTipoVoltajeController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{consultaTipoVoltajeController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepTrafosInstRetSeccion.xhtml"
+  PATH="/SigeItrRepTrafosInstRetSeccion.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepTrafosInstRetSeccion.xhtml:0"
+   NAME="item" PATH="/SigeItrRepTrafosInstRetSeccion.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteTrafoInstRetSeccionController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteTrafoInstRetSeccionController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepTrafosInstRet.xhtml"
+  PATH="/SigeItrRepTrafosInstRet.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepTrafosInstRet.xhtml:0" NAME="item"
+   PATH="/SigeItrRepTrafosInstRet.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteTrafoInstRetController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteTrafoInstRetController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepInterrupcionesPorAnimales.xhtml"
+  PATH="/SigeItrRepInterrupcionesPorAnimales.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepInterrupcionesPorAnimales.xhtml:0"
+   NAME="item" PATH="/SigeItrRepInterrupcionesPorAnimales.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteInterrupcionPorAnimalController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteInterrupcionPorAnimalController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrRepAuditoria.xhtml"
+  PATH="/SigeItrRepAuditoria.xhtml" SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrRepAuditoria.xhtml:0" NAME="item"
+   PATH="/SigeItrRepAuditoria.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteAuditoriaController.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteAuditoriaController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActSubEstacionSubRegion.xhtml"
+  PATH="/SigeItrActSubEstacionSubRegion.xhtml" SHAPE="32,1953,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActSubEstacionSubRegion.xhtml:0"
+   NAME="item" PATH="/SigeItrActSubEstacionSubRegion.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{subEstacionSubRegionController.cancelar}:#SigeItrConfiguracion.xhtml"
+    NAME="output" PATH="/SigeItrConfiguracion.xhtml"
+    TARGET="rules:#SigeItrConfiguracion.xhtml"
+    TITLE="#{subEstacionSubRegionController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#SigeItrRepInterrupcionPorCircuitoMenor5Minutos.xhtml"
+  PATH="/SigeItrRepInterrupcionPorCircuitoMenor5Minutos.xhtml"
+  SHAPE="912,2225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#SigeItrRepInterrupcionPorCircuitoMenor5Minutos.xhtml:0"
+   NAME="item"
+   PATH="/SigeItrRepInterrupcionPorCircuitoMenor5Minutos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteCircuitoMenor5Controller.cancelar}:#main.xhtml"
+    NAME="output" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{reporteCircuitoMenor5Controller.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#SigeItrRepInterrupcionParameComportamiADPIR.xhtml"
+  PATH="/SigeItrRepInterrupcionParameComportamiADPIR.xhtml"
+  SHAPE="32,6401,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#SigeItrRepInterrupcionParameComportamiADPIR.xhtml:0"
+   NAME="item" PATH="/SigeItrRepInterrupcionParameComportamiADPIR.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{interrupcionParameComportamiADPIRController.graficar}:#SigeItrRepInterrupcionParameComportamiADPIRGrafico.xhtml"
+    NAME="output"
+    PATH="/SigeItrRepInterrupcionParameComportamiADPIRGrafico.xhtml"
+    TARGET="rules:#SigeItrRepInterrupcionParameComportamiADPIRGrafico.xhtml"
+    TITLE="#{interrupcionParameComportamiADPIRController.graficar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#SigeItrRepInterrupcionParameComportamiADPIRGrafico.xhtml"
+  PATH="/SigeItrRepInterrupcionParameComportamiADPIRGrafico.xhtml"
+  SHAPE="240,6417,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#SigeItrRepInterrupcionParameComportamiADPIRGrafico.xhtml:0"
+   NAME="item"
+   PATH="/SigeItrRepInterrupcionParameComportamiADPIRGrafico.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{interrupcionParameComportamiADPIRController.regresar}:#SigeItrRepInterrupcionParameComportamiADPIR.xhtml"
+    NAME="output"
+    PATH="/SigeItrRepInterrupcionParameComportamiADPIR.xhtml"
+    TARGET="rules:#SigeItrRepInterrupcionParameComportamiADPIR.xhtml"
+    TITLE="#{interrupcionParameComportamiADPIRController.regresar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrListaReportes.xhtml"
+  PATH="/SigeItrListaReportes.xhtml" SHAPE="560,6513,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrListaReportes.xhtml:0" NAME="item"
+   PATH="/SigeItrListaReportes.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteDBController.agregar}:#SigeItrAdminReportes.xhtml"
+    NAME="output" PATH="/SigeItrAdminReportes.xhtml"
+    TARGET="rules:#SigeItrAdminReportes.xhtml"
+    TITLE="#{reporteDBController.agregar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteDBController.modificar}:#SigeItrAdminReportes.xhtml"
+    NAME="output1" PATH="/SigeItrAdminReportes.xhtml"
+    TARGET="rules:#SigeItrAdminReportes.xhtml"
+    TITLE="#{reporteDBController.modificar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:" SHAPE="32,6513,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::0" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteDBController.verDetalle}:#SigeItrListaDetalleReportes.xhtml"
+    NAME="output" PATH="/SigeItrListaDetalleReportes.xhtml"
+    TARGET="rules:#SigeItrListaDetalleReportes.xhtml"
+    TITLE="#{reporteDBController.verDetalle}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrListaDetalleReportes.xhtml"
+  PATH="/SigeItrListaDetalleReportes.xhtml" SHAPE="288,6529,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrListaDetalleReportes.xhtml:0"
+   NAME="item" PATH="/SigeItrListaDetalleReportes.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{rreporteDBController.regresar}:#SigeItrListaReportes.xhtml"
+    NAME="output" PATH="/SigeItrListaReportes.xhtml"
+    TARGET="rules:#SigeItrListaReportes.xhtml"
+    TITLE="#{rreporteDBController.regresar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrAdminReportes.xhtml"
+  PATH="/SigeItrAdminReportes.xhtml" SHAPE="288,6673,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrAdminReportes.xhtml:0" NAME="item"
+   PATH="/SigeItrAdminReportes.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteDBController.agregarReporte}:#SigeItrListaReportes.xhtml"
+    NAME="output" PATH="/SigeItrListaReportes.xhtml"
+    TARGET="rules:#SigeItrListaReportes.xhtml"
+    TITLE="#{reporteDBController.agregarReporte}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteDBController.descargarVerDetalleJrxml}:#SigeItrAdminReportes.xhtml"
+    NAME="output1" PATH="/SigeItrAdminReportes.xhtml"
+    TARGET="rules:#SigeItrAdminReportes.xhtml"
+    TITLE="#{reporteDBController.descargarVerDetalleJrxml}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteDBController.descargarVerDetalleJasper}:#SigeItrAdminReportes.xhtml"
+    NAME="output2" PATH="/SigeItrAdminReportes.xhtml"
+    TARGET="rules:#SigeItrAdminReportes.xhtml"
+    TITLE="#{reporteDBController.descargarVerDetalleJasper}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteDBController.modificarReporte}:#SigeItrListaReportes.xhtml"
+    NAME="output3" PATH="/SigeItrListaReportes.xhtml"
+    TARGET="rules:#SigeItrListaReportes.xhtml"
+    TITLE="#{reporteDBController.modificarReporte}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{reporteDBController.regresar}:#SigeItrListaReportes.xhtml"
+    NAME="output4" PATH="/SigeItrListaReportes.xhtml"
+    TARGET="rules:#SigeItrListaReportes.xhtml"
+    TITLE="#{reporteDBController.regresar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrConsultaOficinasUsuario.xhtml"
+  PATH="/SigeItrConsultaOficinasUsuario.xhtml" SHAPE="320,6913,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrConsultaOficinasUsuario.xhtml:0"
+   NAME="item" PATH="/SigeItrConsultaOficinasUsuario.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUsuarioOficinaController.buscar}:#SigeItrConsultaOficinasUsuario.xhtml"
+    NAME="output" PATH="/SigeItrConsultaOficinasUsuario.xhtml"
+    TARGET="rules:#SigeItrConsultaOficinasUsuario.xhtml"
+    TITLE="#{mantenimientoUsuarioOficinaController.buscar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUsuarioOficinaController.cancelar}:#SigeItrConsultaOficinasUsuario.xhtml"
+    NAME="output1" PATH="/SigeItrConsultaOficinasUsuario.xhtml"
+    TARGET="rules:#SigeItrConsultaOficinasUsuario.xhtml"
+    TITLE="#{mantenimientoUsuarioOficinaController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUsuarioOficinaController.agregar}:#SigeItrAsociarOficinasUsuario.xhtml"
+    NAME="output2" PATH="/SigeItrAsociarOficinasUsuario.xhtml"
+    TARGET="rules:#SigeItrAsociarOficinasUsuario.xhtml"
+    TITLE="#{mantenimientoUsuarioOficinaController.agregar}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrAsociarOficinasUsuario.xhtml"
+  PATH="/SigeItrAsociarOficinasUsuario.xhtml" SHAPE="64,6897,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrAsociarOficinasUsuario.xhtml:0"
+   NAME="item" PATH="/SigeItrAsociarOficinasUsuario.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUsuarioOficinaController.regresar}:#SigeItrConsultaOficinasUsuario.xhtml"
+    NAME="output" PATH="/SigeItrConsultaOficinasUsuario.xhtml"
+    TARGET="rules:#SigeItrConsultaOficinasUsuario.xhtml"
+    TITLE="#{mantenimientoUsuarioOficinaController.regresar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUsuarioOficinaController.guardar}:#SigeItrAsociarOficinasUsuario.xhtml"
+    NAME="output1" PATH="/SigeItrAsociarOficinasUsuario.xhtml"
+    TARGET="rules:#SigeItrAsociarOficinasUsuario.xhtml"
+    TITLE="#{mantenimientoUsuarioOficinaController.guardar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUsuarioOficinaController.abrirPopUpUsuarios}:#SigeItrPopUpConsultaUsuarios.xhtml"
+    NAME="output2" PATH="/SigeItrPopUpConsultaUsuarios.xhtml"
+    TARGET="rules:#SigeItrPopUpConsultaUsuarios.xhtml"
+    TITLE="#{mantenimientoUsuarioOficinaController.abrirPopUpUsuarios}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUsuarioOficinaController.cerrarPopUpUsuarios}:#SigeItrAsociarOficinasUsuario.xhtml"
+    NAME="output3" PATH="/SigeItrAsociarOficinasUsuario.xhtml"
+    TARGET="rules:#SigeItrAsociarOficinasUsuario.xhtml"
+    TITLE="#{mantenimientoUsuarioOficinaController.cerrarPopUpUsuarios}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrPopUpConsultaUsuarios.xhtml"
+  PATH="/SigeItrPopUpConsultaUsuarios.xhtml" SHAPE="320,7121,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrPopUpConsultaUsuarios.xhtml:0"
+   NAME="item" PATH="/SigeItrPopUpConsultaUsuarios.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUsuarioOficinaController.buscarCedula}:#SigeItrPopUpConsultaUsuarios.xhtml"
+    NAME="output" PATH="/SigeItrPopUpConsultaUsuarios.xhtml"
+    TARGET="rules:#SigeItrPopUpConsultaUsuarios.xhtml"
+    TITLE="#{mantenimientoUsuarioOficinaController.buscarCedula}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mantenimientoUsuarioOficinaController.buscarNombre}:#SigeItrPopUpConsultaUsuarios.xhtml"
+    NAME="output1" PATH="/SigeItrPopUpConsultaUsuarios.xhtml"
+    TARGET="rules:#SigeItrPopUpConsultaUsuarios.xhtml"
+    TITLE="#{mantenimientoUsuarioOficinaController.buscarNombre}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#main.xhtml" PATH="/main.xhtml"
+  SHAPE="1184,2209,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#SigeItrConfiguracion.xhtml"
+  PATH="/SigeItrConfiguracion.xhtml" SHAPE="304,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMayorCincoMin2.xhtml"
+  PATH="/SigeItrActMayorCincoMin2.xhtml" SHAPE="912,2081,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#SigeItrActMayorCincoMin2.xhtml:0" NAME="item"
+   PATH="/SigeItrActMayorCincoMin2.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.irPagina3}:#SigeItrActMayorCincoMin3.xhtml"
+    NAME="output" PATH="/SigeItrActMayorCincoMin3.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin3.xhtml"
+    TITLE="#{mayorCincoMinController.irPagina3}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="201:#{mayorCincoMinController.detalleMaterial}:#SigeItrActMayorCincoMin2Postes.xhtml"
+    NAME="output1" PATH="/SigeItrActMayorCincoMin2Postes.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2Postes.xhtml"
+    TITLE="#{mayorCincoMinController.detalleMaterial}:201" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="230234:#{mayorCincoMinController.detalleMaterial}:#SigeItrActMayorCincoMin2EquipoEspecial.xhtml"
+    NAME="output2" PATH="/SigeItrActMayorCincoMin2EquipoEspecial.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin2EquipoEspecial.xhtml"
+    TITLE="#{mayorCincoMinController.detalleMaterial}:230234" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.cancelar}:#main.xhtml"
+    NAME="output3" PATH="/main.xhtml" TARGET="rules:#main.xhtml"
+    TITLE="#{mayorCincoMinController.cancelar}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.irPagina4}:#SigeItrActMayorCincoMin4.xhtml"
+    NAME="output4" PATH="/SigeItrActMayorCincoMin4.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin4.xhtml"
+    TITLE="#{mayorCincoMinController.irPagina4}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.guardarInterrupcion}:#SigeItrActMayorCincoMinGuardar.xhtml"
+    NAME="output5" PATH="/SigeItrActMayorCincoMinGuardar.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMinGuardar.xhtml"
+    TITLE="#{mayorCincoMinController.guardarInterrupcion}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="total:#{mayorCincoMinController.irSeccionamientos}:#SigeItrActMayorCincoMin7ListaTotal.xhtml"
+    NAME="output6" PATH="/SigeItrActMayorCincoMin7ListaTotal.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin7ListaTotal.xhtml"
+    TITLE="#{mayorCincoMinController.irSeccionamientos}:total" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="parcial:#{mayorCincoMinController.irSeccionamientos}:#SigeItrActMayorCincoMin7Lista.xhtml"
+    NAME="output7" PATH="/SigeItrActMayorCincoMin7Lista.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin7Lista.xhtml"
+    TITLE="#{mayorCincoMinController.irSeccionamientos}:parcial" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{mayorCincoMinController.irGemelas}:#SigeItrActMayorCincoMin6.xhtml"
+    NAME="output8" PATH="/SigeItrActMayorCincoMin6.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin6.xhtml"
+    TITLE="#{mayorCincoMinController.irGemelas}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="successIngreso:#{mayorCincoMinController.regresarDePaginaDos}:#SigeItrActMayorCincoMin1.xhtml"
+    NAME="output9" PATH="/SigeItrActMayorCincoMin1.xhtml"
+    TARGET="rules:#SigeItrActMayorCincoMin1.xhtml"
+    TITLE="#{mayorCincoMinController.regresarDePaginaDos}:successIngreso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="successEdicion:#{mayorCincoMinController.regresarDePaginaDos}:#SigeItrActEditMayorCincoMin1.xhtml"
+    NAME="output10" PATH="/SigeItrActEditMayorCincoMin1.xhtml"
+    TARGET="rules:#SigeItrActEditMayorCincoMin1.xhtml"
+    TITLE="#{mayorCincoMinController.regresarDePaginaDos}:successEdicion" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMenorCincoMinGuardar.xhtml"
+  PATH="/SigeItrActMenorCincoMinGuardar.xhtml" SHAPE="912,3073,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMenorCincoMinGuardarAdmin.xhtml"
+  PATH="/SigeItrActMenorCincoMinGuardarAdmin.xhtml" SHAPE="912,5313,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#SigeItrActMayorCincoMinGuardar.xhtml"
+  PATH="/SigeItrActMayorCincoMinGuardar.xhtml" SHAPE="912,5425,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="cr.go.ice.interrupciones.domain.Cuadrilla" table="EVE06M">
+        <composite-id name="cuadrillaID" class="cr.go.ice.interrupciones.domain.CuadrillaID">
+            <key-property name="aa" column="AA" type="java.lang.Integer" length="4"/>
+			<key-property name="codigoOficina" column="COD_OFICINA" type="java.lang.Integer" length="2"/>
+			<key-property name="numeroInterrupcion" column="NUMINTERRUP" type="java.lang.Long" length="6"/>
+			<key-property name="cedula" column="CEDULA" type="java.lang.Long" length="9"/>
+			<key-property name="reporteInterrupcion" column="REPORTEINTERRUP" type="java.lang.Integer" length="1"/>
+        </composite-id>
+        <property name="indicador" column="INDICADOR"  type="java.lang.String" length="1"/>
+    </class>
+</hibernate-mapping>

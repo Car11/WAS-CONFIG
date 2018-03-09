@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="cr.go.ice.interrupciones.domain.Region" table="EVE05C">
+        <id name="region" type="java.lang.Integer" column="REG" length="2">
+            <generator class="assigned"/>
+        </id>
+        <property name="nombreRegion" column="NOM_REGION" type="java.lang.String" length="20"/>
+        <property name="kmsRegion" column="KMS_REGION" type="java.lang.Double" length="10" precision="2"/>
+        <property name="abonadoRegion" column="ABON_REGION" type="java.lang.Long" length="6"/>
+        <property name="demanda" column="DEMANDA" type="java.lang.Long" length="9"/>
+        <property name="energia" column="ENERGIA" type="java.lang.Long" length="9"/>
+    </class>
+</hibernate-mapping>

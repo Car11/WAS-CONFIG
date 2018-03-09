@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="cr.go.ice.interrupciones.domain.SubRegion" table="EVE04C">
+        <composite-id name="subRegionID" class="cr.go.ice.interrupciones.domain.SubRegionID">
+            <key-property name="subRegion" column="SUBREGION" type="java.lang.Integer" length="2"/>
+            <key-many-to-one name="region" column="REG" lazy="false"/>
+        </composite-id>
+        <property name="nombreSubRegion" column="NOM_SUBREGION"  type="java.lang.String" length="20"/>
+        <property name="kmsSubRegion" column="KMS_SUBREGION" type="java.lang.Double" length="10" precision="2"/>
+        <property name="abonadoSubregion" column="ABON_SUBREGION" type="java.lang.Long" length="6"/>
+    </class>
+</hibernate-mapping>

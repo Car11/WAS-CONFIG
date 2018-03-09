@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SigeItrRepInterrupcionInformePostes" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="20" bottomMargin="20" uuid="c050a4a8-b51c-40de-9840-32ffca773201">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="pTipoNivelRed" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/opt/WS_SACE/InterrupcionesWeb/WebContent/jasperReports/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pFechaInicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pFechaFin" class="java.util.Date"/>
+	<parameter name="pRegion" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pMovimiento" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pCalidad" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pSubregion" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pSubestacion" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pCircuito" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pSeccion" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<field name="ANNO" class="java.lang.Integer"/>
+	<field name="OFICINA" class="java.lang.Integer"/>
+	<field name="NUMINTERRUPCION" class="java.lang.Integer"/>
+	<field name="FECHAINICIO" class="java.sql.Timestamp"/>
+	<field name="MEDIDOR" class="java.math.BigDecimal"/>
+	<field name="LOCAFALLAPUEBLO" class="java.math.BigDecimal"/>
+	<field name="LOCAFALLACALLE" class="java.math.BigDecimal"/>
+	<field name="LOCAFALLAPOSTE" class="java.math.BigDecimal"/>
+	<field name="LOCAFALLASECUENCIA" class="java.math.BigDecimal"/>
+	<field name="EQUIPOPUEBLO" class="java.math.BigDecimal"/>
+	<field name="EQUIPOCALLE" class="java.math.BigDecimal"/>
+	<field name="EQUIPOPOSTE" class="java.math.BigDecimal"/>
+	<field name="EQUIPOSECUENCIA" class="java.math.BigDecimal"/>
+	<field name="COMENTARIO" class="java.lang.String"/>
+	<field name="(SELECTEVE05M.NUM_VEHICULOFROMEVE05MWHEREEVE05M.AA=EVE01M.AAANDEVE05M.COD_OFICINA=EVE01M.COD_OFICINAANDEVE05M.NUMINTERRUP=EVE01M.NUMINTERRUPANDROWNUM=1)" class="java.math.BigDecimal"/>
+	<field name="NUMCIRCUITO" class="java.lang.String"/>
+	<field name="DESCCIRCUITO" class="java.lang.String"/>
+	<field name="DESCSECCION" class="java.lang.String"/>
+	<field name="DESCMATERIAL" class="java.lang.String"/>
+	<field name="DESCDANO" class="java.lang.String"/>
+	<field name="DESCPROTECCION" class="java.lang.String"/>
+	<field name="DESCCAUSA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="1" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="33" splitType="Stretch">
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-3" x="0" y="0" width="612" height="33" uuid="f6efc2dc-f414-42bd-8fdb-e8be806f03ae">
+					<printWhenExpression><![CDATA[new Boolean(($P{pTipoNivelRed} != null) && ($P{pTipoNivelRed}.intValue()==4))]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="pTipoNivelRed">
+					<subreportParameterExpression><![CDATA[$P{pTipoNivelRed}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pFechaInicio">
+					<subreportParameterExpression><![CDATA[$P{pFechaInicio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pFechaFin">
+					<subreportParameterExpression><![CDATA[$P{pFechaFin}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pRegion">
+					<subreportParameterExpression><![CDATA[$P{pRegion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pMovimiento">
+					<subreportParameterExpression><![CDATA[$P{pMovimiento}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pCalidad">
+					<subreportParameterExpression><![CDATA[$P{pCalidad}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pSubregion">
+					<subreportParameterExpression><![CDATA[$P{pSubregion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pSubestacion">
+					<subreportParameterExpression><![CDATA[$P{pSubestacion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pCircuito">
+					<subreportParameterExpression><![CDATA[$P{pCircuito}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pSeccion">
+					<subreportParameterExpression><![CDATA[$P{pSeccion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Sub_SigeItrRepInterrupcionInformePostes_Seccion.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-4" x="0" y="0" width="612" height="33" uuid="74e7e84c-f9b6-497a-aa6f-2c4cc72825be">
+					<printWhenExpression><![CDATA[new Boolean(($P{pTipoNivelRed} != null) && ($P{pTipoNivelRed}.intValue()==2))]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="pTipoNivelRed">
+					<subreportParameterExpression><![CDATA[$P{pTipoNivelRed}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pFechaInicio">
+					<subreportParameterExpression><![CDATA[$P{pFechaInicio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pFechaFin">
+					<subreportParameterExpression><![CDATA[$P{pFechaFin}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pRegion">
+					<subreportParameterExpression><![CDATA[$P{pRegion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pMovimiento">
+					<subreportParameterExpression><![CDATA[$P{pMovimiento}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pCalidad">
+					<subreportParameterExpression><![CDATA[$P{pCalidad}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pSubregion">
+					<subreportParameterExpression><![CDATA[$P{pSubregion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pSubestacion">
+					<subreportParameterExpression><![CDATA[$P{pSubestacion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pCircuito">
+					<subreportParameterExpression><![CDATA[$P{pCircuito}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pSeccion">
+					<subreportParameterExpression><![CDATA[$P{pCircuito}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Sub_SigeItrRepInterrupcionInformePostes_Subestacion.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-5" x="0" y="0" width="612" height="33" uuid="b5fc52e9-d836-4fb1-b058-710ddc13842e">
+					<printWhenExpression><![CDATA[new Boolean(($P{pTipoNivelRed} != null) && ($P{pTipoNivelRed}.intValue()==1))]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="pTipoNivelRed">
+					<subreportParameterExpression><![CDATA[$P{pTipoNivelRed}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pFechaInicio">
+					<subreportParameterExpression><![CDATA[$P{pFechaInicio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pFechaFin">
+					<subreportParameterExpression><![CDATA[$P{pFechaFin}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pRegion">
+					<subreportParameterExpression><![CDATA[$P{pRegion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pMovimiento">
+					<subreportParameterExpression><![CDATA[$P{pMovimiento}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pCalidad">
+					<subreportParameterExpression><![CDATA[$P{pCalidad}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pSubregion">
+					<subreportParameterExpression><![CDATA[$P{pSubregion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pSubestacion">
+					<subreportParameterExpression><![CDATA[$P{pSubestacion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pCircuito">
+					<subreportParameterExpression><![CDATA[$P{pCircuito}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pSeccion">
+					<subreportParameterExpression><![CDATA[$P{pSeccion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Sub_SigeItrRepInterrupcionInformePostes_Subregion.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-2" stretchType="RelativeToTallestObject" x="0" y="0" width="612" height="33" isPrintWhenDetailOverflows="true" uuid="c8f67e90-4a9c-464d-839b-d19f1a0ac38e">
+					<printWhenExpression><![CDATA[new Boolean(($P{pTipoNivelRed}.intValue()==0) && ($P{pTipoNivelRed} != null))]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="pTipoNivelRed">
+					<subreportParameterExpression><![CDATA[$P{pTipoNivelRed}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pFechaInicio">
+					<subreportParameterExpression><![CDATA[$P{pFechaInicio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pFechaFin">
+					<subreportParameterExpression><![CDATA[$P{pFechaFin}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pRegion">
+					<subreportParameterExpression><![CDATA[$P{pRegion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pMovimiento">
+					<subreportParameterExpression><![CDATA[$P{pMovimiento}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pCalidad">
+					<subreportParameterExpression><![CDATA[$P{pCalidad}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pSubregion">
+					<subreportParameterExpression><![CDATA[$P{pSubregion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pSubestacion">
+					<subreportParameterExpression><![CDATA[$P{pSubestacion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pCircuito">
+					<subreportParameterExpression><![CDATA[$P{pCircuito}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pSeccion">
+					<subreportParameterExpression><![CDATA[$P{pSeccion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Sub_SigeItrRepInterrupcionInformePostes_Region.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-1" x="0" y="0" width="612" height="33" uuid="f6f3069e-ccc2-4609-8013-98e4408ae1ce">
+					<printWhenExpression><![CDATA[new Boolean(($P{pTipoNivelRed} != null) && ($P{pTipoNivelRed}.intValue()==3))]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="pTipoNivelRed">
+					<subreportParameterExpression><![CDATA[$P{pTipoNivelRed}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pFechaInicio">
+					<subreportParameterExpression><![CDATA[$P{pFechaInicio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pFechaFin">
+					<subreportParameterExpression><![CDATA[$P{pFechaFin}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pRegion">
+					<subreportParameterExpression><![CDATA[$P{pRegion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pMovimiento">
+					<subreportParameterExpression><![CDATA[$P{pMovimiento}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pCalidad">
+					<subreportParameterExpression><![CDATA[$P{pCalidad}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pSubregion">
+					<subreportParameterExpression><![CDATA[$P{pSubregion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pSubestacion">
+					<subreportParameterExpression><![CDATA[$P{pSubestacion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pCircuito">
+					<subreportParameterExpression><![CDATA[$P{pCircuito}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pSeccion">
+					<subreportParameterExpression><![CDATA[$P{pSeccion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Sub_SigeItrRepInterrupcionInformePostes_Circuito.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

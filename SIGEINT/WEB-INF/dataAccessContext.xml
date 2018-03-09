@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd" xmlns:jee="http://www.springframework.org/schema/jee">
+    
+    <!--========== Data Sources ==========-->
+    <bean id="interrupciones2DS" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/interrupciones2DS" />
+    </bean>
+
+    <bean id="obrasDS" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/obrasDS" />
+    </bean>
+
+    <!--  <bean id="transformadores2DS" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/transformadores2DS" />
+    </bean>-->
+    
+    <!-- LobHandler for JDBC drivers -->
+    <bean id="defaultLobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" lazy-init="true"/>
+    
+    <!--========== Session Factory ==========-->
+    <bean id="interrupcionesSF" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="interrupciones2DS" />
+        <property name="lobHandler" ref="defaultLobHandler"/>
+        <property name="mappingResources">
+            <list>
+				<value>cr/go/ice/interrupciones/domain/Animal.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Causa.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Circuito.hbm.xml</value>
+                <value>cr/go/ice/interrupciones/domain/ComportamientoADPIR.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/ConsecutivoClor.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Correo.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Cuadrilla.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Dano.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Empleado.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/EquipoEspecial.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Fusible.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Glosario.hbm.xml</value>
+                <value>cr/go/ice/interrupciones/domain/HistoricoTrasladoSeccion.hbm.xml</value>
+                <value>cr/go/ice/interrupciones/domain/IndiceGlobalRegion.hbm.xml</value>
+                <value>cr/go/ice/interrupciones/domain/IndiceCalidadRegion.hbm.xml</value>
+                <value>cr/go/ice/interrupciones/domain/IndiceCalidadNacional.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Interrupcion.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/InterrupcionGemela.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Material.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/NoPropiaSeccionamiento.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Oficina.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Parametro.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/PosteInstaladoRetirado.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Proteccion.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Provolma.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Region.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Reporte.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Seccion.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/SubEstacion.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/SubEstacionSubRegion.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/SubRegion.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/TipoVoltaje.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Trafo.hbm.xml</value>
+ 				<value>cr/go/ice/interrupciones/domain/Vehiculo.hbm.xml</value>
+				<value>cr/go/ice/interrupciones/domain/Pueblo.hbm.xml</value>
+                <value>cr/go/ice/interrupciones/domain/CambioSeccion.hbm.xml</value>
+				<value>cr/go/ice/interrupciones/domain/Auditoria.hbm.xml</value>
+				<value>cr/go/ice/interrupciones/domain/TiposCausa.hbm.xml</value>
+				<value>cr/go/ice/interrupciones/domain/TiposCausaEspecifica.hbm.xml</value>
+				<value>cr/go/ice/interrupciones/domain/DetalleCausa.hbm.xml</value>
+				<value>cr/go/ice/interrupciones/domain/UbicacionGeneralDano.hbm.xml</value>
+				<value>cr/go/ice/interrupciones/domain/UbicacionEspecificaDano.hbm.xml</value>
+				<value>cr/go/ice/interrupciones/domain/UsuarioOficina.hbm.xml</value>
+				
+				<!-- Mapeos de SIGEdocWeb -->   
+                <value>cr/go/ice/sige/carga/domain/DocArchivo.hbm.xml</value>    
+                <value>cr/go/ice/sige/carga/domain/DocArchivoPuro.hbm.xml</value>          
+                <value>cr/go/ice/sige/carga/domain/DocAplicacion.hbm.xml</value>
+                <value>cr/go/ice/sige/carga/domain/DocRolArchivo.hbm.xml</value>
+                <value>cr/go/ice/sige/carga/domain/DocRolUsuario.hbm.xml</value>
+                <value>cr/go/ice/sige/carga/domain/DocTipoArchivo.hbm.xml</value>
+                <value>cr/go/ice/sige/carga/domain/DocUsuarioCarga.hbm.xml</value>
+                
+                <!--======== UTILIDADESJAVA ========-->                
+                <value>com/vvs/reporte/ReportesDinamicos.hbm.xml</value>
+                <value>com/vvs/reporte/ReportesDinamicosAud.hbm.xml</value>
+                <value>com/vvs/reporte/ReportesDinamicosSub.hbm.xml</value>
+                <value>com/vvs/reporte/ReportesDinamicosMod.hbm.xml</value>  
+				
+				<!-- Mapeos de SIGEMailer -->	
+				<value>cr/go/ice/sige/confmailer/domain/Mailer.hbm.xml</value> 	
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle9Dialect</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.use_outer_join">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="obrasSF" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="obrasDS" />
+        <property name="mappingResources">
+            <list>
+				<value>cr/go/ice/obras/domain/Agencia.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle9Dialect</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.use_outer_join">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--  <bean id="transformadoresSF" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="transformadores2DS" />
+        <property name="mappingResources">
+            <list>
+				<value>cr/go/ice/interrupciones/domain/Pueblo.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle9Dialect</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.use_outer_join">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+            </props>
+        </property>
+    </bean>-->    
+    
+    <!--========== Data Access Objects ==========-->
+    
+    <!-- ===================Abstractos================= -->
+    <bean id="abstractInterrupcionDAO" class="org.springframework.orm.hibernate3.support.HibernateDaoSupport" abstract="true">
+        <property name="sessionFactory" ref="interrupcionesSF"/>
+    </bean>
+
+    <bean id="abstractObraDAO" class="org.springframework.orm.hibernate3.support.HibernateDaoSupport" abstract="true">
+        <property name="sessionFactory" ref="obrasSF"/>
+    </bean>
+     
+    <bean id="abstractTransformadorDAO" class="org.springframework.orm.hibernate3.support.HibernateDaoSupport" abstract="true">
+        <property name="sessionFactory" ref="transformadoresSF"/>
+    </bean>
+    
+    <!--<bean id="abstractConfmailerDAO" class="org.springframework.orm.hibernate3.support.HibernateDaoSupport" abstract="true">
+        <property name="sessionFactory" ref="confmailerSF"/>
+    </bean>-->    
+    
+	<!-- ===================DAOs de la Aplicacion================= -->
+	
+	<!-- Interrupciones -->
+	<bean id="animalDAO"                    class="cr.go.ice.interrupciones.DAO.impl.AnimalDAOImpl"    parent="abstractInterrupcionDAO" />
+	<bean id="causaDAO"                     class="cr.go.ice.interrupciones.DAO.impl.CausaDAOImpl"     parent="abstractInterrupcionDAO" />
+	<bean id="circuitoDAO"                  class="cr.go.ice.interrupciones.DAO.impl.CircuitoDAOImpl"  parent="abstractInterrupcionDAO">
+		<property name="ds" ref="interrupciones2DS" />
+	</bean>
+    <bean id="consecutivoClorDAO"           class="cr.go.ice.interrupciones.DAO.impl.ConsecutivoClorDAOImpl"     parent="abstractInterrupcionDAO" />
+	<bean id="comportamientoADPIRDAO"       class="cr.go.ice.interrupciones.DAO.impl.ComportamientoADPIRDAOImpl" parent="abstractInterrupcionDAO" />
+	<bean id="correoDAO"                    class="cr.go.ice.interrupciones.DAO.impl.CorreoDAOImpl"              parent="abstractInterrupcionDAO" />
+	<bean id="cuadrillaDAO"                 class="cr.go.ice.interrupciones.DAO.impl.CuadrillaDAOImpl"           parent="abstractInterrupcionDAO" />
+	<bean id="danoDAO"                      class="cr.go.ice.interrupciones.DAO.impl.DanoDAOImpl"                parent="abstractInterrupcionDAO" />
+	<bean id="empleadoDAO"                  class="cr.go.ice.interrupciones.DAO.impl.EmpleadoDAOImpl"            parent="abstractInterrupcionDAO" />
+	<bean id="equipoEspecialDAO"            class="cr.go.ice.interrupciones.DAO.impl.EquipoEspecialDAOImpl"      parent="abstractInterrupcionDAO" />
+	<bean id="fusibleDAO"                   class="cr.go.ice.interrupciones.DAO.impl.FusibleDAOImpl"             parent="abstractInterrupcionDAO" />
+	<bean id="glosarioDAO"                  class="cr.go.ice.interrupciones.DAO.impl.GlosarioDAOImpl"            parent="abstractInterrupcionDAO" />
+    <bean id="historicoTrasladoSeccionDAO"  class="cr.go.ice.interrupciones.DAO.impl.HistoricoTrasladoSeccionDAOImpl" parent="abstractInterrupcionDAO" />
+	<bean id="interrupcionDAO"              class="cr.go.ice.interrupciones.DAO.impl.InterrupcionDAOImpl"             parent="abstractInterrupcionDAO">
+		<property name="ds" ref="interrupciones2DS" />
+	</bean>
+	<bean id="interrupcionGemelaDAO"        class="cr.go.ice.interrupciones.DAO.impl.InterrupcionGemelaDAOImpl"        parent="abstractInterrupcionDAO" />
+	<bean id="materialDAO"                  class="cr.go.ice.interrupciones.DAO.impl.MaterialDAOImpl"                  parent="abstractInterrupcionDAO" />
+	<bean id="noPropiaSeccionamientoDAO"    class="cr.go.ice.interrupciones.DAO.impl.NoPropiaSeccionamientoDAOImpl"    parent="abstractInterrupcionDAO">
+		<property name="ds" ref="interrupciones2DS" />
+	</bean>
+	<bean id="auditoriaDAO"    class="cr.go.ice.interrupciones.DAO.impl.AuditoriaDAOImpl"    parent="abstractInterrupcionDAO"/>
+	
+	<bean id="oficinaDAO"                   class="cr.go.ice.interrupciones.DAO.impl.OficinaDAOImpl"                   parent="abstractInterrupcionDAO" />
+	<bean id="parametroDAO"                 class="cr.go.ice.interrupciones.DAO.impl.ParametroDAOImpl"                 parent="abstractInterrupcionDAO" />
+	<bean id="posteInstaladoRetiradoDAO"    class="cr.go.ice.interrupciones.DAO.impl.PosteInstaladoRetiradoDAOImpl"    parent="abstractInterrupcionDAO" />
+	<bean id="proteccionDAO"                class="cr.go.ice.interrupciones.DAO.impl.ProteccionDAOImpl"                parent="abstractInterrupcionDAO" />
+	<bean id="provolmaDAO"                  class="cr.go.ice.interrupciones.DAO.impl.ProvolmaDAOImpl"                  parent="abstractInterrupcionDAO" />
+	<bean id="regionDAO"                    class="cr.go.ice.interrupciones.DAO.impl.RegionDAOImpl"                    parent="abstractInterrupcionDAO">
+		<property name="ds" ref="interrupciones2DS" />
+	</bean>
+	<bean id="reporteDAO"                   class="cr.go.ice.interrupciones.DAO.impl.ReporteDAOImpl" parent="abstractInterrupcionDAO" />
+    <bean id="seccionDAO"                   class="cr.go.ice.interrupciones.DAO.impl.SeccionDAOImpl" parent="abstractInterrupcionDAO">
+		<property name="ds" ref="interrupciones2DS" />
+	</bean>
+	<bean id="subEstacionDAO"               class="cr.go.ice.interrupciones.DAO.impl.SubEstacionDAOImpl"          parent="abstractInterrupcionDAO">
+		<property name="ds" ref="interrupciones2DS" />
+	</bean>
+	<bean id="subEstacionSubRegionDAO"      class="cr.go.ice.interrupciones.DAO.impl.SubEstacionSubRegionDAOImpl" parent="abstractInterrupcionDAO" />	
+	
+	<bean id="subRegionDAO" class="cr.go.ice.interrupciones.DAO.impl.SubRegionDAOImpl" parent="abstractInterrupcionDAO">
+		<property name="ds" ref="interrupciones2DS" />
+	</bean>
+    <bean id="indiceGlobalRegionDAO"   class="cr.go.ice.interrupciones.DAO.impl.IndiceGlobalRegionDAOImpl" parent="abstractInterrupcionDAO" />
+    <bean id="indiceCalidadNacionalDAO"   class="cr.go.ice.interrupciones.DAO.impl.IndiceCalidadNacionalDAOImpl" parent="abstractInterrupcionDAO" />
+    <bean id="indiceCalidadRegionDAO"   class="cr.go.ice.interrupciones.DAO.impl.IndiceCalidadRegionDAOImpl" parent="abstractInterrupcionDAO" />
+	<bean id="tipoVoltajeDAO"          class="cr.go.ice.interrupciones.DAO.impl.TipoVoltajeDAOImpl"        parent="abstractInterrupcionDAO" />
+	<bean id="trafoDAO"                class="cr.go.ice.interrupciones.DAO.impl.TrafoDAOImpl"              parent="abstractInterrupcionDAO" />
+	<bean id="vehiculoDAO"             class="cr.go.ice.interrupciones.DAO.impl.VehiculoDAOImpl"           parent="abstractInterrupcionDAO" />
+	
+	<bean id="tiposCausaDAO"              class="cr.go.ice.interrupciones.DAO.impl.TiposCausaDAOImpl"              parent="abstractInterrupcionDAO" />
+	<bean id="tiposCausaEspecificaDAO"    class="cr.go.ice.interrupciones.DAO.impl.TiposCausaEspecificaDAOImpl"    parent="abstractInterrupcionDAO" />
+	<bean id="detalleCausaDAO"            class="cr.go.ice.interrupciones.DAO.impl.DetalleCausaDAOImpl"            parent="abstractInterrupcionDAO" />
+	<bean id="ubicacionGeneralDanoDAO"    class="cr.go.ice.interrupciones.DAO.impl.UbicacionGeneralDanoDAOImpl"    parent="abstractInterrupcionDAO" />
+	<bean id="ubicacionEspecificaDanoDAO" class="cr.go.ice.interrupciones.DAO.impl.UbicacionEspecificaDanoDAOImpl" parent="abstractInterrupcionDAO" />
+	<bean id="usuarioOficinaDAO" 		  class="cr.go.ice.interrupciones.DAO.impl.UsuarioOficinaDAOImpl" 		   parent="abstractInterrupcionDAO" />		
+	
+	<!-- Obras -->
+	<bean id="agenciaDAO" class="cr.go.ice.obras.DAO.impl.AgenciaDAOImpl" parent="abstractObraDAO" />
+	
+	<!-- Transformadores -->
+	<bean id="puebloDAO" class="cr.go.ice.interrupciones.DAO.impl.PuebloDAOImpl" parent="abstractInterrupcionDAO" />
+	
+	<!-- DAOs de SIGEdocWeb -->
+    <bean id="aplicacionDao"            class="cr.go.ice.sige.carga.dao.impl.AplicacionDaoHB"           parent="abstractInterrupcionDAO" />
+    <bean id="archivoDao"               class="cr.go.ice.sige.carga.dao.impl.ArchivoDaoHB"              parent="abstractInterrupcionDAO" />
+    <bean id="rolUsuarioDao"            class="cr.go.ice.sige.carga.dao.impl.RolUsuarioDaoHB"           parent="abstractInterrupcionDAO" /> 
+    <bean id="tipoArchivoDao"           class="cr.go.ice.sige.carga.dao.impl.TipoArchivoDaoHB"          parent="abstractInterrupcionDAO" />
+	
+	
+	<!-- DAOs de SIGEMailer --> 
+    <bean id="mailerDao" class="cr.go.ice.sige.confmailer.dao.impl.MailerDaoHb" parent="abstractInterrupcionDAO"/>
+	
+	<!--========== ConfMailer ==========-->
+    <!-- <bean id="mailerDao" class="cr.go.ice.sige.confmailer.dao.impl.MailerDaoHb" parent="abstractConfmailerDAO"/>-->
+	
+	<!--========== Transaction Manager ==========-->
+    <bean id="interrupcionesTM" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="interrupcionesSF"/>
+    </bean>
+    
+    <bean id="obrasTM" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="obrasSF"/>
+    </bean>
+    
+    <!--  <bean id="transformadoresTM" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="transformadoresSF"/>
+    </bean>	-->
+    
+    <!--<bean id="confmailerTM" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="confmailerSF"/>
+    </bean>-->	    
+    
+    <bean id="genericUtilityDao"      class="com.vvs.generic.dao.impl.GenericUtilityDaoImpl"                parent="abstractInterrupcionDAO"/>
+    <bean id="genericoDao"            class="cr.go.ice.interrupciones.DAO.impl.GenericoDaoHB"               parent="abstractInterrupcionDAO"/>
+    
+</beans>

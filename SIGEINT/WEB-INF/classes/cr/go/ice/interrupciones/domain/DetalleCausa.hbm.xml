@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="cr.go.ice.interrupciones.domain.DetalleCausa" table="EVE_DETALLECAUSA">
+        <composite-id name="detalleCausaID" class="cr.go.ice.interrupciones.domain.DetalleCausaID">
+            <key-property name="detalleCausa" column="DETALLECAUSA" type="java.lang.Integer" length="2"/>
+            <key-many-to-one name="tiposCausaEspecifica" lazy="false">
+                <column name="CAUSAESPEC"/>
+                <column name="TIPOCAUSA"/>
+            </key-many-to-one>
+        </composite-id>
+        <property name="descripcion" column="DESCRIPCION"  type="java.lang.String" length="250"/>
+        <property name="estado" column="ESTADO" type="java.lang.Integer" length="1"/>
+    </class>
+</hibernate-mapping>

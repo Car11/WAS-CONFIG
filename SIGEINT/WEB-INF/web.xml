@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<display-name>InterrupcionesWeb</display-name>
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>client</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>afternoon</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>org.apache.myfaces.EXPRESSION_FACTORY</param-name>
+		<param-value>org.jboss.el.ExpressionFactoryImpl</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+		<param-value>.xhtml</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/dataAccessContext.xml /WEB-INF/applicationContext.xml
+        WEB-INF/dataAccessContextCia.xml /WEB-INF/applicationContextCia.xml</param-value>
+	</context-param>
+
+	<context-param>
+		<description>
+    		Comma-delimited list of context-relative resource paths under which the JSF implementation
+			will look for application configuration resources, before loading a configuration resource
+			named /WEB-INF/faces-config.xml (if such a resource exists).</description>
+		<param-name>javax.faces.CONFIG_FILES</param-name>
+		<param-value></param-value>
+	</context-param>
+
+	<context-param>
+		<description>
+    		A human readable string describing where this particular JSF application is
+			in the software development lifecycle.
+			Valid values are 'Development', 'UnitTest', 'SystemTest' and 'Production'.
+			Default is 'Production'.
+			This parameter is not available in JSF 1.x.</description>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Production</param-value>
+	</context-param>
+
+	<context-param>
+		<description>
+    		Monitors Faces JSP files for modifications and synchronizes a running server with
+			the changes without restarting the server. If this parameter is set to false or
+			removed from the deployment descriptor, any changes made to Faces JSP files may
+			not be seen by the server until it is restarted. This parameter is usually set
+			to true while the Faces JSP files are being developed and debugged in order to
+			improve the performance of the development environment.</description>
+		<param-name>com.ibm.ws.jsf.JSP_UPDATE_CHECK</param-name>
+		<param-value>true</param-value>
+	</context-param>	
+	<context-param>
+		<description>
+    		Load JSF runtime when the application server starts up. If this parameter is set to false or removed,
+			JSF runtime will be loaded and initialized when the first JSF request is processed.
+			This may disable custom JSF extensions, such as factories defined in the project.</description>
+		<param-name>com.ibm.ws.jsf.LOAD_FACES_CONFIG_AT_STARTUP</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	
+	<context-param>
+	<description>Esto reconoce el TimeZone en la se que encuentra el sistema y así convertir la fecha y 
+				hora dependiendo de la ubicación. Esto aplica para la versión jsf 2.1 en adelante</description>
+    <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+    <param-value>true</param-value>
+</context-param>
+	
+	<security-constraint>
+		<display-name>CotrolTotal</display-name>
+		<web-resource-collection>
+			<web-resource-name>TodasLasPaginas</web-resource-name>
+			<description></description>
+			<url-pattern>/main.jsp</url-pattern>
+			<url-pattern>/main.jsf</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description>Usuarios</description>
+			<role-name>UsuarioCia</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+
+	<filter>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>cr.go.ice.ldap.auth.LoginFilter</filter-class>
+		<init-param>
+			<param-name>RESOURCE_BUNDLE</param-name>
+			<param-value>cr.go.ice.ldap.auth.iceLdap</param-value>
+		</init-param>
+	</filter>
+	
+	<filter>
+		<description>Filtro para transacciones Hibernate</description>
+		<display-name>HibernateFilter</display-name>
+		<filter-name>HibernateFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+		<init-param>
+			<param-name>sessionFactoryBeanName</param-name>
+			<param-value>interrupcionesSF</param-value>
+		</init-param>
+	</filter>
+
+	 <filter>
+		<description>Ejecuta la seguridad del Cia2</description>
+		<filter-name>AutorizacionCiaFilter</filter-name>
+		<filter-class>cr.go.ice.cia.web.filtro.AutorizacionCiaFilter</filter-class>
+	</filter>
+
+	<filter>
+		<display-name>InterrupcionesLoginFilter</display-name>
+		<filter-name>InterrupcionesLoginFilter</filter-name>
+		<filter-class>cr.go.ice.interrupciones.web.filters.InterrupcionesLoginFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>InterrupcionesLoginFilter</filter-name>
+		<url-pattern>*.jsf</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>HibernateFilter</filter-name>
+		<url-pattern>*.jsf</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>AutorizacionCiaFilter</filter-name>
+		<url-pattern>*.jsf</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>AutorizacionCiaFilter</filter-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>AutorizacionCiaFilter</filter-name>
+		<url-pattern>/j_security_check</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+		<init-param>
+			<param-name>thresholdSize</param-name>
+			<param-value>51200</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping>
+	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+
+
+	<servlet>
+		<servlet-name>JS Resource Servlet</servlet-name>
+		<servlet-class>com.ibm.faces.webapp.JSResourceServlet</servlet-class>
+		<load-on-startup>-1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>-1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>JS Resource Servlet</servlet-name>
+		<url-pattern>/.ibmjsfres/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>/index.jsf</welcome-file>
+	</welcome-file-list>
+	<error-page>
+		<error-code>400</error-code>
+		<location>/error500.jsf</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error500.jsf</location>
+	</error-page>
+
+	<error-page>
+		<error-code>403</error-code>
+		<location>/accesoDenegado.jsf</location>
+	</error-page>
+
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/logon.jsf</form-login-page>
+			<form-error-page>/logonError.jsf</form-error-page>
+		</form-login-config>
+	</login-config>
+
+	<security-role>
+		<description>Usuarios que tienen acceso a las opciones de Configuración</description>
+		<role-name>UsuarioCia</role-name>
+	</security-role>
+
+	<resource-ref>
+		<description>jdbc/interrupciones2DS</description>
+		<res-ref-name>jdbc/interrupciones2DS</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+
+	<resource-ref>
+		<description>jdbc/obrasDS</description>
+		<res-ref-name>jdbc/obrasDS</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+
+	<resource-ref>
+		<description>jdbc/cia2DS</description>
+		<res-ref-name>jdbc/cia2DS</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+	
+	<env-entry>
+		<env-entry-name>useLoginFilter</env-entry-name>
+		<env-entry-type>java.lang.Boolean</env-entry-type>
+		<env-entry-value>true</env-entry-value>
+	</env-entry>
+	
+	<env-entry>
+		<env-entry-name>server</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>speapl71.ice.go.cr</env-entry-value>
+
+	</env-entry>
+	<env-entry>
+		<env-entry-name>principal</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>cn=usrsigeint,cn=directoryServer,ou=grupos,o=grupoice,o=ice</env-entry-value>
+
+	</env-entry>
+	<env-entry>
+		<env-entry-name>credential</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>usersigeint</env-entry-value>
+
+	</env-entry>
+	<env-entry>
+		<env-entry-name>dnUsers</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>ou=empleados,o=grupoice,o=ice</env-entry-value>
+
+	</env-entry>
+
+	<env-entry>
+		<description>Path al achivo de configuracion de los generadores XML</description>
+		<env-entry-name>XMLGeneratorsPath</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>XMLGenerator.xml</env-entry-value>
+
+	</env-entry>
+	<env-entry>
+		<description>Archivo de configuracion del mailer, se buscara dentro de XMLPath</description>
+		<env-entry-name>MailerConfigurationFile</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>mailer-configuration.xml</env-entry-value>
+
+	</env-entry>
+	<env-entry>
+		<description>Archivo xml donde se almacenaran los correos</description>
+		<env-entry-name>MailerDataFile</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>mailer-data.xml</env-entry-value>
+
+	</env-entry>
+	<env-entry>
+		<description>Archivo html template del correo</description>
+		<env-entry-name>templateHtml</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>templateCorreo.html</env-entry-value>
+
+	</env-entry>
+	<env-entry>
+		<description>Archivo adjunto para el correo del reporte de interrupciones por circuito</description>
+		<env-entry-name>attachment</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>/file/SigeItrRepInterrupcionPorCircuito.xls</env-entry-value>
+
+	</env-entry>
+	<env-entry>
+		<description>Modulo que implementa el XMLGenerator para el correo del reporte de interrupciones por circuito</description>
+		<env-entry-name>modulo</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>correos</env-entry-value>
+
+	</env-entry>
+	<env-entry>
+		<description>Remitente del correo del reporte de interrupciones por circuito</description>
+		<env-entry-name>remitente</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>sige@ice.go.cr</env-entry-value>
+
+	</env-entry>
+	<servlet>
+		<display-name>ServletImagenes</display-name>
+		<servlet-name>ServletImagenes</servlet-name>
+		<servlet-class>cr.go.ice.sige.carga.web.servlet.ServletImagenes</servlet-class>
+	</servlet>
+
+	<servlet>
+		<display-name>ServletDocumentos</display-name>
+		<servlet-name>ServletDocumentos</servlet-name>
+		<servlet-class>cr.go.ice.sige.carga.web.servlet.ServletDocumentos</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<description>Servlet de parametros para reportes JASPER</description>
+		<display-name>ServletReporte</display-name>
+		<servlet-name>ServletReporte</servlet-name>
+		<servlet-class>cr.go.ice.interrupciones.servlets.ServletReporte</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ServletImagenes</servlet-name>
+		<url-pattern>/ServletImagenes</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ServletDocumentos</servlet-name>
+		<url-pattern>/ServletDocumentos</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ServletReporte</servlet-name>
+		<url-pattern>/ServletReporte</url-pattern>
+	</servlet-mapping>
+</web-app>

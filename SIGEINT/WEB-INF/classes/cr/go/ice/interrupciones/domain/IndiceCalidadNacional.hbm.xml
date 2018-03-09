@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+<class name="cr.go.ice.interrupciones.domain.IndiceCalidadNacional" table="EVEINDCALIDADNAC">
+    <composite-id name="id" class="cr.go.ice.interrupciones.domain.IndiceCalidadNacionalId">
+        <key-property name="ano" column="AA" type="java.lang.Integer" length="4" />
+        <key-property name="mes" column="MES" type="java.lang.Integer" length="2" />
+    </composite-id>
+    <property name="abonadosNacional" column="ABONACIONAL" type="java.lang.Integer" length="8" not-null="false"/>
+    <property name="horasAbonadoNacional" column="HRS_ABONACIONAL" type="java.lang.Double" length="14" precision="2" not-null="false"/>
+    <property name="horasAbonadoNacionalAcumulados" column="HRS_ABONACIONALACUM" type="java.lang.Double" length="15" precision="4" not-null="false"/>
+    <property name="abonadosAfectadosNacional" column="ABOAFECTANACIONAL" type="java.lang.Integer" length="10" not-null="false"/>
+    <property name="abonadosAfectadosNacionalAcumulados" column="ABOAFECTANACIONALACUM" type="java.lang.Integer" length="15" not-null="false"/>
+    <property name="duracionNacional" column="DURACIONNACIONAL" type="java.lang.Double" length="14" precision="2" not-null="false"/>
+    <property name="duracionNacionalAcumulado" column="DURACIONNACIONALACUM" type="java.lang.Double" length="15" precision="2" not-null="false"/>
+    <property name="averiasNacional" column="AVERIASNACIONAL" type="java.lang.Integer" length="8" not-null="false"/>
+    <property name="averiasNacionalAcumulado" column="AVERIASNACIONALACUM" type="java.lang.Integer" length="10" not-null="false"/>
+    
+    <property name="dpirNacional" column="DPIRNACIONAL" type="java.lang.Double" length="14" precision="4" not-null="false"/>
+    <property name="dpirNacionalAcumulado" column="ADPIRNACIONAL" type="java.lang.Double" length="15" precision="4" not-null="false"/>
+    <property name="fpiNacional" column="FPINACIONAL" type="java.lang.Double" length="14" precision="4" not-null="false"/>
+    <property name="fpiNacionalAcumulado" column="AFPINACIONAL" type="java.lang.Double" length="15" precision="4" not-null="false"/>
+    <property name="dpicNacional" column="DPICNACIONAL" type="java.lang.Double" length="14" precision="4" not-null="false"/>
+    <property name="dpicNacionalAcumulado" column="ADPICNACIONAL" type="java.lang.Double" length="15"  precision="4" not-null="false"/>
+    <property name="dpsNacional" column="DPSNACIONAL" type="java.lang.Double" length="14" precision="4" not-null="false"/>
+    <property name="dpsNacionalAcumulado" column="ADPSNACIONAL" type="java.lang.Double" length="15" precision="4" not-null="false"/>
+    <property name="dpaNacional" column="DPANACIONAL" type="java.lang.Double" length="14" precision="4" not-null="false"/>
+    <property name="dpaNacionalAcumulado" column="ADPANACIONAL" type="java.lang.Double" length="15" precision="4" not-null="false"/>
+    
+    <property name="horasAbonadoSuspensionProgramada" column="HRS_ABO_SUPPROG" type="java.lang.Double" length="14" precision="2" not-null="false"/>
+    <property name="horasAbonadoSuspensionProgramadaAcumulado" column="HRS_ABO_SUPPROGACUM" type="java.lang.Double" length="15" precision="2" not-null="false"/>
+    <property name="abonadosAfectadosSuspensionProgramada" column="ABOAFECTA_SUPPROG" type="java.lang.Integer" length="10" not-null="false"/>
+    <property name="abonadosAfectadosSuspensionProgramadaAcumulado" column="ABOAFECTA_SUPPROGACUM" type="java.lang.Integer" length="15" not-null="false"/>
+    <property name="duracionSuspensionProgramada" column="DURACIONSUSPPROG" type="java.lang.Double" length="14" precision="2" not-null="false"/>
+    <property name="duracionSuspensionProgramadaAcumulado" column="DURACIONSUSPPROGACUM" type="java.lang.Double" length="15" precision="2" not-null="false"/>
+    <property name="averiasSuspensionProgramada" column="AVERIASSUSPPROG" type="java.lang.Integer" length="8" not-null="false"/>
+    <property name="averiasSuspensionProgramadaAcumulado" column="AVERIASSUSPPROGACUM" type="java.lang.Integer" length="10" not-null="false"/>
+    
+    <property name="dpirSuspensionProgramada" column="DPIRSUSPPROG" type="java.lang.Double" length="14" precision="4" not-null="false"/>
+    <property name="dpirSuspensionProgramadaAcumulado" column="ADPIRSUSPPROG" type="java.lang.Double" length="15" precision="4" not-null="false"/>
+    <property name="fpiSuspensionProgramada" column="FPISUSPPROG" type="java.lang.Double" length="14" precision="4" not-null="false"/>
+    <property name="fpiSuspensionProgramadaAcumulado" column="AFPISUSPPROG" type="java.lang.Double" length="15" precision="4" not-null="false"/>
+    <property name="dpicSuspensionProgramada" column="DPICSUSPPROG" type="java.lang.Double" length="14" precision="4" not-null="false"/>
+    <property name="dpicSuspensionProgramadaAcumulado" column="ADPICSUSPPROG" type="java.lang.Double" length="15"  precision="4" not-null="false"/>
+    <property name="dpsSuspensionProgramada" column="DPSSUSPPROG" type="java.lang.Double" length="14" precision="4" not-null="false"/>
+    <property name="dpsSuspensionProgramadaAcumulado" column="ADPSSUSPPROG" type="java.lang.Double" length="15" precision="4" not-null="false"/>
+    <property name="dpaSuspensionProgramada" column="DPASUSPPROG" type="java.lang.Double" length="14" precision="4" not-null="false"/>
+    <property name="dpaSuspensionProgramadaAcumulado" column="ADPASUSPPROG" type="java.lang.Double" length="15" precision="4" not-null="false"/>
+    
+    <property name="dpirPuro" column="DPIRPURO" type="java.lang.Double" length="14" precision="4" not-null="false"/>
+    <property name="dpirPuroAcumulado" column="ADPIRPURO" type="java.lang.Double" length="15" precision="4" not-null="false"/>
+    <property name="fpiPuro" column="FPIPURO" type="java.lang.Double" length="14" precision="4" not-null="false"/>
+    <property name="fpiPuroAcumulado" column="AFPIPURO" type="java.lang.Double" length="15" precision="4" not-null="false"/>
+    <property name="dpicPuro" column="DPICPURO" type="java.lang.Double" length="14" precision="4" not-null="false"/>
+    <property name="dpicPuroAcumulado" column="ADPICPURO" type="java.lang.Double" length="15"  precision="4" not-null="false"/>
+    <property name="dpsPuro" column="DPSPURO" type="java.lang.Double" length="14" precision="4" not-null="false"/>
+    <property name="dpsPuroAcumulado" column="ADPSPURO" type="java.lang.Double" length="15" precision="4" not-null="false"/>
+    <property name="dpaPuro" column="DPAPURO" type="java.lang.Double" length="14" precision="4" not-null="false"/>
+    <property name="dpaPuroAcumulado" column="ADPAPURO" type="java.lang.Double" length="15" precision="4" not-null="false"/>
+</class>
+</hibernate-mapping>

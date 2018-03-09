@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd" xmlns:jee="http://www.springframework.org/schema/jee">
+    
+    <!--========== Data Sources ==========-->
+    <bean id="ciaDS" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/cia2DS" />
+    </bean>
+    <!--========== Session Factory ==========-->
+    <bean id="ciaSF" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="ciaDS" />
+        <property name="mappingResources">
+            <list>
+                <value>cr/go/ice/cia/dominio/xml/AplicacionCia.hbm.xml</value>
+                <value>cr/go/ice/cia/dominio/xml/GrupoCia.hbm.xml</value>
+                <value>cr/go/ice/cia/dominio/xml/GrupoAplicacionCia.hbm.xml</value>
+                <value>cr/go/ice/cia/dominio/xml/GrupoUsuarioCia.hbm.xml</value>
+                <value>cr/go/ice/cia/dominio/xml/ModuloCia.hbm.xml</value>
+                <value>cr/go/ice/cia/dominio/xml/PaginaOpcionCia.hbm.xml</value>
+                <value>cr/go/ice/cia/dominio/xml/OpcionCia.hbm.xml</value>
+                <value>cr/go/ice/cia/dominio/xml/OpcionPerfilCia.hbm.xml</value>
+                <value>cr/go/ice/cia/dominio/xml/PaginaCia.hbm.xml</value>
+                <value>cr/go/ice/cia/dominio/xml/PerfilCia.hbm.xml</value>
+                <value>cr/go/ice/cia/dominio/xml/PerfilGrupoCia.hbm.xml</value>
+                <value>cr/go/ice/cia/dominio/xml/UsuarioCia.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.use_outer_join">true</prop>
+	  			<prop key="hibernate.format_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <!-- ==========    Data Access Objects   ========== -->
+    <!-- ===================Abstractos================= -->
+    <bean id="abstractCiaDao" class="org.springframework.orm.hibernate3.support.HibernateDaoSupport" abstract="true">
+        <property name="sessionFactory" ref="ciaSF"/>
+    </bean> 
+    <!-- ===================Daos de la Aplicacion================= -->
+    <bean id="aplicacionCiaDao"       class="cr.go.ice.cia.dao.impl.AplicacionCiaDaoHB"       parent="abstractCiaDao" />
+    <bean id="paginaOpcionCiaDao"     class="cr.go.ice.cia.dao.impl.PaginaOpcionCiaDaoHB"     parent="abstractCiaDao" />
+    <bean id="opcionCiaDao"           class="cr.go.ice.cia.dao.impl.OpcionCiaDaoHB"           parent="abstractCiaDao" />
+    <bean id="opcionPerfilCiaDao"     class="cr.go.ice.cia.dao.impl.OpcionPerfilCiaDaoHB"     parent="abstractCiaDao" />
+    <bean id="paginaCiaDao"           class="cr.go.ice.cia.dao.impl.PaginaCiaDaoHB"           parent="abstractCiaDao" />
+    <bean id="perfilCiaDao"           class="cr.go.ice.cia.dao.impl.PerfilCiaDaoHB"           parent="abstractCiaDao" />
+    <bean id="perfilGrupoCiaDao"      class="cr.go.ice.cia.dao.impl.PerfilGrupoCiaDaoHB"      parent="abstractCiaDao" />
+    <bean id="usuarioCiaDao"          class="cr.go.ice.cia.dao.impl.UsuarioCiaDaoHB"          parent="abstractCiaDao" />
+    <bean id="grupoCiaDao"            class="cr.go.ice.cia.dao.impl.GrupoCiaDaoHB"            parent="abstractCiaDao" />
+    <bean id="grupoAplicacionCiaDao"  class="cr.go.ice.cia.dao.impl.GrupoAplicacionCiaDaoHB"  parent="abstractCiaDao" />
+    <bean id="grupoUsuarioCiaDao"     class="cr.go.ice.cia.dao.impl.GrupoUsuarioCiaDaoHB"     parent="abstractCiaDao" />
+    <bean id="moduloCiaDao"           class="cr.go.ice.cia.dao.impl.ModuloCiaDaoHB"           parent="abstractCiaDao" />
+    <bean id="generacionArchivoDao"   class="cr.go.ice.cia.dao.impl.GeneracionArchivoDaoHB"   parent="abstractCiaDao" >
+    	<property name="ciaDS"     ref="ciaDS" />
+    </bean>
+</beans>

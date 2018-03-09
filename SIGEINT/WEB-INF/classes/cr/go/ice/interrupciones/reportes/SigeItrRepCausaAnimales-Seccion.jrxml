@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SigeItrRepCausaAnimales-Seccion" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="7e34eefe-1a88-4d8e-8860-e872a07a21fa">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="ISO-8859-1"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="animal" class="java.lang.Integer"/>
+	<parameter name="nivelRed" class="java.lang.String"/>
+	<parameter name="fechaInicio" class="java.lang.String"/>
+	<parameter name="fechaFin" class="java.lang.String"/>
+	<parameter name="region" class="java.lang.Integer"/>
+	<parameter name="subregion" class="java.lang.Integer"/>
+	<parameter name="subestacion" class="java.lang.Integer"/>
+	<parameter name="circuito" class="java.lang.Integer"/>
+	<parameter name="seccion" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select
+	inte.causa1,
+	inte.fecini,
+	inte.horaini,
+	inte.codanimal,
+	inte.codpueblo,
+	inte.codcalle,
+	inte.poste,
+	inte.secuencia,
+	inte.codpueblo_equipo,
+	inte.codcalle_equipo,
+	inte.poste_equipo,
+	inte.secuencia_equipo ,
+	inte.reg,
+	region.NOM_REGION,
+	animal.tipo_animal,
+	animal.nom_animal,
+	inte.SUBREGION,
+	inte.sub as cod_subestacion,
+	subestacion.NOM_SUBESTACION,
+	inte.cir as cod_circuito,
+	circuito.NOM_CIRCUITO,
+	subregion.NOM_SUBREGION,
+	inte.seccion,
+	seccion.NOM_SECCION,
+	(inte.aa||'-'||inte.cod_oficina||'-'||inte.numinterrup) AS numeroInterrupcion,
+	inte.lugar
+from
+	eve01m inte
+     	inner join eve22c animal on (inte.codanimal = animal.CODANIMAL)
+	inner join eve05c region on (region.reg = inte.reg)
+	inner join eve04c subregion on ((subregion.reg = inte.reg) and (subregion.SUBREGION = inte.SUBREGION))
+	inner join eve03c subestacion on  (subestacion.sub = inte.sub)
+	inner join eve01c circuito on ((circuito.sub = inte.sub) and (circuito.CIR = inte.cir))
+  	inner join eve06c seccion on ((seccion.sub = inte.sub) and (seccion.CIR = inte.cir) and (seccion.seccion = inte.seccion))
+where
+	inte.causa1=402 and
+	(inte.reg =  $P{region} or $P{region}=0) and
+	(inte.SUBREGION =  $P{subregion} or $P{subregion}=0) and
+	(inte.sub =  $P{subestacion} or $P{subestacion}=0) and
+	(inte.cir =  $P{circuito} or $P{circuito}=0) and
+	(inte.seccion =  $P{seccion} or $P{seccion}=0) and
+	(inte.codanimal = $P{animal} or $P{animal}=0) and
+	(TO_DATE(inte.fecini) >= TO_DATE($P{fechaInicio}, 'dd/mm/yyyy') ) and
+	(TO_DATE(inte.fecini) <= TO_DATE($P{fechaFin}, 'dd/mm/yyyy') )
+order by
+	inte.reg,
+	inte.subregion,
+	inte.sub,
+	inte.cir,
+	inte.seccion,
+	inte.fecini,
+	inte.horaini,
+	animal.nom_animal]]>
+	</queryString>
+	<field name="CAUSA1" class="java.math.BigDecimal"/>
+	<field name="FECINI" class="java.sql.Timestamp"/>
+	<field name="HORAINI" class="java.math.BigDecimal"/>
+	<field name="CODANIMAL" class="java.math.BigDecimal"/>
+	<field name="CODPUEBLO" class="java.math.BigDecimal"/>
+	<field name="CODCALLE" class="java.math.BigDecimal"/>
+	<field name="POSTE" class="java.math.BigDecimal"/>
+	<field name="SECUENCIA" class="java.math.BigDecimal"/>
+	<field name="CODPUEBLO_EQUIPO" class="java.math.BigDecimal"/>
+	<field name="CODCALLE_EQUIPO" class="java.math.BigDecimal"/>
+	<field name="POSTE_EQUIPO" class="java.math.BigDecimal"/>
+	<field name="SECUENCIA_EQUIPO" class="java.math.BigDecimal"/>
+	<field name="REG" class="java.math.BigDecimal"/>
+	<field name="NOM_REGION" class="java.lang.String"/>
+	<field name="TIPO_ANIMAL" class="java.math.BigDecimal"/>
+	<field name="NOM_ANIMAL" class="java.lang.String"/>
+	<field name="SUBREGION" class="java.math.BigDecimal"/>
+	<field name="COD_SUBESTACION" class="java.math.BigDecimal"/>
+	<field name="NOM_SUBESTACION" class="java.lang.String"/>
+	<field name="COD_CIRCUITO" class="java.math.BigDecimal"/>
+	<field name="NOM_CIRCUITO" class="java.lang.String"/>
+	<field name="NOM_SUBREGION" class="java.lang.String"/>
+	<field name="SECCION" class="java.math.BigDecimal"/>
+	<field name="NOM_SECCION" class="java.lang.String"/>
+	<field name="NUMEROINTERRUPCION" class="java.lang.String"/>
+	<field name="LUGAR" class="java.lang.String"/>
+	<group name="regionGroup">
+		<groupExpression><![CDATA[$F{SECCION}]]></groupExpression>
+		<groupHeader>
+			<band height="62" splitType="Stretch">
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+					<reportElement key="textField-8" x="0" y="15" width="535" height="19" uuid="7824bb55-59d2-46ef-8909-22f78945a609"/>
+					<textElement>
+						<font isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(($F{REG}==null)?(""):("Sección: "+$F{REG}+" - "+$F{SUBREGION}+" - "+$F{COD_SUBESTACION}+" - "+$F{COD_CIRCUITO}+" -"+$F{SECCION}+" - "+$F{NOM_SECCION}))]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-71" mode="Opaque" x="0" y="34" width="65" height="28" backcolor="#999999" uuid="06c018f2-8ed4-4d6d-bfa2-eabf2fd1e5ef"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Número Interrupción]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-72" mode="Opaque" x="65" y="34" width="62" height="28" backcolor="#999999" uuid="45bf6bbd-a379-4dd1-87e9-8cc088532fd9"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Fecha Interrupción]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-73" mode="Opaque" x="127" y="34" width="28" height="28" backcolor="#999999" uuid="07ae045a-fec3-4abb-ba02-1acdb2fbc398"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Hora]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-74" mode="Opaque" x="155" y="34" width="78" height="28" backcolor="#999999" uuid="c311115f-8e27-486b-9cff-87edbc9d4340"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Nombre de animal]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-75" mode="Opaque" x="233" y="34" width="55" height="28" backcolor="#999999" uuid="200719cf-be67-4404-bff4-e6ba6bca917a"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Tipo de animal]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-76" mode="Opaque" x="288" y="34" width="84" height="28" backcolor="#999999" uuid="4fadff56-b9f7-40ac-bfe0-eb14b44d650d"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Localización Falla]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-77" mode="Opaque" x="372" y="34" width="84" height="28" backcolor="#999999" uuid="eee7c5ba-c757-43e0-b1ac-026ecea399f4"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Localización equipo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-78" mode="Opaque" x="456" y="34" width="79" height="28" backcolor="#999999" uuid="a289f55e-d36d-4e51-a04a-295ac8bb2e54"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Lugar]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18" splitType="Stretch">
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+					<reportElement key="textField-9" x="0" y="0" width="535" height="18" uuid="8a7aed8e-2292-4288-9159-44447153b97b"/>
+					<textElement>
+						<font isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(($F{REG}==null)?("No hay información para generar el reporte. "):"")]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="75" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-1" x="155" y="0" width="217" height="19" uuid="05b66113-89c2-4c4f-bd8c-405dc17c325b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Interrupciones por causa de animales
+
+
+]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH:mm:ss" isBlankWhenNull="false">
+				<reportElement key="textField-1" x="422" y="19" width="113" height="18" uuid="d2eced20-3d0d-4193-9ac7-daf9fe20d043"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-3" x="372" y="0" width="84" height="19" uuid="bc56f214-ac28-466b-a60f-61e096097569"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pág. "+ $V{PAGE_NUMBER} +" de "  ]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-4" x="456" y="0" width="79" height="19" uuid="91429ab6-41a9-4e3b-a328-91c2dc2517a9"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[  $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-52" x="0" y="0" width="155" height="19" uuid="a85da3bf-6fd5-44f0-bfbe-2afa9f7fb509"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[ICE-UEN Servicio al Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-53" x="0" y="19" width="155" height="56" uuid="627485d3-c011-48ed-8200-ebebf1e0179f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-54" x="372" y="37" width="163" height="38" uuid="0e5107bd-3933-4633-bbf2-40932b794e2c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="155" y="19" width="217" height="18" uuid="0665ad81-c12c-438d-8f8d-0c138d4a9e69"/>
+				<textElement textAlignment="Center">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{animal}.intValue()==0)?" Todos ":$F{NOM_ANIMAL})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-54" x="372" y="19" width="50" height="18" uuid="a964ca74-087d-4b55-8693-d5e2c24f6737"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Fecha: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-70" x="266" y="55" width="28" height="19" uuid="0224424f-ca8d-4c67-8759-c74962093a8b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[al  ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField-17" x="211" y="55" width="55" height="19" uuid="60903bdb-1482-4601-b733-48cf0180fe05"/>
+				<textElement>
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechaInicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-69" x="155" y="55" width="56" height="19" uuid="ee51051a-20ce-41bd-af86-526a162825f6"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Del ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField-18" x="294" y="55" width="78" height="19" uuid="88b3411f-7393-4845-8e41-42f803559393"/>
+				<textElement>
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechaFin}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField-17" x="155" y="37" width="217" height="18" uuid="5afbbf47-8b72-4a88-8202-38dae74d4a54"/>
+				<textElement textAlignment="Center">
+					<font isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["A nivel de   "+$P{nivelRed}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-19" mode="Opaque" x="0" y="0" width="65" height="24" backcolor="#CCCCCC" uuid="29ce4d65-a690-4eaf-a783-fb07e50fb4a9">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 != 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{NUMEROINTERRUPCION}==null)?" ":$F{NUMEROINTERRUPCION}.toString())]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField-20" x="65" y="0" width="62" height="24" uuid="93e75ee4-7f31-4a50-8e17-928168505d27">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 == 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECINI}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement key="textField-21" x="127" y="0" width="28" height="24" uuid="6ec3317a-6d4f-45fc-805f-ed78ff458d96">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 == 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(new java.text.DecimalFormat("00")).format($F{HORAINI}.intValue()) + ":" +
+(new java.text.DecimalFormat("00")).format(($F{HORAINI}.doubleValue() - $F{HORAINI}.intValue()) * 100)]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-22" x="155" y="0" width="78" height="24" uuid="d06e92a1-30d6-4a86-98f9-6f6fd7c5cd25">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 == 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOM_ANIMAL}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-23" x="233" y="0" width="55" height="24" uuid="0814c65f-8cbc-4d4d-a02f-841b974f5ecf">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 == 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{TIPO_ANIMAL}.intValue()==1)? "Voladores" :
+     ($F{TIPO_ANIMAL}.intValue()==2)?"Trepadores":"Monos")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement key="textField-24" x="288" y="0" width="84" height="24" uuid="e29814ab-dead-44f4-bc37-ed405b9a40ee">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 == 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{CODPUEBLO}==null)?" ":$F{CODPUEBLO}.toString())+"-"+
+(($F{CODCALLE}==null)?" ":$F{CODCALLE}.toString())+"-"+
+(($F{POSTE}==null)?" ":$F{POSTE}.toString())+"-"+
+(($F{SECUENCIA}==null)?" ":$F{SECUENCIA}.toString())]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-25" mode="Opaque" x="372" y="0" width="84" height="24" backcolor="#CCCCCC" uuid="dc86ae7f-b83a-4a7a-95a6-2badbc0edd5b">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 != 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{CODPUEBLO_EQUIPO}==null)?" ":$F{CODPUEBLO_EQUIPO}.toString())+"-"+
+(($F{CODCALLE_EQUIPO}==null)?" ":$F{CODCALLE_EQUIPO}.toString())+"-"+
+(($F{POSTE_EQUIPO}==null)?" ":$F{POSTE_EQUIPO}.toString())+"-"+
+(($F{SECUENCIA_EQUIPO}==null)?" ":$F{SECUENCIA_EQUIPO}.toString())]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-26" mode="Opaque" x="456" y="0" width="79" height="24" backcolor="#CCCCCC" uuid="4be57118-c499-4272-82dd-d12e38ffe49f">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 != 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{LUGAR}==null)?" ":$F{LUGAR}.toString())]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement key="textField-27" x="0" y="0" width="65" height="24" uuid="3a133c08-3a4c-4682-86a9-d0b1fe9cc6d5">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 == 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{NUMEROINTERRUPCION}==null)?" ":$F{NUMEROINTERRUPCION}.toString())]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField-28" mode="Opaque" x="65" y="0" width="62" height="24" backcolor="#CCCCCC" uuid="1f39be09-0824-4a9e-8167-5ef2e31ab7ab">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 != 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECINI}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement key="textField-29" mode="Opaque" x="127" y="0" width="28" height="24" backcolor="#CCCCCC" uuid="22a26240-2608-4a06-82e1-a21f801234ea">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 != 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(new java.text.DecimalFormat("00")).format($F{HORAINI}.intValue()) + ":" +
+(new java.text.DecimalFormat("00")).format(($F{HORAINI}.doubleValue() - $F{HORAINI}.intValue()) * 100)]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-30" mode="Opaque" x="155" y="0" width="78" height="24" backcolor="#CCCCCC" uuid="3dc2b625-af55-494a-aadb-3e0d0223a290">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 != 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOM_ANIMAL}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-31" mode="Opaque" x="233" y="0" width="55" height="24" backcolor="#CCCCCC" uuid="d5dd937e-3c4c-48f9-b311-bef7f471619a">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 != 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{TIPO_ANIMAL}.intValue()==1)? "Voladores" :
+     ($F{TIPO_ANIMAL}.intValue()==2)?"Trepadores":"Monos")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement key="textField-32" mode="Opaque" x="288" y="0" width="84" height="24" backcolor="#CCCCCC" uuid="3ed38edc-988d-4b0c-a2c3-9189f44f824c">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 != 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{CODPUEBLO}==null)?" ":$F{CODPUEBLO}.toString())+"-"+
+(($F{CODCALLE}==null)?" ":$F{CODCALLE}.toString())+"-"+
+(($F{POSTE}==null)?" ":$F{POSTE}.toString())+"-"+
+(($F{SECUENCIA}==null)?" ":$F{SECUENCIA}.toString())]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement key="textField-33" x="372" y="0" width="84" height="24" uuid="c082e935-0e04-424e-8f83-cb4c21c18bb2">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 == 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{CODPUEBLO_EQUIPO}==null)?" ":$F{CODPUEBLO_EQUIPO}.toString())+"-"+
+(($F{CODCALLE_EQUIPO}==null)?" ":$F{CODCALLE_EQUIPO}.toString())+"-"+
+(($F{POSTE_EQUIPO}==null)?" ":$F{POSTE_EQUIPO}.toString())+"-"+
+(($F{SECUENCIA_EQUIPO}==null)?" ":$F{SECUENCIA_EQUIPO}.toString())]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-34" x="456" y="0" width="79" height="24" uuid="70d1aa8b-5cb8-4db5-88e1-4b2ba10c98c5">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 == 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{LUGAR}==null)?" ":$F{LUGAR}.toString())]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Prevent"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
